@@ -308,6 +308,8 @@ body {
 
 .inconsistencies-cell.death-spacer {
     background-color: #F1F9FC;
+    border-left: 1px solid #066F90;
+    border-right: 1px solid #066F90;
 }
 
 .burial-header {
