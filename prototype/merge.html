@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FamilySearch - Merge by ID</title>
+    <link rel="stylesheet" href="merge-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="fs-logo">
+                <svg width="147" height="24" viewBox="0 0 147 24" fill="none">
+                    <text x="0" y="18" font-family="Arial" font-size="18" font-weight="bold" fill="#202121">FamilySearch</text>
+                </svg>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="icon-btn" aria-label="Places">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 2C7.24 2 5 4.24 5 7c0 3.54 5 11 5 11s5-7.46 5-11c0-2.76-2.24-5-5-5zm0 7c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                </svg>
+            </button>
+            <button class="icon-btn" aria-label="World">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <circle cx="10" cy="10" r="8" stroke="currentColor" fill="none" stroke-width="1.5"/>
+                </svg>
+            </button>
+            <button class="icon-btn" aria-label="Help">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <circle cx="10" cy="10" r="8" stroke="currentColor" fill="none" stroke-width="1.5"/>
+                    <text x="10" y="14" text-anchor="middle" font-size="12" fill="currentColor">?</text>
+                </svg>
+            </button>
+            <button class="icon-btn" aria-label="Messages">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M18 4H2C1.45 4 1 4.45 1 5v10c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zm0 3l-8 5-8-5V5l8 5 8-5v2z"/>
+                </svg>
+            </button>
+            <button class="icon-btn" aria-label="Notifications">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 2C8.9 2 8 2.9 8 4v.29C6.03 5.17 4.5 7.27 4.5 9.75v4.5L3 15.75v1.5h14v-1.5l-1.5-1.5v-4.5c0-2.48-1.53-4.58-3.5-5.46V4c0-1.1-.9-2-2-2zm0 18c1.1 0 2-.9 2-2H8c0 1.1.9 2 2 2z"/>
+                </svg>
+            </button>
+            <button class="user-btn">
+                <div class="user-avatar">AH</div>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                    <path d="M6 8L2 4h8L6 8z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sub Navigation -->
+    <div class="sub-nav">
+        <div class="sub-nav-left">
+            <button class="tab-btn">Overview</button>
+            <button class="tab-btn active">Tree</button>
+            <button class="tab-btn">Person</button>
+            <button class="tab-btn">Recents</button>
+            <button class="tab-btn">Find</button>
+            <button class="tab-btn">My Contributions</button>
+        </div>
+        <button class="help-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <circle cx="8" cy="8" r="7" stroke="currentColor" fill="none" stroke-width="1.5"/>
+                <text x="8" y="11" text-anchor="middle" font-size="10" fill="currentColor">?</text>
+            </svg>
+            Help Others
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="#" class="breadcrumb-link">Tree</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Merge by ID</span>
+        </div>
+
+        <!-- Merge Container -->
+        <div class="merge-container">
+            <div class="merge-header">
+                <h1 class="merge-title">Merge by ID</h1>
+                <button class="btn-cancel-top">CANCEL</button>
+            </div>
+
+            <div class="merge-intro">
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#4CAF50" style="flex-shrink: 0;">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                    <p style="margin: 0; font-family: 'Noto Sans', sans-serif; font-size: 16px; color: #202121;">These 2 people have no obvious conflicts.</p>
+                </div>
+            </div>
+            
+            <!-- Three Column Grid -->
+            <div class="merge-grid">
+                <!-- Column Headers -->
+                <div class="column-header duplicate1">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <h2 class="column-title">Duplicate one</h2>
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="#9EA1A1">
+                            <circle cx="9" cy="9" r="8" stroke="#9EA1A1" fill="none" stroke-width="1.5"/>
+                            <text x="9" y="12.5" text-anchor="middle" font-size="11" fill="#9EA1A1">i</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="column-header duplicate2">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <h2 class="column-title">Duplicate two</h2>
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="#9EA1A1">
+                            <circle cx="9" cy="9" r="8" stroke="#9EA1A1" fill="none" stroke-width="1.5"/>
+                            <text x="9" y="12.5" text-anchor="middle" font-size="11" fill="#9EA1A1">i</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="column-header surviving">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <h2 class="column-title">Resulting Person</h2>
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="#9EA1A1">
+                            <circle cx="9" cy="9" r="8" stroke="#9EA1A1" fill="none" stroke-width="1.5"/>
+                            <text x="9" y="12.5" text-anchor="middle" font-size="11" fill="#9EA1A1">i</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Person Info Section -->
+                <div class="merge-section person-section">
+                    <!-- Duplicate 1 Person -->
+                    <div class="person-card">
+                        <div class="person-header">
+                            <img src="female.png" alt="Marianna Wismiewska" class="person-avatar">
+                            <div class="person-info">
+                                <h3 class="person-name">Marianna Wismiewska</h3>
+                                <p class="person-id">LN5Q-DW1</p>
+                                <p class="person-dates">1857 – 1907</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Duplicate 2 Person -->
+                    <div class="person-card">
+                        <div class="person-header">
+                            <img src="female.png" alt="Emer Caroline Cannon" class="person-avatar">
+                            <div class="person-info">
+                                <h3 class="person-name">Emer Caroline Cannon</h3>
+                                <p class="person-id">MDH2-6X8</p>
+                                <p class="person-dates">17 April 1883 - 4 November 1955</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Surviving Person -->
+                    <div class="person-card surviving-card">
+                        <div class="person-header">
+                            <img src="female.png" alt="Emer Caroline Cannon" class="person-avatar">
+                            <div class="person-info">
+                                <h3 class="person-name">Emer Caroline Cannon</h3>
+                                <p class="person-id">MDH2-6X8</p>
+                                <p class="person-dates">17 April 1883 - 4 November 1955</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Birth Name Section -->
+                <div class="section-header-row">
+                    <div class="section-label">BIRTH NAME</div>
+                    <div class="section-label">BIRTH NAME</div>
+                    <div class="section-label">BIRTH NAME</div>
+                </div>
+
+                <div class="data-row">
+                    <div class="data-cell">
+                        <input type="checkbox" name="birth-name" class="data-checkbox" checked>
+                        <span class="data-value">Marianna Wisniewska</span>
+                    </div>
+                    <div class="data-cell">
+                        <input type="checkbox" name="birth-name-2" class="data-checkbox">
+                        <span class="data-value">Emer Caroline Cannon</span>
+                    </div>
+                    <div class="data-cell surviving-cell">
+                        <span class="data-value">Marianna Wisniewska</span>
+                    </div>
+                </div>
+
+                <!-- Birth Section -->
+                <div class="section-header-row">
+                    <div class="section-label">BIRTH</div>
+                    <div class="section-label">BIRTH</div>
+                    <div class="section-label">BIRTH</div>
+                </div>
+
+                <div class="data-row">
+                    <div class="data-cell">
+                        <input type="checkbox" name="birth" class="data-checkbox" checked>
+                        <span class="data-value">1857<br>Stupsk, Mlawa County, Masovia, Poland</span>
+                    </div>
+                    <div class="data-cell">
+                        <input type="checkbox" name="birth-2" class="data-checkbox">
+                        <span class="data-value">17 April 1883<br>North Carolina, United States</span>
+                    </div>
+                    <div class="data-cell surviving-cell">
+                        <span class="data-value">1857<br>Stupsk, Mlawa County, Masovia, Poland</span>
+                    </div>
+                </div>
+
+                <!-- Death Section -->
+                <div class="section-header-row">
+                    <div class="section-label">DEATH</div>
+                    <div class="section-label">DEATH</div>
+                    <div class="section-label">DEATH</div>
+                </div>
+
+                <div class="data-row">
+                    <div class="data-cell">
+                        <input type="checkbox" name="death" class="data-checkbox" checked>
+                        <span class="data-value">1907<br>Smiecin, Ciechanow, Warsaw, Poland</span>
+                    </div>
+                    <div class="data-cell">
+                        <input type="checkbox" name="death-2" class="data-checkbox">
+                        <span class="data-value">4 November 1955<br>Jenkins, Letcher, Kentucky, United States</span>
+                    </div>
+                    <div class="data-cell surviving-cell">
+                        <span class="data-value">1907<br>Smiecin, Ciechanow, Warsaw, Poland</span>
+                    </div>
+                </div>
+
+                <!-- Burial Section -->
+                <div class="section-header-row">
+                    <div class="section-label">BURIAL</div>
+                    <div class="section-label">BURIAL</div>
+                    <div class="section-label">BURIAL</div>
+                </div>
+
+                <div class="data-row">
+                    <div class="data-cell empty-cell">
+                        <span class="empty-text">—</span>
+                    </div>
+                    <div class="data-cell">
+                        <input type="checkbox" name="burial" class="data-checkbox" checked>
+                        <span class="data-value">9 November 1955<br>H R Johnson Cemetery, Shelby Gap, Pike, Kentucky, United States</span>
+                    </div>
+                    <div class="data-cell surviving-cell">
+                        <span class="data-value">9 November 1955<br>H R Johnson Cemetery, Shelby Gap, Pike, Kentucky, United States</span>
+                    </div>
+                </div>
+
+                <!-- Other Information Section -->
+                <div class="section-divider-row">
+                    <div class="section-divider">
+                        <h3 class="section-title">Other Information</h3>
+                    </div>
+                    <div class="section-divider">
+                        <h3 class="section-title">Other Information</h3>
+                    </div>
+                    <div class="section-divider">
+                        <h3 class="section-title">Other Information</h3>
+                    </div>
+                </div>
+
+                <!-- Residence Section -->
+                <div class="section-header-row">
+                    <div class="section-label">RESIDENCE</div>
+                    <div class="section-label">RESIDENCE</div>
+                    <div class="section-label">RESIDENCE</div>
+                </div>
+
+                <div class="data-row">
+                    <div class="data-cell empty-cell">
+                        <span class="empty-text">—</span>
+                    </div>
+                    <div class="data-cell">
+                        <input type="checkbox" class="data-checkbox" checked>
+                        <div class="data-value">
+                            <div style="margin-bottom: 12px;">
+                                <div>1910</div>
+                                <div>Cranberry, Mitchell, North Carolina, United States</div>
+                            </div>
+                            <div style="margin-bottom: 12px;">
+                                <div>1920</div>
+                                <div>Upper Elkhorn, Pike, Kentucky, United States</div>
+                            </div>
+                            <div style="margin-bottom: 12px;">
+                                <div>1935</div>
+                                <div>Same house</div>
+                            </div>
+                            <div>
+                                <div>1940</div>
+                                <div>Magisterial District 2, Pike, Kentucky, United States</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-cell surviving-cell">
+                        <div class="data-value">
+                            <div style="margin-bottom: 12px;">
+                                <div>1910</div>
+                                <div>Cranberry, Mitchell, North Carolina, United States</div>
+                            </div>
+                            <div style="margin-bottom: 12px;">
+                                <div>1920</div>
+                                <div>Upper Elkhorn, Pike, Kentucky, United States</div>
+                            </div>
+                            <div style="margin-bottom: 12px;">
+                                <div>1935</div>
+                                <div>Same house</div>
+                            </div>
+                            <div>
+                                <div>1940</div>
+                                <div>Magisterial District 2, Pike, Kentucky, United States</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Family Section -->
+                <div class="section-divider-row">
+                    <div class="section-divider">
+                        <h3 class="section-title">Family</h3>
+                    </div>
+                    <div class="section-divider">
+                        <h3 class="section-title">Family</h3>
+                    </div>
+                    <div class="section-divider">
+                        <h3 class="section-title">Family</h3>
+                    </div>
+                </div>
+
+                <!-- Spouses with nested Children -->
+                <div class="section-header-row">
+                    <div class="section-label">SPOUSES</div>
+                    <div class="section-label">SPOUSES</div>
+                    <div class="section-label">SPOUSES</div>
+                </div>
+
+                <div class="data-row family-row no-border-bottom">
+                    <div class="data-cell empty-cell">
+                        <span class="empty-text">—</span>
+                    </div>
+                    <div class="data-cell">
+                        <div class="family-member">
+                            <img src="male.png" alt="William D Laws" class="family-avatar">
+                            <div>
+                                <div class="family-name">William D Laws</div>
+                                <div class="family-dates">1876–1944 • L2LF-GVT</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 16px; margin-left: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 14px; font-weight: 600; color: #202121;">Marriage</div>
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 14px; color: #666;">27 October 1900 • Watauga, North Carolina, United States</div>
+                        </div>
+                        
+                        <!-- Nested Children -->
+                        <div style="margin-top: 24px; margin-left: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Children</div>
+                            <div class="family-member">
+                                <img src="male.png" alt="Dewey William Laws" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Dewey William Laws</div>
+                                    <div class="family-dates">1901–1977 • L2LT-ZGT</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Bessie Jane Laws" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Bessie Jane Laws</div>
+                                    <div class="family-dates">1903–1996 • L2G7-CSD</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Mamie Louella Laws" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Mamie Louella Laws</div>
+                                    <div class="family-dates">1904–1984 • L2G4-ZS7</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Minnie Laws" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Minnie Laws</div>
+                                    <div class="family-dates">1906–1968 • KHWH-G9Q</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-cell">
+                        <div class="family-member">
+                            <img src="male.png" alt="William D Laws" class="family-avatar">
+                            <div>
+                                <div class="family-name">William D Laws</div>
+                                <div class="family-dates">1876–1944 • L2LF-GVT</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 16px; margin-left: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 14px; font-weight: 600; color: #202121;">Marriage</div>
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 14px; color: #666;">27 October 1900 • Watauga, North Carolina, United States</div>
+                        </div>
+                        
+                        <!-- Nested Children -->
+                        <div style="margin-top: 24px; margin-left: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Children</div>
+                            <div class="family-member">
+                                <img src="male.png" alt="Dewey William Laws" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Dewey William Laws</div>
+                                    <div class="family-dates">1901–1977 • L2LT-ZGT</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Bessie Jane Laws" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Bessie Jane Laws</div>
+                                    <div class="family-dates">1903–1996 • L2G7-CSD</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Mamie Louella Laws" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Mamie Louella Laws</div>
+                                    <div class="family-dates">1904–1984 • L2G4-ZS7</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Minnie Laws" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Minnie Laws</div>
+                                    <div class="family-dates">1906–1968 • KHWH-G9Q</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Divider before Parents -->
+                <div class="inset-divider-row">
+                    <div class="inset-divider"></div>
+                    <div class="inset-divider"></div>
+                    <div class="inset-divider"></div>
+                </div>
+
+                <!-- Parents with nested Siblings -->
+                <div class="section-header-row">
+                    <div class="section-label">PARENTS</div>
+                    <div class="section-label">PARENTS</div>
+                    <div class="section-label">PARENTS</div>
+                </div>
+
+                <div class="data-row family-row">
+                    <div class="data-cell">
+                        <div class="family-member">
+                            <img src="male.png" alt="Jan Wisniewski" class="family-avatar">
+                            <div>
+                                <div class="family-name">Jan Wisniewski</div>
+                                <div class="family-dates">1827–Deceased • G7B8-HPG</div>
+                            </div>
+                        </div>
+                        <div class="family-member" style="margin-top: 12px;">
+                            <img src="female.png" alt="Jozefa Rozumek" class="family-avatar">
+                            <div>
+                                <div class="family-name">Jozefa Rozumek</div>
+                                <div class="family-dates">1830–1891 • G7B8-NTL</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 16px; margin-left: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 14px; font-weight: 600; color: #202121;">Marriage</div>
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 14px; color: #666;">1850 • Stupsk, Mława, Masovia, Poland</div>
+                        </div>
+                        
+                        <!-- Nested Siblings -->
+                        <div style="margin-top: 24px; margin-left: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Siblings</div>
+                            <div class="family-member">
+                                <img src="male.png" alt="Hipolit Wiśniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Hipolit Wiśniewski</div>
+                                    <div class="family-dates">1853–1856 • GWL8-5WX</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Anna Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Anna Wiśniewska</div>
+                                    <div class="family-dates">1856–Deceased • GZJS-LB5</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Marianna Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Marianna Wiśniewska</div>
+                                    <div class="family-dates">1857–1907 • LN5Q-DW1</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="Antoni Wiśniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Antoni Wiśniewski</div>
+                                    <div class="family-dates">1859–Deceased • GZJS-26J</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="Józef Wiśniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Józef Wiśniewski</div>
+                                    <div class="family-dates">1860–Deceased • GZJ3-VVX</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Ewa Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Ewa Wiśniewska</div>
+                                    <div class="family-dates">1862–Deceased • GZJ3-RKY</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Tekla Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Tekla Wiśniewska</div>
+                                    <div class="family-dates">1867–Deceased • GZJZ-4GV</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="Albion Wisniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Albion Wisniewski</div>
+                                    <div class="family-dates">1870–Deceased • GSD8-9KP</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Katarzyna Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Katarzyna Wiśniewska</div>
+                                    <div class="family-dates">1871–Deceased • GZJZ-2P3</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="Franciszek Wiśniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Franciszek Wiśniewski</div>
+                                    <div class="family-dates">1874–Deceased • GZJZ-FC8</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Stanisława Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Stanisława Wiśniewska</div>
+                                    <div class="family-dates">1876–Deceased • GZJZ-LCK</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-cell">
+                        <div class="family-member">
+                            <img src="male.png" alt="Eli Harmon" class="family-avatar">
+                            <div>
+                                <div class="family-name">Eli Harmon</div>
+                                <div class="family-dates">1854–Deceased • GW4Y-L8D</div>
+                            </div>
+                        </div>
+                        <div class="family-member" style="margin-top: 12px;">
+                            <img src="female.png" alt="Cornelia Cannon" class="family-avatar">
+                            <div>
+                                <div class="family-name">Cornelia Cannon</div>
+                                <div class="family-dates">1855–1934 • LHZ7-KYQ</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Nested Siblings -->
+                        <div style="margin-top: 24px; margin-left: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Siblings</div>
+                            <div class="family-member">
+                                <img src="female.png" alt="Emer Caroline Cannon" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Emer Caroline Cannon</div>
+                                    <div class="family-dates">1883–1955 • MDH2-6X8</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Parents</div>
+                            <div class="family-member">
+                                <img src="male.png" alt="Joseph Harrison Mitchell" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Joseph Harrison Mitchell</div>
+                                    <div class="family-dates">1848–1926 • L2FP-WCZ</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Cornelia Cannon" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Cornelia Cannon</div>
+                                    <div class="family-dates">1855–1934 • LHZ7-KYQ</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Nested Siblings -->
+                            <div style="margin-top: 24px; margin-left: 36px;">
+                                <div style="font-family: 'Noto Sans', sans-serif; font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Siblings</div>
+                                <div class="family-member">
+                                    <img src="female.png" alt="Emer Caroline Cannon" class="family-avatar">
+                                    <div>
+                                        <div class="family-name">Emer Caroline Cannon</div>
+                                        <div class="family-dates">1883–1955 • MDH2-6X8</div>
+                                    </div>
+                                </div>
+                                <div class="family-member" style="margin-top: 12px;">
+                                    <img src="male.png" alt="Roy Charles Mitchell" class="family-avatar">
+                                    <div>
+                                        <div class="family-name">Roy Charles Mitchell</div>
+                                        <div class="family-dates">1888–1963 • L2FT-92V</div>
+                                    </div>
+                                </div>
+                                <div class="family-member" style="margin-top: 12px;">
+                                    <img src="female.png" alt="Verona Mitchell" class="family-avatar">
+                                    <div>
+                                        <div class="family-name">Verona Mitchell</div>
+                                        <div class="family-dates">1889–1965 • L2FT-SW3</div>
+                                    </div>
+                                </div>
+                                <div class="family-member" style="margin-top: 12px;">
+                                    <img src="male.png" alt="William Walter Mitchell" class="family-avatar">
+                                    <div>
+                                        <div class="family-name">William Walter Mitchell</div>
+                                        <div class="family-dates">1892–1977 • L2JQ-T74</div>
+                                    </div>
+                                </div>
+                                <div class="family-member" style="margin-top: 12px;">
+                                    <img src="male.png" alt="John Ira Mitchell" class="family-avatar">
+                                    <div>
+                                        <div class="family-name">John Ira Mitchell</div>
+                                        <div class="family-dates">1894–1962 • L2JQ-TC5</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-cell">
+                        <div class="family-member">
+                            <img src="male.png" alt="Jan Wisniewski" class="family-avatar">
+                            <div>
+                                <div class="family-name">Jan Wisniewski</div>
+                                <div class="family-dates">1827–Deceased • G7B8-HPG</div>
+                            </div>
+                        </div>
+                        <div class="family-member" style="margin-top: 12px;">
+                            <img src="female.png" alt="Jozefa Rozumek" class="family-avatar">
+                            <div>
+                                <div class="family-name">Jozefa Rozumek</div>
+                                <div class="family-dates">1830–1891 • G7B8-NTL</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 16px; margin-left: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 14px; font-weight: 600; color: #202121;">Marriage</div>
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 14px; color: #666;">1850 • Stupsk, Mława, Masovia, Poland</div>
+                        </div>
+                        
+                        <!-- Combined Siblings -->
+                        <div style="margin-top: 24px; margin-left: 36px;">
+                            <div style="font-family: 'Noto Sans', sans-serif; font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Siblings</div>
+                            <div class="family-member">
+                                <img src="male.png" alt="Hipolit Wiśniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Hipolit Wiśniewski</div>
+                                    <div class="family-dates">1853–1856 • GWL8-5WX</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Anna Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Anna Wiśniewska</div>
+                                    <div class="family-dates">1856–Deceased • GZJS-LB5</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Marianna Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Marianna Wiśniewska</div>
+                                    <div class="family-dates">1857–1907 • LN5Q-DW1</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="Antoni Wiśniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Antoni Wiśniewski</div>
+                                    <div class="family-dates">1859–Deceased • GZJS-26J</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="Józef Wiśniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Józef Wiśniewski</div>
+                                    <div class="family-dates">1860–Deceased • GZJ3-VVX</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Ewa Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Ewa Wiśniewska</div>
+                                    <div class="family-dates">1862–Deceased • GZJ3-RKY</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Tekla Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Tekla Wiśniewska</div>
+                                    <div class="family-dates">1867–Deceased • GZJZ-4GV</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="Albion Wisniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Albion Wisniewski</div>
+                                    <div class="family-dates">1870–Deceased • GSD8-9KP</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Katarzyna Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Katarzyna Wiśniewska</div>
+                                    <div class="family-dates">1871–Deceased • GZJZ-2P3</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="Franciszek Wiśniewski" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Franciszek Wiśniewski</div>
+                                    <div class="family-dates">1874–Deceased • GZJZ-FC8</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Stanisława Wiśniewska" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Stanisława Wiśniewska</div>
+                                    <div class="family-dates">1876–Deceased • GZJZ-LCK</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Emer Caroline Cannon" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Emer Caroline Cannon</div>
+                                    <div class="family-dates">1883–1955 • MDH2-6X8</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="Roy Charles Mitchell" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Roy Charles Mitchell</div>
+                                    <div class="family-dates">1888–1963 • L2FT-92V</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="female.png" alt="Verona Mitchell" class="family-avatar">
+                                <div>
+                                    <div class="family-name">Verona Mitchell</div>
+                                    <div class="family-dates">1889–1965 • L2FT-SW3</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="William Walter Mitchell" class="family-avatar">
+                                <div>
+                                    <div class="family-name">William Walter Mitchell</div>
+                                    <div class="family-dates">1892–1977 • L2JQ-T74</div>
+                                </div>
+                            </div>
+                            <div class="family-member" style="margin-top: 12px;">
+                                <img src="male.png" alt="John Ira Mitchell" class="family-avatar">
+                                <div>
+                                    <div class="family-name">John Ira Mitchell</div>
+                                    <div class="family-dates">1894–1962 • L2JQ-TC5</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sources Section -->
+                <div class="section-divider-row">
+                    <div class="section-divider">
+                        <h3 class="section-title">Sources</h3>
+                    </div>
+                    <div class="section-divider">
+                        <h3 class="section-title">Sources</h3>
+                    </div>
+                    <div class="section-divider">
+                        <h3 class="section-title">Sources</h3>
+                    </div>
+                </div>
+
+                <div class="data-row sources-row last-row">
+                    <div class="data-cell">
+                        <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-cell">
+                        <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-cell surviving-cell">
+                        <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-title">Grace Graham, "Scotland, Civil Registration, 1855-1875, 1881, 1891"</div>
+                                <div class="source-citation">04/07/1787 BLACK, JAMES (Old Parish Registers Births 859/ 10 187 Buittle) Page 187 of 219</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="merge-actions">
+                <button class="btn-cancel">CANCEL</button>
+                <button class="btn-merge">MERGE</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Handle radio button changes for person selection
+        document.querySelectorAll('input[name="person-select"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    const selectedCard = this.closest('.person-card');
+                    const survivingCard = document.querySelector('.person-section .surviving-card');
+                    
+                    // Update surviving person info
+                    survivingCard.querySelector('.person-avatar').src = selectedCard.querySelector('.person-avatar').src;
+                    survivingCard.querySelector('.person-name').textContent = selectedCard.querySelector('.person-name').textContent;
+                    survivingCard.querySelector('.person-id').textContent = selectedCard.querySelector('.person-id').textContent;
+                    
+                    // Update person-dates if they exist
+                    const selectedDates = selectedCard.querySelector('.person-dates');
+                    const survivingDates = survivingCard.querySelector('.person-dates');
+                    if (selectedDates && survivingDates) {
+                        survivingDates.textContent = selectedDates.textContent;
+                    }
+                }
+            });
+        });
+
+        // Handle checkbox changes for data fields
+        document.querySelectorAll('.data-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    // Get the checkbox name (e.g., "birth-name" or "birth-name-2")
+                    const checkboxName = this.name;
+                    
+                    // Find the corresponding checkbox in the other column
+                    let otherCheckboxName;
+                    if (checkboxName.endsWith('-2')) {
+                        // This is column 2, uncheck column 1
+                        otherCheckboxName = checkboxName.slice(0, -2);
+                    } else {
+                        // This is column 1, uncheck column 2
+                        otherCheckboxName = checkboxName + '-2';
+                    }
+                    
+                    const otherCheckbox = document.querySelector(`input[name="${otherCheckboxName}"]`);
+                    if (otherCheckbox) {
+                        otherCheckbox.checked = false;
+                    }
+                }
+                updateSurvivingColumn();
+            });
+        });
+
+        function updateSurvivingColumn() {
+            // Update each data section based on checked checkboxes
+            updateSection('birth-name', 'birth-name-2');
+            updateSection('birth', 'birth-2');
+            updateSection('death', 'death-2');
+            updateSection('burial', null);
+        }
+
+        function updateSection(name1, name2) {
+            const checkbox1 = document.querySelector(`input[name="${name1}"]`);
+            const checkbox2 = document.querySelector(`input[name="${name2}"]`);
+            
+            if (!checkbox1 && !checkbox2) return;
+            
+            const row = checkbox1 ? checkbox1.closest('.data-row') : checkbox2.closest('.data-row');
+            const survivingCell = row.querySelector('.surviving-cell .data-value');
+            
+            let selectedValues = [];
+            
+            if (checkbox1 && checkbox1.checked) {
+                selectedValues.push(checkbox1.nextElementSibling.innerHTML);
+            }
+            if (checkbox2 && checkbox2.checked) {
+                selectedValues.push(checkbox2.nextElementSibling.innerHTML);
+            }
+            
+            if (survivingCell && selectedValues.length > 0) {
+                survivingCell.innerHTML = selectedValues[0]; // Just show the first checked value
+            }
+        }
+    </script>
+</body>
+</html>
