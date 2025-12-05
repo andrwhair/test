@@ -544,11 +544,11 @@ body {
 .section-label {
     padding: 10px 20px 2px 20px;
     font-family: 'Noto Sans', sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     color: #666;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
 }
 
 .section-label:nth-child(1) {
