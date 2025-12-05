@@ -5,12 +5,10 @@
 }
 
 body {
-    font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Verdana', Arial, sans-serif;
     background-color: #DDDFDF;
     color: #202121;
     min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Header Styles */
