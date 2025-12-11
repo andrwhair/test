@@ -1,0 +1,89 @@
+/* Zion UI Design System - Color Palette */
+
+:root {
+    /* Gray Scale */
+    --gray00: #FEFEFE;
+    --gray02: #F5F6F6;
+    --gray03: #EAECEC;
+    --gray05: #DCDEDE;
+    --gray10: #CACDCD;
+    --gray20: #B5B8B9;
+    --gray30: #9EA1A3;
+    --gray40: #888C8E;
+    --gray50: #75797B;
+    --gray60: #64686A;
+    --gray70: #535658;
+    --gray80: #434547;
+    --gray90: #333435;
+    --gray100: #202121;
+
+    /* Blue Scale */
+    --blue02: #D8FCFF;
+    --blue03: #BFF5FF;
+    --blue05: #A7E9F8;
+    --blue10: #8AD7ED;
+    --blue20: #6AC3E0;
+    --blue30: #46ACD0;
+    --blue40: #2396BF;
+    --blue50: #0482AB;
+    --blue60: #056F94;
+    --blue70: #145C7A;
+    --blue80: #1A495F;
+    --blue90: #1A3746;
+
+    /* Green Scale */
+    --green02: #F2F8DE;
+    --green03: #E6F2AC;
+    --green05: #D8E76D;
+    --green10: #C4D72D;
+    --green20: #A9C30A;
+    --green30: #88AD1D;
+    --green40: #6A992D;
+    --green50: #508535;
+    --green60: #3A7338;
+    --green70: #276136;
+    --green80: #1B4E2F;
+    --green90: #163A26;
+
+    /* Yellow Scale */
+    --yellow02: #FAF7DB;
+    --yellow03: #F9EDA1;
+    --yellow05: #FDDD47;
+    --yellow10: #FFC400;
+    --yellow20: #F9A519;
+    --yellow30: #F87F09;
+    --yellow40: #EA6108;
+    --yellow50: #CE5012;
+    --yellow60: #AF4619;
+    --yellow70: #8F3D1C;
+    --yellow80: #6F331C;
+    --yellow90: #512919;
+
+    /* Red Scale */
+    --red02: #FCF4F5;
+    --red03: #FCE6E9;
+    --red05: #FED3DA;
+    --red10: #FFBAC5;
+    --red20: #FB9CAE;
+    --red30: #F67896;
+    --red40: #ED5481;
+    --red50: #DF306E;
+    --red60: #CA0D5E;
+    --red70: #AB024E;
+    --red80: #86123F;
+    --red90: #621730;
+
+    /* Purple Scale */
+    --purple02: #F7F5FB;
+    --purple03: #F1E9FB;
+    --purple05: #E9D7FD;
+    --purple10: #DFBFFF;
+    --purple20: #D3A4FF;
+    --purple30: #BF89F1;
+    --purple40: #A776D5;
+    --purple50: #9066B6;
+    --purple60: #7B5999;
+    --purple70: #654B7C;
+    --purple80: #503D61;
+    --purple90: #3B2F46;
+}

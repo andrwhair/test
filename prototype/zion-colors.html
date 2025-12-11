@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zion UI Color System Reference</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="zion-colors.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            padding: 40px 20px;
+            background: var(--gray02);
+            color: var(--gray100);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 48px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--gray100);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--gray60);
+        }
+
+        .usage-notes {
+            background: var(--blue02);
+            border: 1px solid var(--blue20);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 40px;
+        }
+
+        .usage-notes h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--blue80);
+        }
+
+        .usage-notes ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .usage-notes li {
+            color: var(--blue90);
+            margin-bottom: 4px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .usage-notes li::before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+        }
+
+        .color-family {
+            margin-bottom: 48px;
+        }
+
+        .family-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: capitalize;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .color-swatch {
+            background: white;
+            border: 1px solid var(--gray20);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .color-swatch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-display {
+            height: 80px;
+            width: 100%;
+            border-bottom: 1px solid var(--gray20);
+        }
+
+        .color-info {
+            padding: 12px;
+        }
+
+        .color-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--gray90);
+        }
+
+        .color-variable {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 11px;
+            color: var(--gray60);
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--gray70);
+            font-weight: 500;
+        }
+
+        /* Color-specific text contrast for display */
+        .gray100 .color-display,
+        .gray90 .color-display,
+        .gray80 .color-display,
+        .gray70 .color-display,
+        .blue90 .color-display,
+        .blue80 .color-display,
+        .blue70 .color-display,
+        .green90 .color-display,
+        .green80 .color-display,
+        .yellow90 .color-display,
+        .yellow80 .color-display,
+        .yellow70 .color-display,
+        .red90 .color-display,
+        .red80 .color-display,
+        .purple90 .color-display,
+        .purple80 .color-display {
+            position: relative;
+        }
+
+        .gray100 .color-display::after,
+        .gray90 .color-display::after,
+        .gray80 .color-display::after,
+        .gray70 .color-display::after,
+        .blue90 .color-display::after,
+        .blue80 .color-display::after,
+        .blue70 .color-display::after,
+        .green90 .color-display::after,
+        .green80 .color-display::after,
+        .yellow90 .color-display::after,
+        .yellow80 .color-display::after,
+        .yellow70 .color-display::after,
+        .red90 .color-display::after,
+        .red80 .color-display::after,
+        .purple90 .color-display::after,
+        .purple80 .color-display::after {
+            content: "✓";
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: white;
+            font-size: 16px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Zion UI Design System</h1>
+            <p class="subtitle">The Official FamilySearch Color Palette</p>
+        </header>
+
+        <div class="usage-notes">
+            <h2>Usage Guidelines</h2>
+            <ul>
+                <li><strong>Links:</strong> Use blue70 (--blue70)</li>
+                <li><strong>Buttons:</strong> Use color60 from the appropriate family</li>
+                <li><strong>Backgrounds:</strong> gray00-gray05 for light surfaces</li>
+                <li><strong>Text:</strong> gray100 for primary, gray70 for secondary</li>
+            </ul>
+        </div>
+
+        <!-- Gray Family -->
+        <div class="color-family">
+            <h2 class="family-title">Gray</h2>
+            <div class="color-grid">
+                <div class="color-swatch gray00">
+                    <div class="color-display" style="background-color: var(--gray00);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray00</div>
+                        <div class="color-variable">--gray00</div>
+                        <div class="color-hex">#FEFEFE</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray02">
+                    <div class="color-display" style="background-color: var(--gray02);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray02</div>
+                        <div class="color-variable">--gray02</div>
+                        <div class="color-hex">#F5F6F6</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray03">
+                    <div class="color-display" style="background-color: var(--gray03);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray03</div>
+                        <div class="color-variable">--gray03</div>
+                        <div class="color-hex">#EAECEC</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray05">
+                    <div class="color-display" style="background-color: var(--gray05);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray05</div>
+                        <div class="color-variable">--gray05</div>
+                        <div class="color-hex">#DCDEDE</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray10">
+                    <div class="color-display" style="background-color: var(--gray10);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray10</div>
+                        <div class="color-variable">--gray10</div>
+                        <div class="color-hex">#CACDCD</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray20">
+                    <div class="color-display" style="background-color: var(--gray20);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray20</div>
+                        <div class="color-variable">--gray20</div>
+                        <div class="color-hex">#B5B8B9</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray30">
+                    <div class="color-display" style="background-color: var(--gray30);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray30</div>
+                        <div class="color-variable">--gray30</div>
+                        <div class="color-hex">#9EA1A3</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray40">
+                    <div class="color-display" style="background-color: var(--gray40);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray40</div>
+                        <div class="color-variable">--gray40</div>
+                        <div class="color-hex">#888C8E</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray50">
+                    <div class="color-display" style="background-color: var(--gray50);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray50</div>
+                        <div class="color-variable">--gray50</div>
+                        <div class="color-hex">#75797B</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray60">
+                    <div class="color-display" style="background-color: var(--gray60);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray60</div>
+                        <div class="color-variable">--gray60</div>
+                        <div class="color-hex">#64686A</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray70">
+                    <div class="color-display" style="background-color: var(--gray70);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray70</div>
+                        <div class="color-variable">--gray70</div>
+                        <div class="color-hex">#535658</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray80">
+                    <div class="color-display" style="background-color: var(--gray80);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray80</div>
+                        <div class="color-variable">--gray80</div>
+                        <div class="color-hex">#434547</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray90">
+                    <div class="color-display" style="background-color: var(--gray90);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray90</div>
+                        <div class="color-variable">--gray90</div>
+                        <div class="color-hex">#333435</div>
+                    </div>
+                </div>
+                <div class="color-swatch gray100">
+                    <div class="color-display" style="background-color: var(--gray100);"></div>
+                    <div class="color-info">
+                        <div class="color-name">gray100</div>
+                        <div class="color-variable">--gray100</div>
+                        <div class="color-hex">#202121</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blue Family -->
+        <div class="color-family">
+            <h2 class="family-title">Blue</h2>
+            <div class="color-grid">
+                <div class="color-swatch blue02">
+                    <div class="color-display" style="background-color: var(--blue02);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue02</div>
+                        <div class="color-variable">--blue02</div>
+                        <div class="color-hex">#D8FCFF</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue03">
+                    <div class="color-display" style="background-color: var(--blue03);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue03</div>
+                        <div class="color-variable">--blue03</div>
+                        <div class="color-hex">#BFF5FF</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue05">
+                    <div class="color-display" style="background-color: var(--blue05);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue05</div>
+                        <div class="color-variable">--blue05</div>
+                        <div class="color-hex">#A7E9F8</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue10">
+                    <div class="color-display" style="background-color: var(--blue10);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue10</div>
+                        <div class="color-variable">--blue10</div>
+                        <div class="color-hex">#8AD7ED</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue20">
+                    <div class="color-display" style="background-color: var(--blue20);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue20</div>
+                        <div class="color-variable">--blue20</div>
+                        <div class="color-hex">#6AC3E0</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue30">
+                    <div class="color-display" style="background-color: var(--blue30);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue30</div>
+                        <div class="color-variable">--blue30</div>
+                        <div class="color-hex">#46ACD0</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue40">
+                    <div class="color-display" style="background-color: var(--blue40);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue40</div>
+                        <div class="color-variable">--blue40</div>
+                        <div class="color-hex">#2396BF</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue50">
+                    <div class="color-display" style="background-color: var(--blue50);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue50</div>
+                        <div class="color-variable">--blue50</div>
+                        <div class="color-hex">#0482AB</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue60">
+                    <div class="color-display" style="background-color: var(--blue60);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue60</div>
+                        <div class="color-variable">--blue60</div>
+                        <div class="color-hex">#056F94</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue70">
+                    <div class="color-display" style="background-color: var(--blue70);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue70</div>
+                        <div class="color-variable">--blue70</div>
+                        <div class="color-hex">#145C7A</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue80">
+                    <div class="color-display" style="background-color: var(--blue80);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue80</div>
+                        <div class="color-variable">--blue80</div>
+                        <div class="color-hex">#1A495F</div>
+                    </div>
+                </div>
+                <div class="color-swatch blue90">
+                    <div class="color-display" style="background-color: var(--blue90);"></div>
+                    <div class="color-info">
+                        <div class="color-name">blue90</div>
+                        <div class="color-variable">--blue90</div>
+                        <div class="color-hex">#1A3746</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Green Family -->
+        <div class="color-family">
+            <h2 class="family-title">Green</h2>
+            <div class="color-grid">
+                <div class="color-swatch green02">
+                    <div class="color-display" style="background-color: var(--green02);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green02</div>
+                        <div class="color-variable">--green02</div>
+                        <div class="color-hex">#F2F8DE</div>
+                    </div>
+                </div>
+                <div class="color-swatch green03">
+                    <div class="color-display" style="background-color: var(--green03);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green03</div>
+                        <div class="color-variable">--green03</div>
+                        <div class="color-hex">#E6F2AC</div>
+                    </div>
+                </div>
+                <div class="color-swatch green05">
+                    <div class="color-display" style="background-color: var(--green05);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green05</div>
+                        <div class="color-variable">--green05</div>
+                        <div class="color-hex">#D8E76D</div>
+                    </div>
+                </div>
+                <div class="color-swatch green10">
+                    <div class="color-display" style="background-color: var(--green10);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green10</div>
+                        <div class="color-variable">--green10</div>
+                        <div class="color-hex">#C4D72D</div>
+                    </div>
+                </div>
+                <div class="color-swatch green20">
+                    <div class="color-display" style="background-color: var(--green20);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green20</div>
+                        <div class="color-variable">--green20</div>
+                        <div class="color-hex">#A9C30A</div>
+                    </div>
+                </div>
+                <div class="color-swatch green30">
+                    <div class="color-display" style="background-color: var(--green30);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green30</div>
+                        <div class="color-variable">--green30</div>
+                        <div class="color-hex">#88AD1D</div>
+                    </div>
+                </div>
+                <div class="color-swatch green40">
+                    <div class="color-display" style="background-color: var(--green40);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green40</div>
+                        <div class="color-variable">--green40</div>
+                        <div class="color-hex">#6A992D</div>
+                    </div>
+                </div>
+                <div class="color-swatch green50">
+                    <div class="color-display" style="background-color: var(--green50);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green50</div>
+                        <div class="color-variable">--green50</div>
+                        <div class="color-hex">#508535</div>
+                    </div>
+                </div>
+                <div class="color-swatch green60">
+                    <div class="color-display" style="background-color: var(--green60);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green60</div>
+                        <div class="color-variable">--green60</div>
+                        <div class="color-hex">#3A7338</div>
+                    </div>
+                </div>
+                <div class="color-swatch green70">
+                    <div class="color-display" style="background-color: var(--green70);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green70</div>
+                        <div class="color-variable">--green70</div>
+                        <div class="color-hex">#276136</div>
+                    </div>
+                </div>
+                <div class="color-swatch green80">
+                    <div class="color-display" style="background-color: var(--green80);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green80</div>
+                        <div class="color-variable">--green80</div>
+                        <div class="color-hex">#1B4E2F</div>
+                    </div>
+                </div>
+                <div class="color-swatch green90">
+                    <div class="color-display" style="background-color: var(--green90);"></div>
+                    <div class="color-info">
+                        <div class="color-name">green90</div>
+                        <div class="color-variable">--green90</div>
+                        <div class="color-hex">#163A26</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yellow Family -->
+        <div class="color-family">
+            <h2 class="family-title">Yellow</h2>
+            <div class="color-grid">
+                <div class="color-swatch yellow02">
+                    <div class="color-display" style="background-color: var(--yellow02);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow02</div>
+                        <div class="color-variable">--yellow02</div>
+                        <div class="color-hex">#FAF7DB</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow03">
+                    <div class="color-display" style="background-color: var(--yellow03);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow03</div>
+                        <div class="color-variable">--yellow03</div>
+                        <div class="color-hex">#F9EDA1</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow05">
+                    <div class="color-display" style="background-color: var(--yellow05);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow05</div>
+                        <div class="color-variable">--yellow05</div>
+                        <div class="color-hex">#FDDD47</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow10">
+                    <div class="color-display" style="background-color: var(--yellow10);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow10</div>
+                        <div class="color-variable">--yellow10</div>
+                        <div class="color-hex">#FFC400</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow20">
+                    <div class="color-display" style="background-color: var(--yellow20);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow20</div>
+                        <div class="color-variable">--yellow20</div>
+                        <div class="color-hex">#F9A519</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow30">
+                    <div class="color-display" style="background-color: var(--yellow30);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow30</div>
+                        <div class="color-variable">--yellow30</div>
+                        <div class="color-hex">#F87F09</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow40">
+                    <div class="color-display" style="background-color: var(--yellow40);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow40</div>
+                        <div class="color-variable">--yellow40</div>
+                        <div class="color-hex">#EA6108</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow50">
+                    <div class="color-display" style="background-color: var(--yellow50);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow50</div>
+                        <div class="color-variable">--yellow50</div>
+                        <div class="color-hex">#CE5012</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow60">
+                    <div class="color-display" style="background-color: var(--yellow60);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow60</div>
+                        <div class="color-variable">--yellow60</div>
+                        <div class="color-hex">#AF4619</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow70">
+                    <div class="color-display" style="background-color: var(--yellow70);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow70</div>
+                        <div class="color-variable">--yellow70</div>
+                        <div class="color-hex">#8F3D1C</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow80">
+                    <div class="color-display" style="background-color: var(--yellow80);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow80</div>
+                        <div class="color-variable">--yellow80</div>
+                        <div class="color-hex">#6F331C</div>
+                    </div>
+                </div>
+                <div class="color-swatch yellow90">
+                    <div class="color-display" style="background-color: var(--yellow90);"></div>
+                    <div class="color-info">
+                        <div class="color-name">yellow90</div>
+                        <div class="color-variable">--yellow90</div>
+                        <div class="color-hex">#512919</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Red Family -->
+        <div class="color-family">
+            <h2 class="family-title">Red</h2>
+            <div class="color-grid">
+                <div class="color-swatch red02">
+                    <div class="color-display" style="background-color: var(--red02);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red02</div>
+                        <div class="color-variable">--red02</div>
+                        <div class="color-hex">#FCF4F5</div>
+                    </div>
+                </div>
+                <div class="color-swatch red03">
+                    <div class="color-display" style="background-color: var(--red03);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red03</div>
+                        <div class="color-variable">--red03</div>
+                        <div class="color-hex">#FCE6E9</div>
+                    </div>
+                </div>
+                <div class="color-swatch red05">
+                    <div class="color-display" style="background-color: var(--red05);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red05</div>
+                        <div class="color-variable">--red05</div>
+                        <div class="color-hex">#FED3DA</div>
+                    </div>
+                </div>
+                <div class="color-swatch red10">
+                    <div class="color-display" style="background-color: var(--red10);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red10</div>
+                        <div class="color-variable">--red10</div>
+                        <div class="color-hex">#FFBAC5</div>
+                    </div>
+                </div>
+                <div class="color-swatch red20">
+                    <div class="color-display" style="background-color: var(--red20);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red20</div>
+                        <div class="color-variable">--red20</div>
+                        <div class="color-hex">#FB9CAE</div>
+                    </div>
+                </div>
+                <div class="color-swatch red30">
+                    <div class="color-display" style="background-color: var(--red30);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red30</div>
+                        <div class="color-variable">--red30</div>
+                        <div class="color-hex">#F67896</div>
+                    </div>
+                </div>
+                <div class="color-swatch red40">
+                    <div class="color-display" style="background-color: var(--red40);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red40</div>
+                        <div class="color-variable">--red40</div>
+                        <div class="color-hex">#ED5481</div>
+                    </div>
+                </div>
+                <div class="color-swatch red50">
+                    <div class="color-display" style="background-color: var(--red50);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red50</div>
+                        <div class="color-variable">--red50</div>
+                        <div class="color-hex">#DF306E</div>
+                    </div>
+                </div>
+                <div class="color-swatch red60">
+                    <div class="color-display" style="background-color: var(--red60);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red60</div>
+                        <div class="color-variable">--red60</div>
+                        <div class="color-hex">#CA0D5E</div>
+                    </div>
+                </div>
+                <div class="color-swatch red70">
+                    <div class="color-display" style="background-color: var(--red70);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red70</div>
+                        <div class="color-variable">--red70</div>
+                        <div class="color-hex">#AB024E</div>
+                    </div>
+                </div>
+                <div class="color-swatch red80">
+                    <div class="color-display" style="background-color: var(--red80);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red80</div>
+                        <div class="color-variable">--red80</div>
+                        <div class="color-hex">#86123F</div>
+                    </div>
+                </div>
+                <div class="color-swatch red90">
+                    <div class="color-display" style="background-color: var(--red90);"></div>
+                    <div class="color-info">
+                        <div class="color-name">red90</div>
+                        <div class="color-variable">--red90</div>
+                        <div class="color-hex">#621730</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Purple Family -->
+        <div class="color-family">
+            <h2 class="family-title">Purple</h2>
+            <div class="color-grid">
+                <div class="color-swatch purple02">
+                    <div class="color-display" style="background-color: var(--purple02);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple02</div>
+                        <div class="color-variable">--purple02</div>
+                        <div class="color-hex">#F7F5FB</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple03">
+                    <div class="color-display" style="background-color: var(--purple03);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple03</div>
+                        <div class="color-variable">--purple03</div>
+                        <div class="color-hex">#F1E9FB</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple05">
+                    <div class="color-display" style="background-color: var(--purple05);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple05</div>
+                        <div class="color-variable">--purple05</div>
+                        <div class="color-hex">#E9D7FD</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple10">
+                    <div class="color-display" style="background-color: var(--purple10);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple10</div>
+                        <div class="color-variable">--purple10</div>
+                        <div class="color-hex">#DFBFFF</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple20">
+                    <div class="color-display" style="background-color: var(--purple20);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple20</div>
+                        <div class="color-variable">--purple20</div>
+                        <div class="color-hex">#D3A4FF</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple30">
+                    <div class="color-display" style="background-color: var(--purple30);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple30</div>
+                        <div class="color-variable">--purple30</div>
+                        <div class="color-hex">#BF89F1</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple40">
+                    <div class="color-display" style="background-color: var(--purple40);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple40</div>
+                        <div class="color-variable">--purple40</div>
+                        <div class="color-hex">#A776D5</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple50">
+                    <div class="color-display" style="background-color: var(--purple50);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple50</div>
+                        <div class="color-variable">--purple50</div>
+                        <div class="color-hex">#9066B6</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple60">
+                    <div class="color-display" style="background-color: var(--purple60);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple60</div>
+                        <div class="color-variable">--purple60</div>
+                        <div class="color-hex">#7B5999</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple70">
+                    <div class="color-display" style="background-color: var(--purple70);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple70</div>
+                        <div class="color-variable">--purple70</div>
+                        <div class="color-hex">#654B7C</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple80">
+                    <div class="color-display" style="background-color: var(--purple80);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple80</div>
+                        <div class="color-variable">--purple80</div>
+                        <div class="color-hex">#503D61</div>
+                    </div>
+                </div>
+                <div class="color-swatch purple90">
+                    <div class="color-display" style="background-color: var(--purple90);"></div>
+                    <div class="color-info">
+                        <div class="color-name">purple90</div>
+                        <div class="color-variable">--purple90</div>
+                        <div class="color-hex">#3B2F46</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
