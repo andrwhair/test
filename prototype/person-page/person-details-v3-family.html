@@ -424,11 +424,25 @@
             color: var(--blue60);
             margin-bottom: 6px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .source-title:hover {
             color: var(--blue70);
             text-decoration: underline;
+        }
+
+        .source-title svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--blue60);
+            flex-shrink: 0;
+        }
+
+        .source-title:hover svg {
+            fill: var(--blue70);
         }
 
         .source-details {
@@ -835,7 +849,7 @@
                     <h2 class="card-title">Sources</h2>
                     
                     <div class="source-item" data-supports="name,birth,parents" data-url="https://www.familysearch.org/search/collection/2001287">
-                        <div class="source-title"><span class="hint-badge">Hint</span>Utah Birth Certificates</div>
+                        <div class="source-title"><span class="hint-badge">Hint</span>Utah Birth Certificates<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
                         <div class="source-details">State Archives, 1896</div>
                         <div class="source-meta">
                             <span class="source-type">Name, Birth, Parents</span>
@@ -843,7 +857,7 @@
                     </div>
 
                     <div class="source-item" data-supports="name,birth,parents" data-siblings="william,margaret,robert,doris,elizabeth" data-url="https://www.familysearch.org/search/collection/1325221">
-                        <div class="source-title">1900 United States Federal Census</div>
+                        <div class="source-title">1900 United States Federal Census<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
                         <div class="source-details">Summit County, Utah</div>
                         <div class="source-meta">
                             <span class="source-type">Name, Sex, Birth, Parents, Siblings</span>
@@ -851,7 +865,7 @@
                     </div>
 
                     <div class="source-item" data-supports="name,birth,parents" data-siblings="william,margaret,robert,doris,elizabeth,george" data-url="https://www.familysearch.org/search/collection/1727033">
-                        <div class="source-title">1910 United States Federal Census</div>
+                        <div class="source-title">1910 United States Federal Census<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
                         <div class="source-details">Summit County, Utah</div>
                         <div class="source-meta">
                             <span class="source-type">Name, Birth, Parents, Siblings</span>
@@ -859,7 +873,7 @@
                     </div>
 
                     <div class="source-item" data-supports="name,spouse,parents" data-url="https://www.familysearch.org/search/collection/1473183">
-                        <div class="source-title">Salt Lake County Marriage Records</div>
+                        <div class="source-title">Salt Lake County Marriage Records<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
                         <div class="source-details">County Clerk, 1917</div>
                         <div class="source-meta">
                             <span class="source-type">Name, Marriage, Spouse, Parents</span>
@@ -867,7 +881,7 @@
                     </div>
 
                     <div class="source-item" data-supports="name,birth,spouse,children" data-url="https://www.familysearch.org/search/collection/1810731">
-                        <div class="source-title"><span class="hint-badge">Hint</span>1930 United States Federal Census</div>
+                        <div class="source-title"><span class="hint-badge">Hint</span>1930 United States Federal Census<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
                         <div class="source-details">Salt Lake County, Utah</div>
                         <div class="source-meta">
                             <span class="source-type">Name, Birth, Spouse, Children</span>
@@ -875,7 +889,7 @@
                     </div>
 
                     <div class="source-item" data-supports="name,birth,spouse,children" data-url="https://www.familysearch.org/search/collection/2000219">
-                        <div class="source-title">1940 United States Federal Census</div>
+                        <div class="source-title">1940 United States Federal Census<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
                         <div class="source-details">Salt Lake County, Utah</div>
                         <div class="source-meta">
                             <span class="source-type">Name, Birth, Spouse, Children</span>
@@ -883,7 +897,7 @@
                     </div>
 
                     <div class="source-item" data-supports="name,death,parents,spouse" data-url="https://www.familysearch.org/search/collection/1966096">
-                        <div class="source-title">Utah Death Certificates</div>
+                        <div class="source-title">Utah Death Certificates<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
                         <div class="source-details">State Archives, 1988</div>
                         <div class="source-meta">
                             <span class="source-type">Name, Death, Parents, Spouse</span>
@@ -891,7 +905,7 @@
                     </div>
 
                     <div class="source-item" data-supports="name,birth,death,burial" data-url="https://www.findagrave.com/">
-                        <div class="source-title">Cemetery Records</div>
+                        <div class="source-title">Cemetery Records<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></div>
                         <div class="source-details">FindAGrave Memorial</div>
                         <div class="source-meta">
                             <span class="source-type">Name, Birth, Death, Burial</span>
