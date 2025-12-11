@@ -421,8 +421,14 @@
         .source-title {
             font-size: 15px;
             font-weight: 600;
-            color: var(--gray100);
+            color: var(--blue60);
             margin-bottom: 6px;
+            cursor: pointer;
+        }
+
+        .source-title:hover {
+            color: var(--blue70);
+            text-decoration: underline;
         }
 
         .source-details {
@@ -828,7 +834,7 @@
                 <div class="card">
                     <h2 class="card-title">Sources</h2>
                     
-                    <div class="source-item" data-supports="name,birth,parents">
+                    <div class="source-item" data-supports="name,birth,parents" data-url="https://www.familysearch.org/search/collection/2001287">
                         <div class="source-title"><span class="hint-badge">Hint</span>Utah Birth Certificates</div>
                         <div class="source-details">State Archives, 1896</div>
                         <div class="source-meta">
@@ -836,7 +842,7 @@
                         </div>
                     </div>
 
-                    <div class="source-item" data-supports="name,birth,parents" data-siblings="william,margaret,robert,doris,elizabeth">
+                    <div class="source-item" data-supports="name,birth,parents" data-siblings="william,margaret,robert,doris,elizabeth" data-url="https://www.familysearch.org/search/collection/1325221">
                         <div class="source-title">1900 United States Federal Census</div>
                         <div class="source-details">Summit County, Utah</div>
                         <div class="source-meta">
@@ -844,7 +850,7 @@
                         </div>
                     </div>
 
-                    <div class="source-item" data-supports="name,birth,parents" data-siblings="william,margaret,robert,doris,elizabeth,george">
+                    <div class="source-item" data-supports="name,birth,parents" data-siblings="william,margaret,robert,doris,elizabeth,george" data-url="https://www.familysearch.org/search/collection/1727033">
                         <div class="source-title">1910 United States Federal Census</div>
                         <div class="source-details">Summit County, Utah</div>
                         <div class="source-meta">
@@ -852,7 +858,7 @@
                         </div>
                     </div>
 
-                    <div class="source-item" data-supports="name,spouse,parents">
+                    <div class="source-item" data-supports="name,spouse,parents" data-url="https://www.familysearch.org/search/collection/1473183">
                         <div class="source-title">Salt Lake County Marriage Records</div>
                         <div class="source-details">County Clerk, 1917</div>
                         <div class="source-meta">
@@ -860,7 +866,7 @@
                         </div>
                     </div>
 
-                    <div class="source-item" data-supports="name,birth,spouse,children">
+                    <div class="source-item" data-supports="name,birth,spouse,children" data-url="https://www.familysearch.org/search/collection/1810731">
                         <div class="source-title"><span class="hint-badge">Hint</span>1930 United States Federal Census</div>
                         <div class="source-details">Salt Lake County, Utah</div>
                         <div class="source-meta">
@@ -868,7 +874,7 @@
                         </div>
                     </div>
 
-                    <div class="source-item" data-supports="name,birth,spouse,children">
+                    <div class="source-item" data-supports="name,birth,spouse,children" data-url="https://www.familysearch.org/search/collection/2000219">
                         <div class="source-title">1940 United States Federal Census</div>
                         <div class="source-details">Salt Lake County, Utah</div>
                         <div class="source-meta">
@@ -876,7 +882,7 @@
                         </div>
                     </div>
 
-                    <div class="source-item" data-supports="name,death,parents,spouse">
+                    <div class="source-item" data-supports="name,death,parents,spouse" data-url="https://www.familysearch.org/search/collection/1966096">
                         <div class="source-title">Utah Death Certificates</div>
                         <div class="source-details">State Archives, 1988</div>
                         <div class="source-meta">
@@ -884,7 +890,7 @@
                         </div>
                     </div>
 
-                    <div class="source-item" data-supports="name,birth,death,burial">
+                    <div class="source-item" data-supports="name,birth,death,burial" data-url="https://www.findagrave.com/">
                         <div class="source-title">Cemetery Records</div>
                         <div class="source-details">FindAGrave Memorial</div>
                         <div class="source-meta">
@@ -964,6 +970,17 @@
             let activeSource = null;
 
             sourceItems.forEach(source => {
+                // Handle source title clicks to open in popup
+                const sourceTitle = source.querySelector('.source-title');
+                sourceTitle.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent the source-item click from firing
+                    const url = source.getAttribute('data-url');
+                    if (url) {
+                        window.open(url, 'sourceWindow', 'width=1000,height=800,scrollbars=yes,resizable=yes');
+                    }
+                });
+                
+                // Handle source-item clicks for highlighting
                 source.addEventListener('click', function(e) {
                     e.preventDefault();
                     
