@@ -1067,6 +1067,24 @@
                 });
             });
 
+            // Click anywhere to deselect source
+            document.addEventListener('click', function(e) {
+                // Check if click is outside source items
+                if (!e.target.closest('.source-item')) {
+                    // Remove all highlights
+                    document.querySelectorAll('.vital-row.highlighted').forEach(item => {
+                        item.classList.remove('highlighted');
+                    });
+                    document.querySelectorAll('.family-member.highlighted').forEach(item => {
+                        item.classList.remove('highlighted');
+                    });
+                    document.querySelectorAll('.source-item.active').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    activeSource = null;
+                }
+            });
+
             // Mobile tab switching
             const mobileTabs = document.querySelectorAll('.mobile-tab');
             const mainContent = document.querySelector('.main-content');
