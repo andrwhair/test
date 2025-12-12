@@ -266,11 +266,18 @@
             border: 2px dashed var(--gray20);
             border-radius: 8px;
             opacity: 0.7;
+            position: relative;
         }
 
         .family-member.potential:hover {
             opacity: 1;
             background: var(--gray02);
+        }
+
+        .family-member.potential .new-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
         }
 
         .family-photo {
@@ -420,6 +427,17 @@
             font-size: 12px;
             font-weight: 600;
             margin-right: 6px;
+        }
+
+        .new-badge {
+            display: inline-block;
+            background: #e6f7ff;
+            color: #0066cc;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
         }
 
         .source-title {
@@ -763,13 +781,14 @@
                         </div>
 
                         <div class="family-member potential" data-family="children">
+                            <span class="new-badge">New</span>
                             <div class="family-photo">
-                                <img src="female.png" alt="Dorothy Anderson">
+                                <img src="female.png" alt="Emma Jane Anderson">
                             </div>
                             <div class="family-info">
-                                <div class="family-name">Dorothy Anderson</div>
-                                <div class="family-relationship">Potential Daughter</div>
-                                <div class="family-dates">1928–</div>
+                                <div class="family-name">Emma Jane Anderson</div>
+                                <div class="family-relationship">Sister</div>
+                                <div class="family-dates">1926–</div>
                             </div>
                         </div>
                     </div>
