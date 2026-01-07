@@ -479,7 +479,7 @@
         .family-member.potential {
             border: 2px dashed var(--blue40);
             border-radius: 8px;
-            background: var(--blue02);
+            background: white;
             margin: 4px 12px;
         }
 
@@ -621,7 +621,6 @@
             background: var(--blue02);
         }
 
-        .view-btn:active,
         .view-btn.active {
             background: var(--blue60);
             color: white;
@@ -695,8 +694,10 @@
         .family-member.highlighted .family-dates,
         .family-member.highlighted .vital-label-text,
         .family-member.highlighted .vital-source-count,
-        .family-member.highlighted .vital-details {
-            color: white;
+        .family-member.highlighted .vital-details,
+        .family-member.highlighted > div,
+        .family-member.highlighted div {
+            color: white !important;
         }
 
         /* Responsive */
@@ -1046,15 +1047,18 @@
                                     </div>
                                 </div>
 
-                                <div class="family-member potential">
-                                    <div class="avatar-small">
-                                        <img src="female.png" alt="Emma Jane Anderson">
+                                <div class="family-member potential" style="flex-direction: column; align-items: flex-start;">
+                                    <div style="font-size: 14px; font-weight: 400; color: var(--gray100); margin-bottom: -2px;">Potential Child</div>
+                                    <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+                                        <div class="avatar-small">
+                                            <img src="female.png" alt="Emma Jane Anderson">
+                                        </div>
+                                        <div class="family-info">
+                                            <div class="family-name">Emma Jane Anderson</div>
+                                            <div class="family-dates">Daughter • 1926–</div>
+                                        </div>
+                                        <button class="view-btn">Review</button>
                                     </div>
-                                    <div class="family-info">
-                                        <div class="family-name">Emma Jane Anderson</div>
-                                        <div class="family-dates">Daughter • 1926–</div>
-                                    </div>
-                                    <button class="btn-small">Review</button>
                                 </div>
 
                                 <button class="add-button">+ Add Child</button>
@@ -1216,20 +1220,20 @@
                         <button class="options-btn">⋯</button>
                     </div>
                     <div class="card-body">
-                        <div class="source-item">
+                        <div class="source-item" style="border: 2px dashed var(--blue40); border-radius: 8px; margin: 4px 12px; padding: 12px;">
                             <div class="hint-badge">Adds Potential Birth Place</div>
                             <div class="source-header">
                                 <div class="source-title">Utah Birth Certificates</div>
-                                <button class="view-btn">View</button>
+                                <button class="view-btn">Review</button>
                             </div>
                             <div class="source-meta">Name, Birth, Parents</div>
                         </div>
 
-                        <div class="source-item">
+                        <div class="source-item" style="border: 2px dashed var(--blue40); border-radius: 8px; margin: 4px 12px; padding: 12px;">
                             <div class="hint-badge">Adds Potential Child</div>
                             <div class="source-header">
                                 <div class="source-title">1930 United States Federal Census</div>
-                                <button class="view-btn">View</button>
+                                <button class="view-btn">Review</button>
                             </div>
                             <div class="source-meta">Name, Birth, Spouse, Children</div>
                         </div>
@@ -1414,6 +1418,8 @@
                     });
                     document.querySelectorAll('.source-item.active').forEach(item => {
                         item.classList.remove('active');
+                        const btn = item.querySelector('.view-btn');
+                        if (btn) btn.classList.remove('active');
                     });
                     activeSource = null;
                 }
