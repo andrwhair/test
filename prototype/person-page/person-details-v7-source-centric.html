@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>George Rhodes Emery - FamilySearch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Verdana, Arial, sans-serif;
+            background-color: #F4F4F4;
+            color: #202121;
+            font-size: 14px;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo {
+            color: #5b9552;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+        }
+
+        .header-nav a {
+            color: #202121;
+            text-decoration: none;
+        }
+
+        .header-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: #202121;
+        }
+
+        /* Sub-header */
+        .sub-header {
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+            padding: 8px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+        }
+
+        .sub-header a {
+            color: #066F90;
+            text-decoration: none;
+        }
+
+        .sub-header a:hover {
+            text-decoration: underline;
+        }
+
+        /* Person Header */
+        .person-header {
+            background-color: #fff;
+            padding: 24px;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        .person-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .person-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #A7C41A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .person-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .person-info {
+            flex: 1;
+        }
+
+        .person-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .person-dates {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .person-id {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .person-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: 1px solid #d4d4d4;
+            background-color: #fff;
+            color: #066F90;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 3px;
+            font-family: Verdana, Arial, sans-serif;
+        }
+
+        .btn:hover {
+            background-color: #f8f8f8;
+        }
+
+        .btn-primary {
+            background-color: #066F90;
+            color: #fff;
+            border-color: #066F90;
+        }
+
+        .btn-primary:hover {
+            background-color: #055a75;
+        }
+
+        /* Tabs */
+        .tabs {
+            background-color: #fff;
+            border-bottom: 2px solid #d4d4d4;
+            display: flex;
+            justify-content: center;
+            padding: 0 24px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .tab:hover {
+            color: #202121;
+        }
+
+        .tab.active {
+            color: #066F90;
+            border-bottom-color: #066F90;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            gap: 28px;
+            padding: 24px;
+            max-width: 1720px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        .left-column {
+            width: 692px;
+            flex-shrink: 0;
+        }
+
+        .right-column {
+            width: 548px;
+            flex-shrink: 0;
+        }
+
+        /* Section Styles */
+        .section {
+            background-color: #fff;
+            border: 1px solid #d4d4d4;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .section-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #d4d4d4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #202121;
+        }
+
+        .section-action {
+            color: #066F90;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            font-family: Verdana, Arial, sans-serif;
+        }
+
+        .section-action:hover {
+            text-decoration: underline;
+        }
+
+        .section-content {
+            padding: 20px;
+        }
+
+        /* Vital Row */
+        .vital-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .vital-row:last-child {
+            border-bottom: none;
+        }
+
+        .vital-label {
+            font-weight: bold;
+            color: #202121;
+            min-width: 100px;
+        }
+
+        .vital-value {
+            flex: 1;
+            color: #202121;
+            padding: 0 20px;
+        }
+
+        .vital-sources {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .vital-edit {
+            color: #39AECB;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .vital-edit:hover {
+            color: #066F90;
+        }
+
+        /* Review Box */
+        .review-box {
+            border: 2px dashed #F57C00;
+            border-radius: 4px;
+            padding: 12px;
+            background-color: #FFF8E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .review-box .vital-label {
+            color: #F57C00;
+        }
+
+        .review-btn {
+            padding: 6px 16px;
+            background-color: #fff;
+            border: 1px solid #F57C00;
+            color: #F57C00;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .review-btn:hover {
+            background-color: #FFF8E1;
+        }
+
+        /* Family Member */
+        .family-member {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .family-member:last-child {
+            border-bottom: none;
+        }
+
+        .family-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #A7C41A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .family-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .family-avatar.female {
+            background-color: #E91E63;
+        }
+
+        .family-avatar.review {
+            background-color: #8BC34A;
+        }
+
+        .family-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .family-name {
+            font-weight: bold;
+            color: #066F90;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .family-name:hover {
+            text-decoration: underline;
+        }
+
+        .family-dates {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .family-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .preferred-check {
+            color: #5b9552;
+            font-size: 18px;
+        }
+
+        .review-label {
+            padding: 4px 12px;
+            background-color: #8BC34A;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .family-edit {
+            color: #39AECB;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* Subsection */
+        .subsection {
+            margin-bottom: 24px;
+        }
+
+        .subsection:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .subsection-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .subsection-action {
+            color: #066F90;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .subsection-action:hover {
+            text-decoration: underline;
+        }
+
+        .add-link {
+            color: #066F90;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 12px;
+            text-decoration: none;
+        }
+
+        .add-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Sources Panel */
+        .sources-count {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .options-btn {
+            padding: 6px 12px;
+            background-color: #fff;
+            border: 1px solid #d4d4d4;
+            color: #066F90;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .options-btn:hover {
+            background-color: #f8f8f8;
+        }
+
+        .source-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            gap: 12px;
+        }
+
+        .source-item:last-child {
+            border-bottom: none;
+        }
+
+        .source-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .source-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .source-title {
+            color: #202121;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .source-details {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .source-view {
+            color: #066F90;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .source-view:hover {
+            text-decoration: underline;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #202121;
+        }
+
+        .info-value {
+            color: #202121;
+            text-align: right;
+        }
+
+        .info-location {
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                </svg>
+                FamilySearch Tree
+            </div>
+            <nav class="header-nav">
+                <a href="#">Family Tree</a>
+                <a href="#">Search</a>
+                <a href="#">Memories</a>
+                <a href="#">Get Involved</a>
+            </nav>
+        </div>
+        <div class="header-icons">
+            <button class="icon-btn">📍</button>
+            <button class="icon-btn">🔍</button>
+            <button class="icon-btn">❓</button>
+            <button class="icon-btn">⚙️</button>
+            <button class="icon-btn">🔔</button>
+            <button class="icon-btn">👤</button>
+        </div>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="sub-header">
+        <a href="#">FamilySearch Tree</a>
+        <span>›</span>
+        <a href="#">Tree</a>
+        <span>›</span>
+        <a href="#">Recents</a>
+        <span>›</span>
+        <a href="#">Find</a>
+        <span>›</span>
+        <a href="#">Following</a>
+        <span>›</span>
+        <a href="#">Person List</a>
+        <span>›</span>
+        <a href="#">My Contributions</a>
+        <span>›</span>
+        <a href="#">Merge Trees</a>
+    </div>
+
+    <!-- Person Header -->
+    <div class="person-header">
+        <div class="person-header-content">
+            <div class="person-avatar">
+                <img src="male.png" alt="George Rhodes Emery">
+            </div>
+            <div class="person-info">
+                <div class="person-name">George Rhodes Emery</div>
+                <div class="person-dates">1891–1946 • KZRZ-11F</div>
+                <div class="person-actions">
+                    <button class="btn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 2L2 6v8h4v-4h4v4h4V6L8 2z"/>
+                        </svg>
+                        VIEW TREE
+                    </button>
+                    <button class="btn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <circle cx="8" cy="4" r="2"/>
+                            <circle cx="4" cy="12" r="2"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                        RELATIONSHIP
+                    </button>
+                    <button class="btn-primary btn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M12 8l-4 4-4-4h3V2h2v6h3z"/>
+                        </svg>
+                        FOLLOW
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <div class="tab active">FACTS</div>
+        <div class="tab">RESEARCH HELP</div>
+        <div class="tab">MEMORIES (22)</div>
+        <div class="tab">ABOUT</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- Vitals Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">Vitals</div>
+                    <button class="section-action">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M2 4h12v2H2V4zm0 4h12v2H2V8zm0 4h12v2H2v-2z"/>
+                        </svg>
+                        Detail View
+                    </button>
+                </div>
+                <div class="section-content">
+                    <div class="vital-row">
+                        <div class="vital-label">Name</div>
+                        <div class="vital-value">
+                            <div>• 115 Sources</div>
+                            <div>George Rhodes Emery</div>
+                        </div>
+                        <div class="vital-edit">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="vital-row">
+                        <div class="vital-label">Sex</div>
+                        <div class="vital-value">
+                            <div>• 115 Sources</div>
+                            <div>Male</div>
+                        </div>
+                        <div class="vital-edit">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="vital-row">
+                        <div class="vital-label">Birth</div>
+                        <div class="vital-value">
+                            <div>• 115 Sources</div>
+                            <div>21 June 1891</div>
+                            <div class="info-location">Salt Lake City, Salt Lake, Utah Territory, United States</div>
+                        </div>
+                        <div class="vital-edit">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="review-box">
+                        <div>
+                            <div class="vital-label">Potential Christening</div>
+                            <div style="margin-top: 4px; color: #202121;">• 1 Source</div>
+                            <div style="margin-top: 4px; color: #202121;">23 June 1891</div>
+                            <div class="info-location" style="margin-top: 2px;">Salt Lake City, Salt Lake, United States</div>
+                        </div>
+                        <button class="review-btn">REVIEW</button>
+                    </div>
+
+                    <div class="vital-row" style="margin-top: 12px;">
+                        <div class="vital-label">Death</div>
+                        <div class="vital-value">
+                            <div>• 115 Sources</div>
+                            <div>20 November 1946</div>
+                            <div class="info-location">Salt Lake City, Salt Lake, Utah Territory, United States</div>
+                        </div>
+                        <div class="vital-edit">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="vital-row">
+                        <div class="vital-label">Burial</div>
+                        <div class="vital-value">
+                            <div style="color: #666; font-style: italic;">No information</div>
+                        </div>
+                        <div class="vital-edit">
+                            <a href="#" class="section-action" style="color: #066F90; text-decoration: none;">+ ADD</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Information Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">Other Information</div>
+                    <button class="section-action">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M2 4h12v2H2V4zm0 4h12v2H2V8zm0 4h12v2H2v-2z"/>
+                        </svg>
+                        Detail View
+                    </button>
+                </div>
+                <div class="section-content">
+                    <div class="info-row">
+                        <div class="info-label">Alternate Names</div>
+                        <div style="flex: 1;"></div>
+                        <a href="#" class="section-action" style="color: #066F90; text-decoration: none;">+ ADD</a>
+                    </div>
+
+                    <div class="vital-row">
+                        <div class="vital-label">Custom Event</div>
+                        <div class="vital-value">
+                            <div>• 0 Sources</div>
+                            <div>Baptism</div>
+                            <div style="margin-top: 4px;">18 January 1865</div>
+                            <div class="info-location">Salt Lake, Utah, United States</div>
+                        </div>
+                        <div class="vital-edit">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="vital-row">
+                        <div class="vital-label">Residence</div>
+                        <div class="vital-value">
+                            <div>• 0 Sources</div>
+                            <div>1861</div>
+                            <div class="info-location">Salt Lake City, Salt Lake, United States</div>
+                        </div>
+                        <div class="vital-edit">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="vital-row">
+                        <div class="vital-label">Residence</div>
+                        <div class="vital-value">
+                            <div>• 0 Sources</div>
+                            <div>1861</div>
+                            <div class="info-location">Salt Lake City, Salt Lake, United States</div>
+                        </div>
+                        <div class="vital-edit">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="vital-row">
+                        <div class="vital-label">Custom Event</div>
+                        <div class="vital-value">
+                            <div>• 0 Sources</div>
+                            <div>From 1878 to 1880</div>
+                            <div class="info-location">Great Britain and Wales</div>
+                        </div>
+                        <div class="vital-edit">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <a href="#" class="add-link">+ Add Facts</a>
+                    <a href="#" class="add-link">+ Add Events</a>
+                </div>
+            </div>
+
+            <!-- Family Members Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">Family Members</div>
+                    <button class="section-action">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M2 4h12M2 8h12M2 12h12"/>
+                        </svg>
+                        Show All
+                    </button>
+                </div>
+                <div class="section-content">
+                    <!-- Spouses and Children -->
+                    <div class="subsection">
+                        <div class="subsection-header">
+                            <div class="subsection-title">Spouses and Children</div>
+                            <a href="#" class="subsection-action">SET PREFERRED</a>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-status">
+                                <span class="preferred-check">✓</span>
+                            </div>
+                            <div class="family-label" style="font-weight: bold; color: #666; font-size: 12px;">Preferred</div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar">
+                                <img src="male.png" alt="George Rhodes Emery">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">George Rhodes Emery</div>
+                                <div class="family-dates">1891-1946</div>
+                            </div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar female">
+                                <img src="female.png" alt="Rosiltha Wilding">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">Rosiltha Wilding</div>
+                                <div class="family-dates">1891-1929</div>
+                            </div>
+                        </div>
+
+                        <div class="vital-row" style="margin: 16px 0 8px 0; border: none;">
+                            <div class="vital-label">Marriage</div>
+                            <div class="vital-value">
+                                <div>• 15 Sources</div>
+                                <div>25 July 1912</div>
+                                <div class="info-location">Salt Lake City, Salt Lake, United States</div>
+                            </div>
+                            <div class="vital-edit">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div style="margin: 16px 0 8px 0; padding-top: 12px; border-top: 1px solid #e0e0e0;">
+                            <div style="font-weight: bold; margin-bottom: 12px;">Children (5)</div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar">
+                                <img src="male.png" alt="George Rhodes Emery">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">George Rhodes Emery</div>
+                                <div class="family-dates">1901-2003</div>
+                            </div>
+                            <div class="family-edit">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar">
+                                <img src="male.png" alt="George Rhodes Emery">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">George Rhodes Emery</div>
+                                <div class="family-dates">1901-1903</div>
+                            </div>
+                            <div class="family-edit">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar female">
+                                <img src="female.png" alt="George Rhodes Emery">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">George Rhodes Emery</div>
+                                <div class="family-dates">1901-1903</div>
+                            </div>
+                            <div class="family-edit">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="family-member" style="background-color: #F1F8E9; margin: 0 -12px; padding: 12px;">
+                            <div class="family-avatar review">
+                                <img src="male.png" alt="George Rhodes Emery">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">George Rhodes Emery</div>
+                                <div class="family-dates">Deceased 2020</div>
+                            </div>
+                            <div class="review-label">REVIEW</div>
+                        </div>
+
+                        <div class="family-member" style="background-color: #F1F8E9; margin: 0 -12px; padding: 12px;">
+                            <div class="family-avatar review">
+                                <img src="male.png" alt="George Rhodes Emery">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">George Rhodes Emery</div>
+                                <div class="family-dates">Deceased 2020</div>
+                            </div>
+                            <div class="review-label">REVIEW</div>
+                        </div>
+
+                        <a href="#" class="add-link">+ ADD CHILD</a>
+                        <a href="#" class="add-link">+ ADD SPOUSE</a>
+                        <a href="#" class="add-link">+ ADD CHILD WITH AN UNKNOWN MOTHER</a>
+                    </div>
+
+                    <!-- Parents and Siblings -->
+                    <div class="subsection" style="margin-top: 32px;">
+                        <div class="subsection-header">
+                            <div class="subsection-title">Parents and Siblings</div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar">
+                                <img src="male.png" alt="Rosiltha Wilding">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">Rosiltha Wilding</div>
+                                <div class="family-dates">1891-1929</div>
+                            </div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar female">
+                                <img src="female.png" alt="Rosiltha Wilding">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">Rosiltha Wilding</div>
+                                <div class="family-dates">1891-1929</div>
+                            </div>
+                        </div>
+
+                        <div class="vital-row" style="margin: 16px 0 8px 0; border: none;">
+                            <div class="vital-label">Marriage</div>
+                            <div class="vital-value">
+                                <div>• 15 Sources</div>
+                                <div>25 July 1912</div>
+                                <div class="info-location">Salt Lake City, Salt Lake, United States</div>
+                            </div>
+                            <div class="vital-edit">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div style="margin: 16px 0 8px 0; padding-top: 12px; border-top: 1px solid #e0e0e0;">
+                            <div style="font-weight: bold; margin-bottom: 12px;">Children (3)</div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar">
+                                <img src="male.png" alt="George Rhodes Emery">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">George Rhodes Emery</div>
+                                <div class="family-dates">1901-2003</div>
+                            </div>
+                            <div class="family-edit">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar">
+                                <img src="male.png" alt="George Rhodes Emery">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">George Rhodes Emery</div>
+                                <div class="family-dates">1901-2003</div>
+                            </div>
+                            <div class="family-edit">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="family-member">
+                            <div class="family-avatar female">
+                                <img src="female.png" alt="George Rhodes Emery">
+                            </div>
+                            <div class="family-info">
+                                <div class="family-name">George Rhodes Emery</div>
+                                <div class="family-dates">1901-2003</div>
+                            </div>
+                            <div class="family-edit">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9 9a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9-9z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <a href="#" class="add-link">+ ADD CHILD</a>
+                        <a href="#" class="add-link">+ ADD PARENT</a>
+                    </div>
+
+                    <!-- Other Relationships -->
+                    <div class="subsection" style="margin-top: 32px;">
+                        <div class="subsection-header">
+                            <div class="subsection-title">Other Relationships</div>
+                        </div>
+                        <a href="#" class="add-link">+ ADD OTHER RELATIONSHIP</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <!-- Sources Panel -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="sources-count">Sources (5)</div>
+                    <button class="options-btn">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                            <path d="M2 4l4 4 4-4z"/>
+                        </svg>
+                        OPTIONS
+                    </button>
+                </div>
+                <div class="section-content">
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-content">
+                            <div class="source-title">1955 Utah Birth of George Rhodes Emery : Birth -21 June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                            <div class="source-details">June 1955; Salt Lake City, Salt Lake, Utah, United States</div>
+                        </div>
+                        <a href="#" class="source-view">VIEW</a>
+                    </div>
+
+                    <a href="#" class="add-link" style="margin-top: 16px;">+ ADD SOURCE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
