@@ -359,15 +359,16 @@
         }
 
         .vital-value {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--gray100);
             margin-bottom: 2px;
         }
 
         .vital-details {
-            font-size: 12px;
-            color: var(--gray60);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray100);
         }
 
         .edit-icon-btn {
@@ -419,7 +420,7 @@
         }
 
         .family-section-header {
-            padding: 0 12px 12px 12px;
+            padding: 0 12px 6px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -545,6 +546,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            width: fit-content;
         }
 
         .add-button:hover {
@@ -596,6 +598,10 @@
             font-size: 12px;
             font-weight: 600;
             margin-bottom: 8px;
+        }
+
+        .family-member .hint-badge {
+            margin-bottom: 0;
         }
 
         .source-meta {
@@ -661,8 +667,9 @@
         }
 
         .source-item.active .hint-badge {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: var(--blue02);
+            border-color: var(--blue20);
+            color: var(--blue70);
         }
 
         .source-item.active .view-icon {
@@ -698,6 +705,16 @@
         .family-member.highlighted > div,
         .family-member.highlighted div {
             color: white !important;
+        }
+
+        .family-member.highlighted .hint-badge {
+            background: var(--blue02) !important;
+            border-color: var(--blue20) !important;
+            color: var(--blue70) !important;
+        }
+
+        .family-member.highlighted .view-btn {
+            color: white;
         }
 
         /* Responsive */
@@ -810,7 +827,7 @@
                 <button class="tab active">Details</button>
                 <button class="tab">Research</button>
                 <button class="tab">Memories (22)</button>
-                <button class="tab">Ordinances</button>
+                <button class="tab">Timeline</button>
             </div>
         </div>
     </header>
@@ -921,21 +938,6 @@
                         <div class="vital-item">
                             <div class="vital-content">
                                 <div class="vital-label">
-                                    <span class="vital-label-text">Custom Event</span>
-                                    <span class="vital-source-count">• 3 Sources</span>
-                                </div>
-                                <div class="vital-value">Marriage</div>
-                                <div class="vital-details">21 June 1891</div>
-                                <div class="vital-details">Great Britain and Wales</div>
-                            </div>
-                            <button class="edit-icon-btn" title="Edit">
-                                <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                            </button>
-                        </div>
-
-                        <div class="vital-item">
-                            <div class="vital-content">
-                                <div class="vital-label">
                                     <span class="vital-label-text">Residence</span>
                                     <span class="vital-source-count">• 8 Sources</span>
                                 </div>
@@ -961,20 +963,7 @@
                             </button>
                         </div>
 
-                        <div class="vital-item" style="padding-bottom: 24px;">
-                            <div class="vital-content">
-                                <div class="vital-label">
-                                    <span class="vital-label-text">Custom Event</span>
-                                    <span class="vital-source-count">• 0 Sources</span>
-                                </div>
-                                <div class="vital-value">Marriage</div>
-                                <div class="vital-details">15 June 1910</div>
-                                <div class="vital-details">Boise, Ada, Idaho</div>
-                            </div>
-                            <button class="edit-icon-btn" title="Edit">
-                                <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                            </button>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -993,11 +982,11 @@
                         <!-- Spouses and Children -->
                         <div class="family-section">
                             <div class="family-section-header">
-                                <h3 class="family-section-title">Spouses and Children</h3>
+                                <h3 class="family-section-title">Spouse and Children</h3>
                                 <a href="#" class="section-action">Set Preferred</a>
                             </div>
                             
-                            <div class="family-group">
+                            <div class="family-group" data-marriage="1912">
                                 <div class="preferred-badge">
                                     <svg class="check-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
                                     Preferred
@@ -1009,7 +998,7 @@
                                     </div>
                                     <div class="family-info">
                                         <div class="family-name">Elmer Albert Anderson</div>
-                                        <div class="family-dates">Husband • Married 26 June 1912 • 1893–1981</div>
+                                        <div class="family-dates">Husband • 1893–1929</div>
                                     </div>
                                 </div>
 
@@ -1019,7 +1008,18 @@
                                     </div>
                                     <div class="family-info">
                                         <div class="family-name">Doris Jane Lewis</div>
-                                        <div class="family-dates">1896–1988</div>
+                                        <div class="family-dates">Wife • 1896–1988</div>
+                                    </div>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="family-info">
+                                        <div class="vital-label">
+                                            <span class="vital-label-text">Marriage</span>
+                                            <span class="vital-source-count">• 8 Sources</span>
+                                        </div>
+                                        <div class="vital-details">26 June 1912</div>
+                                        <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
                                     </div>
                                 </div>
                             </div>
@@ -1048,7 +1048,7 @@
                                 </div>
 
                                 <div class="family-member potential" style="flex-direction: column; align-items: flex-start;">
-                                    <div style="font-size: 14px; font-weight: 400; color: var(--gray100); margin-bottom: -2px;">Potential Child</div>
+                                    <div class="hint-badge">Potential Child</div>
                                     <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
                                         <div class="avatar-small">
                                             <img src="female.png" alt="Emma Jane Anderson">
@@ -1066,15 +1066,20 @@
                         </div>
 
                         <!-- Another Spouse Section -->
-                        <div class="family-section">
-                            <div class="family-group">
+                        <div class="family-section" style="margin-top: 22px;">
+                            <div class="family-section-header">
+                                <h3 class="family-section-title">Spouse and Children</h3>
+                                <a href="#" class="section-action">Set Preferred</a>
+                            </div>
+                            
+                            <div class="family-group" data-marriage="1939">
                                 <div class="family-member">
                                     <div class="avatar-small">
                                         <img src="male.png" alt="George Rhodes Emery">
                                     </div>
                                     <div class="family-info">
                                         <div class="family-name">George Rhodes Emery</div>
-                                        <div class="family-dates">Husband • married</div>
+                                        <div class="family-dates">Husband</div>
                                     </div>
                                 </div>
 
@@ -1089,15 +1094,12 @@
                                 </div>
 
                                 <div class="family-member">
-                                    <div class="avatar-small">
-                                        <img src="male.png" alt="George Rhodes Emery">
-                                    </div>
                                     <div class="family-info">
                                         <div class="vital-label">
                                             <span class="vital-label-text">Marriage</span>
                                             <span class="vital-source-count">• 15 Sources</span>
                                         </div>
-                                        <div class="vital-details">25 July 1902</div>
+                                        <div class="vital-details">1939</div>
                                         <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
                                     </div>
                                     <button class="edit-icon-btn" title="Edit">
@@ -1111,11 +1113,11 @@
 
                                 <div class="family-member">
                                     <div class="avatar-small">
-                                        <img src="male.png" alt="George Rhodes Emery">
+                                        <img src="male.png" alt="William George Emery">
                                     </div>
                                     <div class="family-info">
-                                        <div class="family-name">George Rhodes Emery</div>
-                                        <div class="family-dates">1903–1952</div>
+                                        <div class="family-name">William George Emery</div>
+                                        <div class="family-dates">1940–</div>
                                     </div>
                                     <button class="edit-icon-btn" title="Edit">
                                         <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
@@ -1127,7 +1129,7 @@
                         </div>
 
                         <!-- Parents and Siblings -->
-                        <div class="family-section">
+                        <div class="family-section" style="margin-top: 32px;">
                             <div class="family-section-header">
                                 <h3 class="family-section-title">Parents and Siblings</h3>
                             </div>
@@ -1193,14 +1195,14 @@
                                     </div>
                                     <div class="family-info">
                                         <div class="family-name">Doris Jane Lewis</div>
-                                        <div class="family-dates">1896–1988</div>
+                                        <div class="family-dates">Self • 1896–1988</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Other Relationships -->
-                        <div class="family-section">
+                        <div class="family-section" style="margin-top: 32px;">
                             <div class="family-section-header">
                                 <h3 class="family-section-title">Other Relationships</h3>
                             </div>
@@ -1229,7 +1231,7 @@
                             <div class="source-meta">Name, Birth, Parents</div>
                         </div>
 
-                        <div class="source-item" style="border: 2px dashed var(--blue40); border-radius: 8px; margin: 4px 12px; padding: 12px;">
+                        <div class="source-item" style="border: 2px dashed var(--blue40); border-radius: 8px; margin: 4px 12px; padding: 12px;" data-marriage="1912">
                             <div class="hint-badge">Adds Potential Child</div>
                             <div class="source-header">
                                 <div class="source-title">1930 United States Federal Census</div>
@@ -1254,15 +1256,15 @@
                             <div class="source-meta">Name, Birth, Parents, Siblings</div>
                         </div>
 
-                        <div class="source-item">
+                        <div class="source-item" data-marriage="1912">
                             <div class="source-header">
-                                <div class="source-title">Salt Lake County Marriage Records</div>
+                                <div class="source-title">Salt Lake County Marriage Records, 1912</div>
                                 <button class="view-btn">View</button>
                             </div>
                             <div class="source-meta">Name, Marriage, Spouse, Parents</div>
                         </div>
 
-                        <div class="source-item">
+                        <div class="source-item" data-marriage="1939">
                             <div class="source-header">
                                 <div class="source-title">1940 United States Federal Census</div>
                                 <button class="view-btn">View</button>
@@ -1275,7 +1277,7 @@
                                 <div class="source-title">Utah Death Certificates</div>
                                 <button class="view-btn">View</button>
                             </div>
-                            <div class="source-meta">Name, Death, Parents, Spouse</div>
+                            <div class="source-meta">Name, Death, Parents</div>
                         </div>
 
                         <div class="source-item">
@@ -1365,17 +1367,59 @@
                             }
                         });
                     }
+                    if (metaText.includes('marriage')) {
+                        // Highlight marriage events in family section
+                        const marriageYear = this.getAttribute('data-marriage');
+                        if (marriageYear) {
+                            // If source has marriage year, only highlight matching marriage
+                            const matchingGroup = document.querySelector(`.family-group[data-marriage="${marriageYear}"]`);
+                            if (matchingGroup) {
+                                const marriageMembers = matchingGroup.querySelectorAll('.family-member');
+                                marriageMembers.forEach(member => {
+                                    const marriageLabel = member.querySelector('.vital-label-text');
+                                    if (marriageLabel && marriageLabel.textContent === 'Marriage') {
+                                        member.classList.add('highlighted');
+                                    }
+                                });
+                            }
+                        } else {
+                            // If no marriage year, highlight all marriages
+                            const familyMembers = document.querySelectorAll('.family-member');
+                            familyMembers.forEach(member => {
+                                const marriageLabel = member.querySelector('.vital-label-text');
+                                if (marriageLabel && marriageLabel.textContent === 'Marriage') {
+                                    member.classList.add('highlighted');
+                                }
+                            });
+                        }
+                    }
                     
                     // Highlight family members
-                    if (metaText.includes('spouse') || metaText.includes('marriage')) {
+                    if (metaText.includes('spouse')) {
                         // Highlight spouse
-                        const familyMembers = document.querySelectorAll('.family-member');
-                        familyMembers.forEach(member => {
-                            const dates = member.querySelector('.family-dates');
-                            if (dates && (dates.textContent.includes('Husband') || dates.textContent.includes('Wife') || dates.textContent.includes('married'))) {
-                                member.classList.add('highlighted');
+                        const marriageYear = this.getAttribute('data-marriage');
+                        if (marriageYear) {
+                            // If source has marriage year, only highlight spouse from matching marriage
+                            const matchingGroup = document.querySelector(`.family-group[data-marriage="${marriageYear}"]`);
+                            if (matchingGroup) {
+                                const spouseMembers = matchingGroup.querySelectorAll('.family-member');
+                                spouseMembers.forEach(member => {
+                                    const dates = member.querySelector('.family-dates');
+                                    if (dates && (dates.textContent.includes('Husband') || dates.textContent.includes('Wife') || dates.textContent.includes('Self') || dates.textContent.includes('married'))) {
+                                        member.classList.add('highlighted');
+                                    }
+                                });
                             }
-                        });
+                        } else {
+                            // If no marriage year, highlight all spouses
+                            const familyMembers = document.querySelectorAll('.family-member');
+                            familyMembers.forEach(member => {
+                                const dates = member.querySelector('.family-dates');
+                                if (dates && (dates.textContent.includes('Husband') || dates.textContent.includes('Wife') || dates.textContent.includes('Self') || dates.textContent.includes('married'))) {
+                                    member.classList.add('highlighted');
+                                }
+                            });
+                        }
                     }
                     if (metaText.includes('children')) {
                         // Highlight children
@@ -1402,7 +1446,7 @@
                         const familyMembers = document.querySelectorAll('.family-member');
                         familyMembers.forEach(member => {
                             const dates = member.querySelector('.family-dates');
-                            if (dates && (dates.textContent.includes('Brother') || dates.textContent.includes('Sister'))) {
+                            if (dates && (dates.textContent.includes('Brother') || dates.textContent.includes('Sister') || (dates.textContent.includes('Self') && dates.textContent.includes('1896')))) {
                                 member.classList.add('highlighted');
                             }
                         });
