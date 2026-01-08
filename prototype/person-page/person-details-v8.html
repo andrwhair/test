@@ -1228,7 +1228,7 @@
                                 <div class="source-title">Utah Birth Certificates</div>
                                 <button class="view-btn">Review</button>
                             </div>
-                            <div class="source-meta">Name, Birth, Parents</div>
+                            <div class="source-meta">Name, Sex, Birth, Parents</div>
                         </div>
 
                         <div class="source-item" style="border: 2px dashed var(--blue40); border-radius: 8px; margin: 4px 12px; padding: 12px;" data-marriage="1912">
@@ -1237,7 +1237,7 @@
                                 <div class="source-title">1930 United States Federal Census</div>
                                 <button class="view-btn">Review</button>
                             </div>
-                            <div class="source-meta">Name, Birth, Spouse, Children</div>
+                            <div class="source-meta">Name, Sex, Birth, Spouse, Children</div>
                         </div>
 
                         <div class="source-item">
@@ -1253,7 +1253,7 @@
                                 <div class="source-title">1910 United States Federal Census</div>
                                 <button class="view-btn">View</button>
                             </div>
-                            <div class="source-meta">Name, Birth, Parents, Siblings</div>
+                            <div class="source-meta">Name, Sex, Birth, Parents, Siblings</div>
                         </div>
 
                         <div class="source-item" data-marriage="1912">
@@ -1261,7 +1261,7 @@
                                 <div class="source-title">Salt Lake County Marriage Records, 1912</div>
                                 <button class="view-btn">View</button>
                             </div>
-                            <div class="source-meta">Name, Marriage, Spouse, Parents</div>
+                            <div class="source-meta">Name, Sex, Marriage, Spouse, Parents</div>
                         </div>
 
                         <div class="source-item" data-marriage="1939">
@@ -1269,7 +1269,7 @@
                                 <div class="source-title">1940 United States Federal Census</div>
                                 <button class="view-btn">View</button>
                             </div>
-                            <div class="source-meta">Name, Birth, Spouse, Children</div>
+                            <div class="source-meta">Name, Sex, Birth, Spouse, Children</div>
                         </div>
 
                         <div class="source-item">
@@ -1277,7 +1277,7 @@
                                 <div class="source-title">Utah Death Certificates</div>
                                 <button class="view-btn">View</button>
                             </div>
-                            <div class="source-meta">Name, Death, Parents</div>
+                            <div class="source-meta">Name, Sex, Death, Parents</div>
                         </div>
 
                         <div class="source-item">
@@ -1285,7 +1285,7 @@
                                 <div class="source-title">Cemetery Records</div>
                                 <button class="view-btn">View</button>
                             </div>
-                            <div class="source-meta">Name, Birth, Death, Burial</div>
+                            <div class="source-meta">Name, Sex, Birth, Death, Burial</div>
                         </div>
 
                         <button class="add-button" style="margin: 16px;">+ Add Source</button>
@@ -1341,6 +1341,14 @@
                         if (nameVital && nameVital.textContent === 'Name') {
                             nameVital.closest('.vital-item').classList.add('highlighted');
                         }
+                    }
+                    if (metaText.includes('sex')) {
+                        const allVitals = document.querySelectorAll('.vital-item .vital-label-text');
+                        allVitals.forEach(vital => {
+                            if (vital.textContent === 'Sex') {
+                                vital.closest('.vital-item').classList.add('highlighted');
+                            }
+                        });
                     }
                     if (metaText.includes('birth')) {
                         const birthVital = document.querySelector('.vital-item .vital-label-text');
