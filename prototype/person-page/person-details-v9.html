@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doris Jane Lewis - Person Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="zion-colors.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: var(--gray02);
+            color: var(--gray100);
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .site-header {
+            background: white;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo {
+            height: 34px;
+            display: block;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 39px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            padding-top: 6px;
+        }
+
+        .nav-menu a {
+            color: var(--gray100);
+            text-decoration: none;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 0;
+            align-items: center;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray60);
+        }
+
+        .icon-btn:hover {
+            background: var(--gray02);
+            border-radius: 4px;
+        }
+
+        .sub-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 24px;
+            background: white;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+        }
+
+        .breadcrumb-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border: none;
+            padding: 9px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--blue60);
+        }
+
+        .breadcrumb a {
+            color: var(--gray100);
+            text-decoration: none;
+        }
+
+        /* Person Header */
+        .person-header {
+            background: white;
+            padding: 32px 0 32px 0;
+        }
+
+        .person-header-content {
+            max-width: 1720px;
+            margin: 0 auto;
+            padding: 0 117px 0 117px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .person-block {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex: 1;
+        }
+
+        .avatar-large {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--gray10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .person-data {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .person-name {
+            font-size: 27px;
+            font-weight: 700;
+            color: var(--gray100);
+            line-height: 1.2;
+        }
+
+        .person-details {
+            font-size: 16px;
+            color: rgba(0, 3, 7, 0.67);
+        }
+
+        .quality-badge {
+            background: #faecb4;
+            color: #621c00;
+            padding: 4px 8px;
+            border-radius: 24px;
+            font-size: 14px;
+            margin-left: auto;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 24px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--blue60);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--blue02);
+        }
+
+        .btn-icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Tabs */
+        .tabs {
+            background: white;
+            display: flex;
+            justify-content: center;
+        }
+
+        .tabs-container {
+            display: flex;
+            max-width: 1210px;
+            width: 100%;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.175px;
+            color: var(--gray100);
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tab.active {
+            color: var(--blue60);
+            box-shadow: inset 0px -3px 0px 0px #397b99;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1720px;
+            margin: 0 auto;
+            padding: 20px 120px;
+        }
+
+        .content-grid {
+            display: flex;
+            gap: 16px;
+            max-width: 1480px;
+            margin: 0 auto;
+        }
+
+        .left-column {
+            max-width: 520px;
+            min-width: 260px;
+            flex: 1;
+        }
+
+        .middle-column {
+            max-width: 520px;
+            min-width: 300px;
+            flex: 1;
+        }
+
+        .right-column {
+            max-width: 400px;
+            min-width: 260px;
+            flex: 0.77;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--gray10);
+        }
+
+        .left-column .card,
+        .middle-column .card,
+        .right-column .card {
+            margin-bottom: 12px;
+        }
+
+        .left-column .card:last-child,
+        .middle-column .card:last-child,
+        .right-column .card:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray100);
+            margin: 0;
+        }
+
+        .toggle-link {
+            color: var(--blue60);
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .card-body {
+            padding: 0;
+        }
+
+        /* Vitals */
+        .vital-item {
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .vital-item:hover {
+            background: var(--gray02);
+        }
+
+        .vital-content {
+            flex: 1;
+        }
+
+        .vital-label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .vital-label-text {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--gray100);
+        }
+
+        .vital-source-count {
+            font-size: 12px;
+            color: var(--gray60);
+        }
+
+        .vital-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray100);
+            margin-bottom: 2px;
+        }
+
+        .vital-details {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray100);
+        }
+
+        .edit-icon-btn {
+            height: 24px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray60);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .edit-text {
+            display: none;
+        }
+
+        .vital-item:hover .edit-icon-btn {
+            opacity: 1;
+        }
+
+        .vital-item.highlighted .edit-icon-btn {
+            display: none;
+        }
+
+        .edit-icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .add-link {
+            padding: 8px 12px;
+            color: var(--blue60);
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .add-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Family Members */
+        .family-section {
+            margin-bottom: 0;
+        }
+
+        .family-section-header {
+            padding: 0 12px 6px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .family-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray70);
+            margin: 0;
+        }
+
+        .section-action {
+            color: var(--blue60);
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .preferred-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 12px;
+            height: 24px;
+            font-size: 14px;
+            color: var(--gray70);
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--green60);
+        }
+
+        .family-group {
+            padding: 12px 0;
+        }
+
+        .family-group.indented {
+            padding-left: 32px;
+            padding-top: 0;
+        }
+
+        .family-member {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .family-member:hover {
+            background: var(--gray02);
+        }
+
+        .family-member:hover .edit-icon-btn {
+            opacity: 1;
+        }
+
+        .family-member.highlighted .edit-icon-btn {
+            display: none;
+        }
+
+        .family-member.potential {
+            border: 2px dashed var(--blue40);
+            border-radius: 8px;
+            background: white;
+            margin: 4px 12px;
+        }
+
+        .avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--gray10);
+            flex-shrink: 0;
+        }
+
+        .avatar-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .family-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .family-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray100);
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+
+        .family-dates {
+            font-size: 14px;
+            color: var(--gray60);
+            line-height: 1.2;
+        }
+
+        .btn-small {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--gray20);
+            background: white;
+            color: var(--gray100);
+        }
+
+        .btn-small:hover {
+            background: var(--gray02);
+        }
+
+        .add-button {
+            margin: 8px 0;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: white;
+            color: var(--blue60);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            width: fit-content;
+        }
+
+        .add-button:hover {
+            background: var(--blue02);
+        }
+
+        /* Sources Panel */
+        .right-column .card {
+            position: sticky;
+            top: 24px;
+        }
+
+        .source-item {
+            padding: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .source-item:hover {
+            background: var(--gray02);
+        }
+
+        .source-content {
+            flex: 1;
+        }
+
+        .source-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .source-title {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray100);
+            line-height: 1.3;
+        }
+
+        .source-title:hover {
+            text-decoration: none;
+        }
+
+        .hint-badge {
+            display: inline-block;
+            background: var(--blue02);
+            border: 1px solid var(--blue20);
+            color: var(--blue70);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .family-member .hint-badge {
+            margin-bottom: 0;
+        }
+
+        .source-meta {
+            font-size: 13px;
+            color: var(--gray60);
+            line-height: 1.4;
+        }
+
+        .view-btn {
+            padding: 4px 8px;
+            border: none;
+            background: transparent;
+            color: var(--blue60);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            flex-shrink: 0;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .view-btn:hover {
+            background: var(--blue02);
+        }
+
+        .view-btn.active {
+            background: var(--blue60);
+            color: white;
+        }
+
+        .options-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray60);
+            border-radius: 4px;
+        }
+
+        .options-btn:hover {
+            background: var(--gray05);
+        }
+
+        /* Interactive Highlighting */
+        .source-item {
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .source-item.active {
+            background: #00525E;
+            border-left-color: #00525E;
+        }
+
+        .source-item.active .source-title,
+        .source-item.active .source-meta,
+        .source-item.active .hint-badge {
+            color: white;
+        }
+
+        .source-item.active .hint-badge {
+            background: var(--blue02);
+            border-color: var(--blue20);
+            color: var(--blue70);
+        }
+
+        .source-item.active .view-icon {
+            color: white;
+        }
+
+        .vital-item.highlighted {
+            background: #00525E;
+            color: white;
+        }
+
+        .vital-item.highlighted .vital-label-text,
+        .vital-item.highlighted .vital-source-count,
+        .vital-item.highlighted .vital-value,
+        .vital-item.highlighted .vital-details {
+            color: white;
+        }
+
+        .vital-item.highlighted .edit-icon-btn {
+            color: white;
+        }
+
+        .family-member.highlighted {
+            background: #00525E;
+            color: white;
+        }
+
+        .family-member.highlighted .family-name,
+        .family-member.highlighted .family-dates,
+        .family-member.highlighted .vital-label-text,
+        .family-member.highlighted .vital-source-count,
+        .family-member.highlighted .vital-details,
+        .family-member.highlighted > div,
+        .family-member.highlighted div {
+            color: white !important;
+        }
+
+        .family-member.highlighted .hint-badge {
+            background: var(--blue02) !important;
+            border-color: var(--blue20) !important;
+            color: var(--blue70) !important;
+        }
+
+        .family-member.highlighted .view-btn {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1380px) {
+            .content-grid {
+                flex-wrap: wrap;
+            }
+
+            .right-column {
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                flex-direction: column;
+            }
+
+            .left-column,
+            .middle-column,
+            .right-column {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Site Header -->
+    <header class="site-header">
+        <div class="top-nav">
+            <div class="nav-left">
+                <svg class="logo" width="132" height="34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.558 28.29h1.54v-9.134h-1.54v-1.742h9.144v3.268h-2.021V19.39h-3.22v3.683h4.156v1.742h-4.156v3.476h1.689v1.742h-5.592V28.29zM56.277 28.28v-4.087c0-2.38-1.19-3.45-3.045-3.45-1.461 0-2.599.905-3.098 1.975H50.1c-.359-1.389-1.374-1.975-2.651-1.975-1.514 0-2.582 1.104-3.046 2.027v-.802c0-.639-.402-1.01-1.207-1.01h-2.398v1.743h1.024c.254 0 .394.12.394.37v6.944h3.605v-1.743h-1.313v-2.139c0-1.638.744-3.32 2.363-3.32 1.085 0 1.243.828 1.243 1.811v5.4h3.605V28.28H50.38v-2.26c0-1.673.779-3.217 2.346-3.217 1.067 0 1.26.785 1.26 1.811v5.4h3.623v-1.743h-1.33v.009zM40.482 28.29c-.254 0-.394-.121-.394-.389v-3.579c0-2.311-1.313-3.57-3.789-3.57-2.214 0-3.64 1.12-3.64 1.12l.848 1.562s1.226-.871 2.6-.871c.953 0 1.697.405 1.697 1.56v.303h-.577c-1.48 0-5.172.284-5.172 3.053 0 1.846 1.479 2.751 3.045 2.751a3.172 3.172 0 0 0 2.88-1.707v.534c0 .518.323.958 1.172.958h2.161V28.29h-.831zm-2.67-2.191c0 1.138-.883 2.45-2.126 2.45-.848 0-1.339-.57-1.339-1.243 0-1.371 2.18-1.509 3.08-1.509h.386v.302zM60.802 17.414h-2.293v2.01h2.293v-2.01zm0 10.867v-7.323h-3.71v1.743h1.426v7.322h3.605v-1.742h-1.321zM66.297 28.246c-.726-.017-.9-.44-.9-1.242v-9.59h-3.694v1.733h1.427v8.004c0 2.467 1.347 2.95 2.809 2.95h.831v-1.846h-.472v-.009zM79.914 25.96v.941c0 .82 1.05 1.294 2.258 1.294 1.295 0 2.223-.552 2.223-1.561 0-1.277-1.462-1.69-2.94-2.26-1.716-.638-3.387-1.406-3.387-3.657 0-2.536 2.091-3.519 4.288-3.519 2.021 0 4.06.759 4.06 2.217v1.647h-2.144v-.854c0-.638-.954-.974-1.908-.974-1.05 0-1.907.422-1.907 1.388 0 1.156 1.19 1.561 2.52 2.061 1.916.673 3.824 1.424 3.824 3.787 0 2.579-2.196 3.769-4.612 3.769-2.126 0-4.401-.94-4.401-2.838v-1.44h2.126zM130.67 28.281v-4.088c0-2.398-1.26-3.45-3.299-3.45a3.453 3.453 0 0 0-3.072 1.794v-5.14h-3.71v1.742h1.426v10.876h3.606v-1.743h-1.322v-2.415c0-1.664 1.015-3.053 2.634-3.053 1.155 0 1.444.742 1.444 1.846v5.365H132v-1.743h-1.33v.009zM108.941 26.366c0-1.707.831-3.303 2.687-3.303h.56v-2.225h-.42c-1.409 0-2.503 1.035-2.923 2.328v-1.104c0-.759-.412-1.104-1.225-1.104h-2.398v1.743h1.024c.254 0 .402.138.402.388v6.934h3.606V28.29h-1.322v-1.924h.009zM104.915 28.29c-.253 0-.393-.121-.393-.389v-3.579c0-2.311-1.313-3.57-3.79-3.57-2.213 0-3.64 1.12-3.64 1.12l.849 1.562s1.225-.871 2.599-.871c.954 0 1.698.405 1.698 1.56v.303h-.578c-1.479 0-5.18.284-5.18 3.053 0 1.846 1.478 2.751 3.045 2.751a3.205 3.205 0 0 0 2.888-1.707v.534c0 .518.323.958 1.172.958h2.162V28.29h-.832zm-2.669-2.191c0 1.138-.883 2.45-2.126 2.45-.849 0-1.33-.57-1.33-1.243 0-1.371 2.179-1.509 3.08-1.509h.376v.302zM94.843 27.608a4.412 4.412 0 0 1-2.441.742c-1.392 0-2.617-.854-2.766-2.174h6.537v-.612c0-5.071-4.209-4.813-4.209-4.813-2.765 0-4.673 1.958-4.673 4.753 0 2.579 1.899 4.752 4.944 4.752 2.004 0 3.194-.82 3.475-1.035l-.867-1.613zm-2.923-5.02c1.164 0 1.987.69 2.214 1.855h-4.428c.228-1.164 1.05-1.854 2.214-1.854z" fill="#85B940"/><path d="M120.247 27.393c-.56.396-1.514.94-2.651.94-1.567 0-2.888-1.01-2.888-2.881 0-1.656 1.033-2.786 2.704-2.786.779 0 1.715.285 1.715.889v.603h1.978v-1.242c0-1.604-2.232-2.165-3.772-2.165-2.826 0-4.935 2.062-4.935 4.761 0 2.933 2.38 4.727 5.067 4.727 1.61 0 2.949-.69 3.64-1.26l-.858-1.586zM70.822 22.7V20.96h-4.525V22.7h1.12l3.133 7.572c-.507 1.285-1.216 1.674-1.837 1.69a2.462 2.462 0 0 1-.998-.223v1.914c.324.086.7.147 1.138.147 1.566 0 2.879-.82 3.579-2.613l3.37-8.496h1.067V20.95h-4.34v1.742h1.04l-1.89 5.227-1.89-5.227" fill="#85B940"/><path d="M11.796 27.246c1.68-1.087 2.984-2.682 3.527-4.864h-.936c-.587 1.586-1.742 2.578-3.203 3.113a14.778 14.778 0 0 1-.57-4.105c0-3.062.92-5.908 2.504-8.289h-1.934a16.244 16.244 0 0 0-2.95 7.21c-1.076-.663-1.925-1.509-2.423-2.889H4.787c.586 2.14 1.724 3.614 3.273 4.77 0 .164-.01.328-.01.491 0 4.183 1.585 8.004 4.193 10.91h4.62a15.3 15.3 0 0 1-5.067-6.347z" fill="#9B947A"/><path d="M17.222 13.843h7.7v-7.59h-7.7v7.59zm5.89-1.785h-4.079v-4.02h4.078v4.02zM12.689 23.227h8.156v-8.039h-8.156v8.039zm6.345-1.794H14.5v-4.468h4.533v4.468z" fill="#BAB7B1"/><path d="M9.512 13.843h6.345V7.59H9.512v6.253zm4.989-1.337h-3.623v-3.57H14.5v3.57z" fill="#9B947A"/><path d="M3.168 8.935h4.988V4.02H3.168v4.916zM6.8 7.59H4.533V5.356H6.8V7.59z" fill="#BAB7B1"/><path d="M9.512 6.253h6.345V0H9.512v6.253zm4.989-1.337h-3.623v-3.58H14.5v3.58zM0 18.31h8.156v-8.038H0v8.039zm6.344-1.785H1.811v-4.467h4.533v4.467z" fill="#85B940"/></svg>
+                <ul class="nav-menu">
+                    <li><a href="#">Family Tree</a></li>
+                    <li><a href="#">Search</a></li>
+                    <li><a href="#">Memories</a></li>
+                    <li><a href="#">Get Involved</a></li>
+                    <li><a href="#">Activities</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <button class="icon-btn" title="Map">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </button>
+                <button class="icon-btn" title="World">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                </button>
+                <button class="icon-btn" title="Help">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                </button>
+                <button class="icon-btn" title="Messages">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+                </button>
+                <button class="icon-btn" title="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                </button>
+                <button class="icon-btn" title="Account">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="sub-nav">
+            <div class="breadcrumb">
+                <button class="breadcrumb-dropdown">
+                    FamilySearch Tree
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(90deg);"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                </button>
+                <a href="#">Tree</a>
+                <a href="#">Recents</a>
+                <a href="#">Find</a>
+                <a href="#">Following</a>
+                <a href="#">Person List</a>
+                <a href="#">My Contributions</a>
+                <a href="#">Manage Trees</a>
+            </div>
+        </div>
+
+        <div class="person-header">
+            <div class="person-header-content">
+                <div class="person-block">
+                    <div class="avatar-large">
+                        <img src="female.png" alt="Doris Jane Lewis">
+                    </div>
+                    <div class="person-data">
+                        <h1 class="person-name">Doris Jane Lewis</h1>
+                        <p class="person-details">4 January 1896 – 22 December 1988 • KWCL-QCX</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn">
+                        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        View Tree
+                    </button>
+                    <button class="btn">
+                        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                        Relationship
+                    </button>
+                    <button class="btn">
+                        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
+                        Follow
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tabs-container">
+                <button class="tab active">Details</button>
+                <button class="tab">Research</button>
+                <button class="tab">Memories (22)</button>
+                <button class="tab">Timeline</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-grid">
+            <!-- Left Column: Vitals -->
+            <div class="left-column">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Vitals</h2>
+                        <a href="#" class="toggle-link">
+                            Edit
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="vital-item">
+                            <div class="vital-content">
+                                <div class="vital-label">
+                                    <span class="vital-label-text">Name</span>
+                                    <span class="vital-source-count">• 8 Sources</span>
+                                </div>
+                                <div class="vital-value">Doris Jane Lewis</div>
+                            </div>
+                            <button class="edit-icon-btn" title="Edit">
+                                <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+
+                        <div class="vital-item">
+                            <div class="vital-content">
+                                <div class="vital-label">
+                                    <span class="vital-label-text">Sex</span>
+                                    <span class="vital-source-count">• 8 Sources</span>
+                                </div>
+                                <div class="vital-value">Female</div>
+                            </div>
+                            <button class="edit-icon-btn" title="Edit">
+                                <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+
+                        <div class="vital-item">
+                            <div class="vital-content">
+                                <div class="vital-label">
+                                    <span class="vital-label-text">Birth</span>
+                                    <span class="vital-source-count">• 6 Sources</span>
+                                </div>
+                                <div class="vital-value">4 January 1896</div>
+                                <div class="vital-details">Summit, Summit, Utah, United States</div>
+                            </div>
+                            <button class="edit-icon-btn" title="Edit">
+                                <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+
+                        <div class="vital-item">
+                            <div class="vital-content">
+                                <div class="vital-label">
+                                    <span class="vital-label-text">Death</span>
+                                    <span class="vital-source-count">• 2 Sources</span>
+                                </div>
+                                <div class="vital-value">22 December 1988</div>
+                                <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
+                            </div>
+                            <button class="edit-icon-btn" title="Edit">
+                                <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+
+                        <div class="vital-item" style="padding-bottom: 24px;">
+                            <div class="vital-content">
+                                <div class="vital-label">
+                                    <span class="vital-label-text">Burial</span>
+                                    <span class="vital-source-count">• 1 Source</span>
+                                </div>
+                                <div class="vital-value">22 September 1988</div>
+                                <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
+                            </div>
+                            <button class="edit-icon-btn" title="Edit">
+                                <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Information -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Other Information</h2>
+                        <a href="#" class="toggle-link">
+                            Edit
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="vital-item">
+                            <div class="vital-content">
+                                <div class="vital-label">
+                                    <span class="vital-label-text">Alternate Names</span>
+                                </div>
+                                <a href="#" class="add-link">+ Add</a>
+                            </div>
+                        </div>
+
+                        <div class="vital-item">
+                            <div class="vital-content">
+                                <div class="vital-label">
+                                    <span class="vital-label-text">Residence</span>
+                                    <span class="vital-source-count">• 8 Sources</span>
+                                </div>
+                                <div class="vital-value">1900</div>
+                                <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
+                            </div>
+                            <button class="edit-icon-btn" title="Edit">
+                                <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+
+                        <div class="vital-item">
+                            <div class="vital-content">
+                                <div class="vital-label">
+                                    <span class="vital-label-text">Residence</span>
+                                    <span class="vital-source-count">• 8 Sources</span>
+                                </div>
+                                <div class="vital-value">1900</div>
+                                <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
+                            </div>
+                            <button class="edit-icon-btn" title="Edit">
+                                <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Column: Family Members -->
+            <div class="middle-column">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Family</h2>
+                        <a href="#" class="toggle-link">
+                            Edit
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <!-- Spouses and Children -->
+                        <div class="family-section">
+                            <div class="family-section-header">
+                                <h3 class="family-section-title">Spouse and Children</h3>
+                            </div>
+                            
+                            <div class="family-group" data-marriage="1912">
+                                <div class="preferred-badge">
+                                    <svg class="check-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                    Preferred
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="male.png" alt="Elmer Albert Anderson">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Elmer Albert Anderson</div>
+                                        <div class="family-dates">Husband • 1893–1929</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="female.png" alt="Doris Jane Lewis">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Doris Jane Lewis</div>
+                                        <div class="family-dates">Wife • 1896–1988</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="family-info">
+                                        <div class="vital-label">
+                                            <span class="vital-label-text">Marriage</span>
+                                            <span class="vital-source-count">• 8 Sources</span>
+                                        </div>
+                                        <div class="vital-details">26 June 1912</div>
+                                        <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="family-group indented">
+                                <h4 class="family-section-title" style="padding: 12px 0;">Children</h4>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="male.png" alt="Elmer Anderson">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Elmer Anderson</div>
+                                        <div class="family-dates">Son • 1913–1963</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="female.png" alt="Kay Anderson">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Kay Anderson</div>
+                                        <div class="family-dates">Daughter • 1923–1982</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member potential" style="align-items: center;">
+                                    <div style="flex: 1;">
+                                        <div class="hint-badge" style="margin-bottom: 6px;">Potential Child</div>
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div class="avatar-small">
+                                                <img src="female.png" alt="Emma Jane Anderson">
+                                            </div>
+                                            <div class="family-info">
+                                                <div class="family-name">Emma Jane Anderson</div>
+                                                <div class="family-dates">Daughter • 1926–</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="view-btn">Review</button>
+                                </div>
+
+                                <button class="add-button">+ Add Child</button>
+                            </div>
+                        </div>
+
+                        <!-- Another Spouse Section -->
+                        <div class="family-section" style="margin-top: 22px;">
+                            <div class="family-section-header">
+                                <h3 class="family-section-title">Spouse and Children</h3>
+                            </div>
+                            
+                            <div class="family-group" data-marriage="1939">
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="male.png" alt="George Rhodes Emery">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">George Rhodes Emery</div>
+                                        <div class="family-dates">Husband</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="female.png" alt="Doris Jane Lewis">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Doris Jane Lewis</div>
+                                        <div class="family-dates">Self</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="family-info">
+                                        <div class="vital-label">
+                                            <span class="vital-label-text">Marriage</span>
+                                            <span class="vital-source-count">• 15 Sources</span>
+                                        </div>
+                                        <div class="vital-details">1939</div>
+                                        <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="family-group indented">
+                                <h4 class="family-section-title" style="padding: 12px 0;">Children</h4>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="male.png" alt="William George Emery">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">William George Emery</div>
+                                        <div class="family-dates">1940–</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <button class="add-button">+ Add Child</button>
+                            </div>
+                        </div>
+
+                        <!-- Parents and Siblings -->
+                        <div class="family-section" style="margin-top: 32px;">
+                            <div class="family-section-header">
+                                <h3 class="family-section-title">Parents and Siblings</h3>
+                            </div>
+
+                            <div class="family-group">
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="male.png" alt="Thomas Henry Lewis">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Thomas Henry Lewis</div>
+                                        <div class="family-dates">Father • 1851–1936</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="female.png" alt="Mary Jane Blount">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Mary Jane Blount</div>
+                                        <div class="family-dates">Mother • 1860–1936</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="family-group indented">
+                                <h4 class="family-section-title" style="padding: 12px 0;">Siblings</h4>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="male.png" alt="William Thomas Lewis">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">William Thomas Lewis</div>
+                                        <div class="family-dates">Brother • 1888–1965</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="female.png" alt="Margaret Ann Lewis">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Margaret Ann Lewis</div>
+                                        <div class="family-dates">Sister • 1890–1972</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="male.png" alt="Robert James Lewis">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Robert James Lewis</div>
+                                        <div class="family-dates">Brother • 1893–1958</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+
+                                <div class="family-member">
+                                    <div class="avatar-small">
+                                        <img src="female.png" alt="Doris Jane Lewis">
+                                    </div>
+                                    <div class="family-info">
+                                        <div class="family-name">Doris Jane Lewis</div>
+                                        <div class="family-dates">Self • 1896–1988</div>
+                                    </div>
+                                    <button class="edit-icon-btn" title="Edit">
+                                        <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        <span class="edit-text">Edit</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other Relationships -->
+                        <div class="family-section" style="margin-top: 32px;">
+                            <div class="family-section-header">
+                                <h3 class="family-section-title">Other Relationships</h3>
+                            </div>
+                            <div class="family-group">
+                                <button class="add-button">+ Add Other Relationship</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Sources -->
+            <div class="right-column">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h2 class="card-title">Sources (8)</h2>
+                    <button class="options-btn">⋯</button>
+                </div>
+
+                <div class="card" style="border: 2px dashed var(--blue40);">
+                    <div class="card-body">
+                        <div class="source-item">
+                            <div class="source-content">
+                                <div class="hint-badge">Adds Potential Birth Place</div>
+                                <div class="source-header">
+                                    <div class="source-title">Utah Birth Certificates</div>
+                                </div>
+                                <div class="source-meta">Name, Sex, Birth, Parents</div>
+                            </div>
+                            <button class="view-btn">Review</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="border: 2px dashed var(--blue40);">
+                    <div class="card-body">
+                        <div class="source-item" data-marriage="1912">
+                            <div class="source-content">
+                                <div class="hint-badge">Adds Potential Child</div>
+                                <div class="source-header">
+                                    <div class="source-title">1930 United States Federal Census</div>
+                                </div>
+                                <div class="source-meta">Name, Sex, Birth, Spouse, Children</div>
+                            </div>
+                            <button class="view-btn">Review</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="source-item">
+                            <div class="source-content">
+                                <div class="source-header">
+                                    <div class="source-title">1900 United States Federal Census</div>
+                                </div>
+                                <div class="source-meta">Name, Sex, Birth, Parents, Siblings</div>
+                            </div>
+                            <button class="view-btn">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="source-item">
+                            <div class="source-content">
+                                <div class="source-header">
+                                    <div class="source-title">1910 United States Federal Census</div>
+                                </div>
+                                <div class="source-meta">Name, Sex, Birth, Parents, Siblings</div>
+                            </div>
+                            <button class="view-btn">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="source-item" data-marriage="1912">
+                            <div class="source-content">
+                                <div class="source-header">
+                                    <div class="source-title">Salt Lake County Marriage Records, 1912</div>
+                                </div>
+                                <div class="source-meta">Name, Sex, Marriage, Spouse, Parents</div>
+                            </div>
+                            <button class="view-btn">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="source-item" data-marriage="1939">
+                            <div class="source-content">
+                                <div class="source-header">
+                                    <div class="source-title">1940 United States Federal Census</div>
+                                </div>
+                                <div class="source-meta">Name, Sex, Birth, Spouse, Children</div>
+                            </div>
+                            <button class="view-btn">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="source-item">
+                            <div class="source-content">
+                                <div class="source-header">
+                                    <div class="source-title">Utah Death Certificates</div>
+                                </div>
+                                <div class="source-meta">Name, Sex, Death, Parents</div>
+                            </div>
+                            <button class="view-btn">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="source-item">
+                            <div class="source-content">
+                                <div class="source-header">
+                                    <div class="source-title">Cemetery Records</div>
+                                </div>
+                                <div class="source-meta">Name, Sex, Birth, Death, Burial</div>
+                            </div>
+                            <button class="view-btn">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="add-button">+ Add Source</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sourceItems = document.querySelectorAll('.source-item');
+            let activeSource = null;
+
+            sourceItems.forEach(source => {
+                source.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // If clicking the same source, deselect it
+                    if (activeSource === this) {
+                        this.classList.remove('active');
+                        const viewBtn = this.querySelector('.view-btn');
+                        if (viewBtn) viewBtn.classList.remove('active');
+                        document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted').forEach(item => {
+                            item.classList.remove('highlighted');
+                        });
+                        activeSource = null;
+                        return;
+                    }
+                    
+                    // Remove previous highlights
+                    sourceItems.forEach(s => {
+                        s.classList.remove('active');
+                        const btn = s.querySelector('.view-btn');
+                        if (btn) btn.classList.remove('active');
+                    });
+                    document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted').forEach(item => {
+                        item.classList.remove('highlighted');
+                    });
+                    
+                    // Add new highlights
+                    this.classList.add('active');
+                    const viewBtn = this.querySelector('.view-btn');
+                    if (viewBtn) viewBtn.classList.add('active');
+                    activeSource = this;
+                    
+                    // Get what this source supports from meta
+                    const metaText = this.querySelector('.source-meta').textContent.toLowerCase();
+                    
+                    // Highlight vitals
+                    if (metaText.includes('name')) {
+                        const nameVital = document.querySelector('.vital-item .vital-label-text');
+                        if (nameVital && nameVital.textContent === 'Name') {
+                            nameVital.closest('.vital-item').classList.add('highlighted');
+                        }
+                    }
+                    if (metaText.includes('sex')) {
+                        const allVitals = document.querySelectorAll('.vital-item .vital-label-text');
+                        allVitals.forEach(vital => {
+                            if (vital.textContent === 'Sex') {
+                                vital.closest('.vital-item').classList.add('highlighted');
+                            }
+                        });
+                    }
+                    if (metaText.includes('birth')) {
+                        const birthVital = document.querySelector('.vital-item .vital-label-text');
+                        const allVitals = document.querySelectorAll('.vital-item .vital-label-text');
+                        allVitals.forEach(vital => {
+                            if (vital.textContent === 'Birth') {
+                                vital.closest('.vital-item').classList.add('highlighted');
+                            }
+                        });
+                    }
+                    if (metaText.includes('death')) {
+                        const allVitals = document.querySelectorAll('.vital-item .vital-label-text');
+                        allVitals.forEach(vital => {
+                            if (vital.textContent === 'Death') {
+                                vital.closest('.vital-item').classList.add('highlighted');
+                            }
+                        });
+                    }
+                    if (metaText.includes('burial')) {
+                        const allVitals = document.querySelectorAll('.vital-item .vital-label-text');
+                        allVitals.forEach(vital => {
+                            if (vital.textContent === 'Burial') {
+                                vital.closest('.vital-item').classList.add('highlighted');
+                            }
+                        });
+                    }
+                    if (metaText.includes('marriage')) {
+                        // Highlight marriage events in family section
+                        const marriageYear = this.getAttribute('data-marriage');
+                        if (marriageYear) {
+                            // If source has marriage year, only highlight matching marriage
+                            const matchingGroup = document.querySelector(`.family-group[data-marriage="${marriageYear}"]`);
+                            if (matchingGroup) {
+                                const marriageMembers = matchingGroup.querySelectorAll('.family-member');
+                                marriageMembers.forEach(member => {
+                                    const marriageLabel = member.querySelector('.vital-label-text');
+                                    if (marriageLabel && marriageLabel.textContent === 'Marriage') {
+                                        member.classList.add('highlighted');
+                                    }
+                                });
+                            }
+                        } else {
+                            // If no marriage year, highlight all marriages
+                            const familyMembers = document.querySelectorAll('.family-member');
+                            familyMembers.forEach(member => {
+                                const marriageLabel = member.querySelector('.vital-label-text');
+                                if (marriageLabel && marriageLabel.textContent === 'Marriage') {
+                                    member.classList.add('highlighted');
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Highlight family members
+                    if (metaText.includes('spouse')) {
+                        // Highlight spouse
+                        const marriageYear = this.getAttribute('data-marriage');
+                        if (marriageYear) {
+                            // If source has marriage year, only highlight spouse from matching marriage
+                            const matchingGroup = document.querySelector(`.family-group[data-marriage="${marriageYear}"]`);
+                            if (matchingGroup) {
+                                const spouseMembers = matchingGroup.querySelectorAll('.family-member');
+                                spouseMembers.forEach(member => {
+                                    const dates = member.querySelector('.family-dates');
+                                    if (dates && (dates.textContent.includes('Husband') || dates.textContent.includes('Wife') || dates.textContent.includes('Self') || dates.textContent.includes('married'))) {
+                                        member.classList.add('highlighted');
+                                    }
+                                });
+                            }
+                        } else {
+                            // If no marriage year, highlight all spouses
+                            const familyMembers = document.querySelectorAll('.family-member');
+                            familyMembers.forEach(member => {
+                                const dates = member.querySelector('.family-dates');
+                                if (dates && (dates.textContent.includes('Husband') || dates.textContent.includes('Wife') || dates.textContent.includes('Self') || dates.textContent.includes('married'))) {
+                                    member.classList.add('highlighted');
+                                }
+                            });
+                        }
+                    }
+                    if (metaText.includes('children')) {
+                        // Highlight children
+                        const familyMembers = document.querySelectorAll('.family-member');
+                        familyMembers.forEach(member => {
+                            const dates = member.querySelector('.family-dates');
+                            if (dates && (dates.textContent.includes('Son') || dates.textContent.includes('Daughter'))) {
+                                member.classList.add('highlighted');
+                            }
+                        });
+                    }
+                    if (metaText.includes('parents')) {
+                        // Highlight parents
+                        const familyMembers = document.querySelectorAll('.family-member');
+                        familyMembers.forEach(member => {
+                            const dates = member.querySelector('.family-dates');
+                            if (dates && (dates.textContent.includes('Father') || dates.textContent.includes('Mother'))) {
+                                member.classList.add('highlighted');
+                            }
+                        });
+                    }
+                    if (metaText.includes('siblings')) {
+                        // Highlight siblings
+                        const familyMembers = document.querySelectorAll('.family-member');
+                        familyMembers.forEach(member => {
+                            const dates = member.querySelector('.family-dates');
+                            if (dates && (dates.textContent.includes('Brother') || dates.textContent.includes('Sister') || (dates.textContent.includes('Self') && dates.textContent.includes('1896')))) {
+                                member.classList.add('highlighted');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Click anywhere to deselect source
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.source-item')) {
+                    document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted').forEach(item => {
+                        item.classList.remove('highlighted');
+                    });
+                    document.querySelectorAll('.source-item.active').forEach(item => {
+                        item.classList.remove('active');
+                        const btn = item.querySelector('.view-btn');
+                        if (btn) btn.classList.remove('active');
+                    });
+                    activeSource = null;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

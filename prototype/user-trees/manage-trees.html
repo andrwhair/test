@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Trees - FamilySearch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* FamilySearch Colors */
+            --blue40: #0051C4;
+            --blue50: #003DA5;
+            --blue60: #056F94;
+            --green40: #85B940;
+            --green50: #6A9531;
+            --gray10: #F5F5F5;
+            --gray20: #E6E6E6;
+            --gray30: #CCCCCC;
+            --gray40: #B3B3B3;
+            --gray50: #999999;
+            --gray60: #808080;
+            --gray70: #666666;
+            --gray80: #4D4D4D;
+            --gray90: #333333;
+            --white: #FFFFFF;
+            --red50: #C00000;
+            --orange40: #FF9900;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--gray10);
+            color: var(--gray90);
+            line-height: 1.5;
+        }
+
+        /* Header Styles */
+        .site-header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray20);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--gray20);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            height: 34px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--gray90);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            color: var(--blue40);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: var(--gray70);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn:hover {
+            background-color: var(--gray10);
+            color: var(--blue40);
+        }
+
+        .sub-nav {
+            padding: 12px 24px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .breadcrumb-dropdown {
+            background: none;
+            border: none;
+            color: var(--gray90);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .breadcrumb-dropdown:hover {
+            background-color: var(--gray10);
+        }
+
+        .breadcrumb a {
+            color: var(--gray70);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--blue40);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--gray90);
+            margin-bottom: 32px;
+        }
+
+        /* Tree Sections */
+        .tree-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray90);
+            margin-bottom: 16px;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: var(--gray60);
+            margin-bottom: 24px;
+        }
+
+        /* Tree Card */
+        .tree-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border: 1px solid var(--gray20);
+            border-radius: 4px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .tree-card:hover {
+            border-color: var(--blue40);
+            box-shadow: 0 2px 8px rgba(0, 81, 196, 0.1);
+        }
+
+        .tree-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .tree-thumbnail {
+            width: 48px;
+            height: 48px;
+            border-radius: 4px;
+            background-color: var(--gray10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .tree-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tree-thumbnail svg {
+            width: 24px;
+            height: 24px;
+            color: var(--gray60);
+        }
+
+        .tree-info {
+            flex: 1;
+        }
+
+        .tree-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--gray90);
+            margin-bottom: 4px;
+        }
+
+        .tree-meta {
+            font-size: 13px;
+            color: var(--gray60);
+        }
+
+        .tree-actions {
+            display: flex;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .tree-link {
+            color: var(--blue60);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tree-link:hover {
+            color: var(--blue50);
+        }
+
+        /* Upload Button */
+        .upload-gedcom-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background-color: var(--white);
+            border: none;
+            border-radius: 4px;
+            color: var(--blue60);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .upload-gedcom-btn:hover {
+            background-color: var(--gray10);
+        }
+
+        .upload-gedcom-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 32px;
+            color: var(--gray60);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Site Header -->
+    <header class="site-header">
+        <div class="top-nav">
+            <div class="nav-left">
+                <svg class="logo" width="132" height="34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.558 28.29h1.54v-9.134h-1.54v-1.742h9.144v3.268h-2.021V19.39h-3.22v3.683h4.156v1.742h-4.156v3.476h1.689v1.742h-5.592V28.29zM56.277 28.28v-4.087c0-2.38-1.19-3.45-3.045-3.45-1.461 0-2.599.905-3.098 1.975H50.1c-.359-1.389-1.374-1.975-2.651-1.975-1.514 0-2.582 1.104-3.046 2.027v-.802c0-.639-.402-1.01-1.207-1.01h-2.398v1.743h1.024c.254 0 .394.12.394.37v6.944h3.605v-1.743h-1.313v-2.139c0-1.638.744-3.32 2.363-3.32 1.085 0 1.243.828 1.243 1.811v5.4h3.605V28.28H50.38v-2.26c0-1.673.779-3.217 2.346-3.217 1.067 0 1.26.785 1.26 1.811v5.4h3.623v-1.743h-1.33v.009zM40.482 28.29c-.254 0-.394-.121-.394-.389v-3.579c0-2.311-1.313-3.57-3.789-3.57-2.214 0-3.64 1.12-3.64 1.12l.848 1.562s1.226-.871 2.6-.871c.953 0 1.697.405 1.697 1.56v.303h-.577c-1.48 0-5.172.284-5.172 3.053 0 1.846 1.479 2.751 3.045 2.751a3.172 3.172 0 0 0 2.88-1.707v.534c0 .518.323.958 1.172.958h2.161V28.29h-.831zm-2.67-2.191c0 1.138-.883 2.45-2.126 2.45-.848 0-1.339-.57-1.339-1.243 0-1.371 2.18-1.509 3.08-1.509h.386v.302zM60.802 17.414h-2.293v2.01h2.293v-2.01zm0 10.867v-7.323h-3.71v1.743h1.426v7.322h3.605v-1.742h-1.321zM66.297 28.246c-.726-.017-.9-.44-.9-1.242v-9.59h-3.694v1.733h1.427v8.004c0 2.467 1.347 2.95 2.809 2.95h.831v-1.846h-.472v-.009zM79.914 25.96v.941c0 .82 1.05 1.294 2.258 1.294 1.295 0 2.223-.552 2.223-1.561 0-1.277-1.462-1.69-2.94-2.26-1.716-.638-3.387-1.406-3.387-3.657 0-2.536 2.091-3.519 4.288-3.519 2.021 0 4.06.759 4.06 2.217v1.647h-2.144v-.854c0-.638-.954-.974-1.908-.974-1.05 0-1.907.422-1.907 1.388 0 1.156 1.19 1.561 2.52 2.061 1.916.673 3.824 1.424 3.824 3.787 0 2.579-2.196 3.769-4.612 3.769-2.126 0-4.401-.94-4.401-2.838v-1.44h2.126zM130.67 28.281v-4.088c0-2.398-1.26-3.45-3.299-3.45a3.453 3.453 0 0 0-3.072 1.794v-5.14h-3.71v1.742h1.426v10.876h3.606v-1.743h-1.322v-2.415c0-1.664 1.015-3.053 2.634-3.053 1.155 0 1.444.742 1.444 1.846v5.365H132v-1.743h-1.33v.009zM108.941 26.366c0-1.707.831-3.303 2.687-3.303h.56v-2.225h-.42c-1.409 0-2.503 1.035-2.923 2.328v-1.104c0-.759-.412-1.104-1.225-1.104h-2.398v1.743h1.024c.254 0 .402.138.402.388v6.934h3.606V28.29h-1.322v-1.924h.009zM104.915 28.29c-.253 0-.393-.121-.393-.389v-3.579c0-2.311-1.313-3.57-3.79-3.57-2.213 0-3.64 1.12-3.64 1.12l.849 1.562s1.225-.871 2.599-.871c.954 0 1.698.405 1.698 1.56v.303h-.578c-1.479 0-5.18.284-5.18 3.053 0 1.846 1.478 2.751 3.045 2.751a3.205 3.205 0 0 0 2.888-1.707v.534c0 .518.323.958 1.172.958h2.162V28.29h-.832zm-2.669-2.191c0 1.138-.883 2.45-2.126 2.45-.849 0-1.33-.57-1.33-1.243 0-1.371 2.179-1.509 3.08-1.509h.376v.302zM94.843 27.608a4.412 4.412 0 0 1-2.441.742c-1.392 0-2.617-.854-2.766-2.174h6.537v-.612c0-5.071-4.209-4.813-4.209-4.813-2.765 0-4.673 1.958-4.673 4.753 0 2.579 1.899 4.752 4.944 4.752 2.004 0 3.194-.82 3.475-1.035l-.867-1.613zm-2.923-5.02c1.164 0 1.987.69 2.214 1.855h-4.428c.228-1.164 1.05-1.854 2.214-1.854z" fill="#85B940"/><path d="M120.247 27.393c-.56.396-1.514.94-2.651.94-1.567 0-2.888-1.01-2.888-2.881 0-1.656 1.033-2.786 2.704-2.786.779 0 1.715.285 1.715.889v.603h1.978v-1.242c0-1.604-2.232-2.165-3.772-2.165-2.826 0-4.935 2.062-4.935 4.761 0 2.933 2.38 4.727 5.067 4.727 1.61 0 2.949-.69 3.64-1.26l-.858-1.586zM70.822 22.7V20.96h-4.525V22.7h1.12l3.133 7.572c-.507 1.285-1.216 1.674-1.837 1.69a2.462 2.462 0 0 1-.998-.223v1.914c.324.086.7.147 1.138.147 1.566 0 2.879-.82 3.579-2.613l3.37-8.496h1.067V20.95h-4.34v1.742h1.04l-1.89 5.227-1.89-5.227" fill="#85B940"/><path d="M11.796 27.246c1.68-1.087 2.984-2.682 3.527-4.864h-.936c-.587 1.586-1.742 2.578-3.203 3.113a14.778 14.778 0 0 1-.57-4.105c0-3.062.92-5.908 2.504-8.289h-1.934a16.244 16.244 0 0 0-2.95 7.21c-1.076-.663-1.925-1.509-2.423-2.889H4.787c.586 2.14 1.724 3.614 3.273 4.77 0 .164-.01.328-.01.491 0 4.183 1.585 8.004 4.193 10.91h4.62a15.3 15.3 0 0 1-5.067-6.347z" fill="#9B947A"/><path d="M17.222 13.843h7.7v-7.59h-7.7v7.59zm5.89-1.785h-4.079v-4.02h4.078v4.02zM12.689 23.227h8.156v-8.039h-8.156v8.039zm6.345-1.794H14.5v-4.468h4.533v4.468z" fill="#BAB7B1"/><path d="M9.512 13.843h6.345V7.59H9.512v6.253zm4.989-1.337h-3.623v-3.57H14.5v3.57z" fill="#9B947A"/><path d="M3.168 8.935h4.988V4.02H3.168v4.916zM6.8 7.59H4.533V5.356H6.8V7.59z" fill="#BAB7B1"/><path d="M9.512 6.253h6.345V0H9.512v6.253zm4.989-1.337h-3.623v-3.58H14.5v3.58zM0 18.31h8.156v-8.038H0v8.039zm6.344-1.785H1.811v-4.467h4.533v4.467z" fill="#85B940"/></svg>
+                <ul class="nav-menu">
+                    <li><a href="#">Family Tree</a></li>
+                    <li><a href="#">Search</a></li>
+                    <li><a href="#">Memories</a></li>
+                    <li><a href="#">Get Involved</a></li>
+                    <li><a href="#">Activities</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <button class="icon-btn" title="Help">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                </button>
+                <button class="icon-btn" title="Messages">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+                </button>
+                <button class="icon-btn" title="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                </button>
+                <button class="icon-btn" title="Account">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="sub-nav">
+            <div class="breadcrumb">
+                <button class="breadcrumb-dropdown">
+                    FamilySearch Tree
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(90deg);"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                </button>
+                <a href="#">Tree</a>
+                <a href="#">Recents</a>
+                <a href="#">Find</a>
+                <a href="#">Following</a>
+                <a href="#">Person List</a>
+                <a href="#">My Contributions</a>
+                <a href="#" style="font-weight: 600; color: var(--gray90);">Manage Trees</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="page-title">Manage Trees</h1>
+
+        <!-- Trees You Own -->
+        <div class="tree-section">
+            <h2 class="section-title">Trees you own</h2>
+
+            <div class="tree-card">
+                <div class="tree-thumbnail">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M20 4v4h-3V4h3Zm0 12v4h-3v-4h3ZM4 14v-4h3v4H4ZM15 3v2h-1a3 3 0 0 0-3 3v3H9V9a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-2h2v3a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1Z"/></svg>
+                </div>
+                <div class="tree-info">
+                    <div class="tree-name">House of Windsor</div>
+                    <div class="tree-meta">1,247 individuals • Last updated Jan 10, 2026</div>
+                </div>
+                <div class="tree-actions">
+                    <a href="#" class="tree-link">Review Matches</a>
+                    <a href="user-tree-settings.html" class="tree-link">Settings</a>
+                </div>
+            </div>
+
+            <div class="tree-card">
+                <div class="tree-thumbnail">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M20 4v4h-3V4h3Zm0 12v4h-3v-4h3ZM4 14v-4h3v4H4ZM15 3v2h-1a3 3 0 0 0-3 3v3H9V9a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-2h2v3a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1Z"/></svg>
+                </div>
+                <div class="tree-info">
+                    <div class="tree-name">Lewis Family Research</div>
+                    <div class="tree-meta">543 individuals • Last updated Dec 2, 2025</div>
+                </div>
+                <div class="tree-actions">
+                    <a href="#" class="tree-link">Review Matches</a>
+                    <a href="user-tree-settings.html" class="tree-link">Settings</a>
+                </div>
+            </div>
+
+            <button class="upload-gedcom-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M10.54 6.71V16h1.92V6.71l3.18 3.19L17 8.53 11.5 3 6 8.53 7.36 9.9ZM18 18v2H6v-2H4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2Z"></path></svg>
+                Upload GEDCOM
+            </button>
+        </div>
+
+        <!-- Trees Shared With You -->
+        <div class="tree-section">
+            <h2 class="section-title">Trees shared with you</h2>
+            <p class="section-description">If others share their trees with you, they will be visible here.</p>
+
+            <div class="tree-card">
+                <div class="tree-thumbnail">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M20 4v4h-3V4h3Zm0 12v4h-3v-4h3ZM4 14v-4h3v4H4ZM15 3v2h-1a3 3 0 0 0-3 3v3H9V9a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-2h2v3a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1Z"/></svg>
+                </div>
+                <div class="tree-info">
+                    <div class="tree-name">Villalobos Tree</div>
+                    <div class="tree-meta">Shared by Maria Villalobos • 892 individuals</div>
+                </div>
+                <div class="tree-actions">
+                    <a href="#" class="tree-link">Review Matches</a>
+                    <a href="user-tree-settings.html" class="tree-link">Settings</a>
+                </div>
+            </div>
+
+            <div class="tree-card">
+                <div class="tree-thumbnail">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M20 4v4h-3V4h3Zm0 12v4h-3v-4h3ZM4 14v-4h3v4H4ZM15 3v2h-1a3 3 0 0 0-3 3v3H9V9a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-2h2v3a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1Z"/></svg>
+                </div>
+                <div class="tree-info">
+                    <div class="tree-name">Stanton Family Tree</div>
+                    <div class="tree-meta">Shared by Robert Stanton • 1,458 individuals</div>
+                </div>
+                <div class="tree-actions">
+                    <a href="#" class="tree-link">Review Matches</a>
+                    <a href="user-tree-settings.html" class="tree-link">Settings</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
