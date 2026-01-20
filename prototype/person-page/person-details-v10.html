@@ -900,7 +900,7 @@
 
         /* Person Card Popup */
         .person-card-popup {
-            position: fixed;
+            position: absolute;
             display: none;
             background: white;
             border-radius: 12px;
@@ -922,8 +922,8 @@
         }
 
         .person-card-avatar {
-            width: 80px;
-            height: 80px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             overflow: hidden;
             flex-shrink: 0;
@@ -2207,15 +2207,15 @@
                     const popupWidth = 315;
                     const popupHeight = 350;
                     
-                    let left = rect.left;
-                    let top = rect.bottom + 10;
+                    let left = rect.left + window.pageXOffset;
+                    let top = rect.bottom + window.pageYOffset + 10;
                     
-                    // Adjust if popup would go off screen
-                    if (left + popupWidth > window.innerWidth) {
-                        left = window.innerWidth - popupWidth - 20;
+                    // Adjust if popup would go off screen (considering viewport, not page)
+                    if (rect.left + popupWidth > window.innerWidth) {
+                        left = window.innerWidth - popupWidth - 20 + window.pageXOffset;
                     }
-                    if (top + popupHeight > window.innerHeight) {
-                        top = rect.top - popupHeight - 10;
+                    if (rect.bottom + popupHeight > window.innerHeight + window.pageYOffset) {
+                        top = rect.top + window.pageYOffset - popupHeight - 10;
                     }
                     
                     personCardPopup.style.left = left + 'px';
