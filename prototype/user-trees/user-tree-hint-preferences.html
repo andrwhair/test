@@ -12,29 +12,86 @@
         }
 
         :root {
-            /* FamilySearch Colors */
-            --blue40: #0051C4;
-            --blue50: #003DA5;
+            /* Zion UI Design System Colors */
+            /* Gray Scale */
+            --gray00: #FEFEFE;
+            --gray02: #F5F6F6;
+            --gray03: #EAECEC;
+            --gray05: #DCDEDE;
+            --gray10: #CACDCD;
+            --gray20: #B5B8B9;
+            --gray30: #9EA1A3;
+            --gray40: #888C8E;
+            --gray50: #75797B;
+            --gray60: #64686A;
+            --gray70: #535658;
+            --gray80: #434547;
+            --gray90: #333435;
+            --gray100: #202121;
+
+            /* Blue Scale */
+            --blue02: #D8FCFF;
+            --blue03: #BFF5FF;
+            --blue05: #A7E9F8;
+            --blue10: #8AD7ED;
+            --blue20: #6AC3E0;
+            --blue30: #46ACD0;
+            --blue40: #2396BF;
+            --blue50: #0482AB;
             --blue60: #056F94;
-            --green40: #85B940;
-            --green50: #6A9531;
-            --gray10: #F5F5F5;
-            --gray20: #E6E6E6;
-            --gray30: #CCCCCC;
-            --gray40: #B3B3B3;
-            --gray50: #999999;
-            --gray60: #808080;
-            --gray70: #666666;
-            --gray80: #4D4D4D;
-            --gray90: #333333;
+            --blue70: #145C7A;
+            --blue80: #1A495F;
+            --blue90: #1A3746;
+
+            /* Green Scale */
+            --green02: #F2F8DE;
+            --green03: #E6F2AC;
+            --green05: #D8E76D;
+            --green10: #C4D72D;
+            --green20: #A9C30A;
+            --green30: #88AD1D;
+            --green40: #6A992D;
+            --green50: #508535;
+            --green60: #3A7338;
+            --green70: #276136;
+            --green80: #1B4E2F;
+            --green90: #163A26;
+
+            /* Red Scale */
+            --red02: #FCF4F5;
+            --red03: #FCE6E9;
+            --red05: #FED3DA;
+            --red10: #FFBAC5;
+            --red20: #FB9CAE;
+            --red30: #F67896;
+            --red40: #ED5481;
+            --red50: #DF306E;
+            --red60: #CA0D5E;
+            --red70: #AB024E;
+            --red80: #86123F;
+            --red90: #621730;
+
+            /* Yellow Scale */
+            --yellow02: #FAF7DB;
+            --yellow03: #F9EDA1;
+            --yellow05: #FDDD47;
+            --yellow10: #FFC400;
+            --yellow20: #F9A519;
+            --yellow30: #F87F09;
+            --yellow40: #EA6108;
+            --yellow50: #CE5012;
+            --yellow60: #AF4619;
+            --yellow70: #8F3D1C;
+            --yellow80: #6F331C;
+            --yellow90: #512919;
+
+            /* Legacy aliases for compatibility */
             --white: #FFFFFF;
-            --red50: #C00000;
-            --orange40: #FF9900;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--gray10);
+            background-color: var(--gray02);
             color: var(--gray90);
             line-height: 1.5;
         }
@@ -42,7 +99,7 @@
         /* Header Styles */
         .site-header {
             background-color: var(--white);
-            border-bottom: 1px solid var(--gray20);
+            border-bottom: 1px solid var(--gray05);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -53,7 +110,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 24px;
-            border-bottom: 1px solid var(--gray20);
+            border-bottom: 1px solid var(--gray05);
         }
 
         .nav-left {
@@ -101,7 +158,7 @@
         }
 
         .icon-btn:hover {
-            background-color: var(--gray10);
+            background-color: var(--blue02);
             color: var(--blue60);
         }
 
@@ -130,7 +187,7 @@
         }
 
         .breadcrumb-dropdown:hover {
-            background-color: var(--gray10);
+            background-color: var(--blue02);
         }
 
         .breadcrumb a {
@@ -146,7 +203,7 @@
         .page-header {
             background-color: var(--white);
             padding: 24px;
-            border-bottom: 1px solid var(--gray20);
+            border-bottom: 1px solid var(--gray05);
         }
 
         .page-title {
@@ -373,13 +430,16 @@
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-primary {
@@ -388,22 +448,24 @@
         }
 
         .btn-primary:hover {
-            background-color: var(--blue50);
+            background-color: var(--blue70);
         }
 
         .btn-primary:disabled {
-            background-color: var(--gray30);
+            background-color: var(--gray20);
+            color: var(--gray50);
             cursor: not-allowed;
         }
 
         .btn-secondary {
-            background-color: var(--white);
-            border: 1px solid var(--gray30);
+            background-color: transparent;
+            border: 1px solid var(--gray20);
             color: var(--gray90);
         }
 
         .btn-secondary:hover {
-            background-color: var(--gray10);
+            background-color: var(--blue02);
+            border-color: var(--blue20);
         }
 
         /* Content Panels */
@@ -497,8 +559,8 @@
         }
 
         .info-card {
-            background-color: #F0F7FF;
-            border-left: 4px solid var(--blue40);
+            background-color: var(--gray03);
+            border-left: 4px solid var(--blue60);
             padding: 16px;
             border-radius: 4px;
             margin-top: 24px;
@@ -551,7 +613,12 @@
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(90deg);"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
                 </button>
                 <a href="#">Tree</a>
-                <a href="#">Settings</a>
+                <a href="#">Recents</a>
+                <a href="#">Find</a>
+                <a href="#">Following</a>
+                <a href="#">Person List</a>
+                <a href="#">My Contributions</a>
+                <a href="manage-trees.html" style="font-weight: 600; color: var(--gray90);">Manage Trees</a>
             </div>
         </div>
 
