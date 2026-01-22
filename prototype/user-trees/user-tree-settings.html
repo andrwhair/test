@@ -414,6 +414,56 @@
             margin-top: 4px;
         }
 
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--gray30);
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--blue60);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .toggle-switch input:focus + .toggle-slider {
+            box-shadow: 0 0 0 3px rgba(5, 111, 148, 0.1);
+        }
+
         .btn {
             padding: 12px 20px;
             border: none;
@@ -442,6 +492,21 @@
             cursor: not-allowed;
         }
 
+        .btn-danger {
+            background-color: var(--red50);
+            color: white;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background-color: var(--red60);
+        }
+
+        .btn-danger:disabled {
+            background-color: var(--red20);
+            color: var(--red50);
+            cursor: not-allowed;
+        }
+
         .btn-secondary {
             background-color: transparent;
             color: var(--gray90);
@@ -455,7 +520,7 @@
 
         /* Info Card */
         .info-card {
-            background-color: var(--gray03);
+            background-color: var(--gray02);
             border-left: 4px solid var(--blue60);
             padding: 16px;
             border-radius: 4px;
@@ -482,7 +547,7 @@
             align-items: center;
             gap: 12px;
             padding: 12px;
-            background-color: var(--gray03);
+            background-color: var(--gray02);
             border-radius: 4px;
             margin-bottom: 16px;
         }
@@ -545,7 +610,6 @@
             gap: 12px;
             margin-top: 24px;
             padding-top: 24px;
-            border-top: 1px solid var(--gray20);
         }
 
         /* Loading Overlay */
@@ -777,7 +841,6 @@
         <!-- Settings Sidebar -->
         <aside class="settings-sidebar">
             <div class="settings-section">
-                <h2 class="section-title">Tree Settings</h2>
                 <ul class="settings-menu">
                     <li>
                         <a href="#" class="settings-menu-item active" onclick="showPanel('treeDetails'); return false;">
@@ -792,35 +855,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="settings-menu-item">
+                        <a href="#" class="settings-menu-item" onclick="showPanel('privacy'); return false;">
                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                            Manage Members (1)
+                            Sharing and Permissions
                         </a>
                     </li>
                 </ul>
-            </div>
-
-            <div class="collapsible-section">
-                <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                    <span class="collapsible-title">Advanced Settings</span>
-                    <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
-                </div>
-                <div class="collapsible-content">
-                    <ul class="settings-menu">
-                        <li>
-                            <a href="#" class="settings-menu-item" onclick="showPanel('privacy'); return false;">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                                Sharing and Permissions
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="settings-menu-item delete-option" onclick="showPanel('deleteTree'); return false;">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                                Delete Tree
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </aside>
 
@@ -850,10 +890,11 @@
                         <label class="form-label" for="tree-description">Tree Description</label>
                         <textarea id="tree-description" class="form-input" placeholder="Add a description for your tree..."></textarea>
                         <p class="form-description">Help others understand what makes this tree unique.</p>
+                        <button type="button" class="btn btn-primary" style="margin-top: 12px;" disabled>Save</button>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Your Home Person in This Tree</label>
+                        <label class="form-label">Home Person in This Tree</label>
                         <div class="user-info">
                             <div class="user-avatar">DL</div>
                             <div class="user-details">
@@ -864,17 +905,36 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="preferred-tree" />
-                            <label class="checkbox-label" for="preferred-tree">
-                                <strong>Set as Preferred Tree</strong>
-                                <div class="form-description">The FamilySearch Tree is your preferred tree currently. Would you like to set House of Windsor as your new preferred tree?</div>
+                        <label class="form-label">Preferred Tree</label>
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: var(--gray02); border-radius: 8px;">
+                            <div style="font-size: 14px; color: var(--gray90);">
+                                The FamilySearch Tree is your preferred tree currently. Would you like to set House of Windsor as your new preferred tree?
+                            </div>
+                            <label class="toggle-switch" style="flex-shrink: 0; margin-left: 16px;">
+                                <input type="checkbox" id="preferred-tree" />
+                                <span class="toggle-slider"></span>
                             </label>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary" disabled>Save Changes</button>
                 </form>
+
+                <!-- Delete Tree Section -->
+                <div style="margin-top: 48px; padding-top: 32px; border-top: 2px solid var(--gray10);">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--gray90);">Delete Tree</h3>
+                    
+                    <p style="font-size: 14px; color: var(--gray70); margin-bottom: 16px; line-height: 1.5;">
+                        Delete your tree from FamilySearch. This includes deleting all people, photos, stories, etc. in your tree
+                    </p>
+
+                    <div style="display: flex; align-items: start; gap: 12px; padding: 12px 16px; background: var(--gray02); border-radius: 8px; border-left: 4px solid var(--yellow40); margin-bottom: 16px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--yellow50)" style="flex-shrink: 0; margin-top: 2px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                        <div style="font-size: 14px; color: var(--gray90);">
+                            <strong>Warning!</strong> This action cannot be undone!
+                        </div>
+                    </div>
+
+                    <a href="#" style="color: var(--blue60); font-size: 14px; font-weight: 500; text-decoration: none;" onclick="return confirm('Are you sure you want to delete this tree? This will permanently remove 1,247 individuals and all associated data.');">Delete your tree</a>
+                </div>
             </div>
 
             <!-- Upload New GEDCOM Panel -->
@@ -889,7 +949,7 @@
                     <div class="file-upload-hint">GEDCOM (.ged) files only</div>
                 </div>
 
-                <div class="panel-actions">
+                <div class="panel-actions" style="justify-content: flex-start;">
                     <button class="btn btn-primary" id="upload-continue-btn" onclick="showMergePreview()" disabled>Continue</button>
                 </div>
             </div>
@@ -999,7 +1059,7 @@
                     </div>
                 </div>
 
-                <div class="panel-actions">
+                <div class="panel-actions" style="justify-content: flex-start;">
                     <button class="btn btn-secondary" onclick="showPanel('updateGedcom')">Back</button>
                     <button class="btn btn-primary">Apply Changes</button>
                 </div>
@@ -1026,40 +1086,90 @@
             <div id="privacy" class="content-panel">
                 <h2 class="panel-title">Sharing and Permissions</h2>
                 
-                <label class="radio-option" style="margin-bottom: 16px;">
-                    <input type="radio" name="privacy-setting" value="public" checked />
-                    <span class="radio-checkmark"></span>
-                    <div class="radio-option-content">
-                        <div class="radio-option-title">Public</div>
-                        <div class="radio-option-description" style="margin-bottom: 8px;">All FamilySearch users can view the deceased individuals in this tree. They will not see living individuals nor be able to change any data in the tree.</div>
-                        <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px; font-size: 14px;">Why make your tree public?</div>
-                        <ul style="margin-left: 20px; font-size: 14px; color: var(--gray70); line-height: 1.6;">
-                            <li>By making your good research available to others, people working on the same lines can contact you, share data and collaborate with you.</li>
-                            <li>You will be helping other members of the FamilySearch community discover information about their relatives.</li>
-                        </ul>
-                    </div>
-                </label>
+                <div style="display: flex; gap: 16px;">
+                    <label class="radio-option" style="flex: 1;">
+                        <input type="radio" name="privacy-setting" value="public" checked />
+                        <span class="radio-checkmark"></span>
+                        <div class="radio-option-content">
+                            <div class="radio-option-title">Public</div>
+                            <div class="radio-option-description">All FamilySearch users can view the deceased individuals in this tree. They will not see living individuals nor be able to change any data in the tree.</div>
+                        </div>
+                    </label>
 
-                <label class="radio-option">
-                    <input type="radio" name="privacy-setting" value="private" />
-                    <span class="radio-checkmark"></span>
-                    <div class="radio-option-content">
-                        <div class="radio-option-title">Private Tree</div>
-                        <div class="radio-option-description" style="margin-bottom: 12px; font-size: 15px;">Only you and your invited contributors can view this tree. However, our AI will be able to use information from this tree to improve the quality of other trees.</div>
-                        <p style="font-size: 13px; color: var(--gray70); line-height: 1.6; margin-bottom: 0;">If you, as the owner of this tree, do not sign into your FamilySearch account for two years, and if you and your invited contributors make no edits to this tree during that same time, FamilySearch will attempt to contact you by email. After 30 days, the privacy setting will automatically change to public, and your deceased data will become visible. Living data will remain private at all times.</p>
-                    </div>
-                </label>
-
-                <div style="display: flex; gap: 8px; margin-top: 20px; padding: 12px; background: #FFF8E1; border-left: 4px solid var(--orange40); border-radius: 4px;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--orange40)" style="flex-shrink: 0; margin-top: 2px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
-                    <div style="font-size: 13px; color: var(--gray80); line-height: 1.5;">
-                        <strong>Note:</strong> If you change your Tree from public to private, it may take up to an hour for the deceased data to be removed from search results.
-                    </div>
+                    <label class="radio-option" style="flex: 1;">
+                        <input type="radio" name="privacy-setting" value="private" />
+                        <span class="radio-checkmark"></span>
+                        <div class="radio-option-content">
+                            <div class="radio-option-title">Private Tree</div>
+                            <div class="radio-option-description">Only you and your invited contributors can view this tree. However, our AI will be able to use information from this tree to improve the quality of other trees.</div>
+                        </div>
+                    </label>
                 </div>
 
-                <div class="panel-actions">
-                    <button class="btn btn-secondary" onclick="showPanel('treeDetails')">Cancel</button>
+                <div class="panel-actions" style="justify-content: flex-start;">
                     <button id="privacy-save-btn" class="btn btn-primary" disabled>Save</button>
+                </div>
+
+                <!-- Members Section -->
+                <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--gray20);">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--gray90);">Contributors</h3>
+                    
+                    <!-- Members -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--gray70);">Members</div>
+                        
+                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">S</div>
+                                <div>
+                                    <div style="font-size: 15px; color: var(--gray90);">Sarah Johnson</div>
+                                    <div style="font-size: 13px; color: var(--blue60); font-weight: 500;">Owner</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">J</div>
+                                <div style="font-size: 15px; color: var(--gray90);">Julie Diane Alexander</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">E</div>
+                                <div style="font-size: 15px; color: var(--gray90);">Erica Dawn Weller</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">E</div>
+                                <div style="font-size: 15px; color: var(--gray90);">Esther Grover</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">R</div>
+                                <div style="font-size: 15px; color: var(--gray90);">Rachel Weller Marchant</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">M</div>
+                                <div style="font-size: 15px; color: var(--gray90);">Marilyn Van Sickle</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: flex-start; margin-top: 12px;">
+                            <button class="btn btn-secondary" style="display: flex; align-items: center; gap: 8px;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                Create Invite
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1098,9 +1208,8 @@
                     </div>
                 </div>
 
-                <div class="panel-actions">
-                    <button class="btn btn-secondary" onclick="showPanel('treeDetails')">Cancel</button>
-                    <button class="btn btn-primary" style="background-color: var(--red50);" id="delete-btn" disabled>Delete Tree</button>
+                <div class="panel-actions" style="justify-content: flex-start;">
+                    <button class="btn btn-primary btn-danger" id="delete-btn" disabled>Delete Tree</button>
                 </div>
             </div>
         </main>

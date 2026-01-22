@@ -488,10 +488,14 @@
         }
 
         .family-member.potential {
-            border: 2px dashed var(--blue40);
+            border: 2px dashed var(--green60);
             border-radius: 8px;
-            background: white;
+            background: var(--green02);
             margin: 4px 12px;
+        }
+
+        .family-member.potential .avatar-small {
+            border: 2px solid var(--green60);
         }
 
         .avatar-small {
@@ -673,6 +677,7 @@
         .source-item.active {
             background: #00525E;
             border-left-color: #00525E;
+            border-radius: 0 8px 8px 0;
         }
 
         .source-item.active .source-title,
@@ -694,6 +699,7 @@
         .vital-item.highlighted {
             background: #00525E;
             color: white;
+            border-radius: 8px;
         }
 
         .vital-item.highlighted .vital-label-text,
@@ -710,6 +716,7 @@
         .family-member.highlighted {
             background: #00525E;
             color: white;
+            border-radius: 8px;
         }
 
         .family-member.highlighted .family-name,
@@ -916,8 +923,8 @@
 
         .person-card-header {
             display: flex;
-            gap: 16px;
-            padding: 24px 24px 20px 24px;
+            gap: 12px;
+            padding: 16px 20px 12px 20px;
             border-bottom: 1px solid var(--gray10);
         }
 
@@ -941,7 +948,7 @@
         }
 
         .person-card-name {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--gray100);
             margin-bottom: 4px;
@@ -950,7 +957,7 @@
         .person-card-id {
             font-size: 14px;
             color: var(--gray60);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .person-card-tabs {
@@ -971,11 +978,11 @@
         }
 
         .person-card-body {
-            padding: 20px 24px;
+            padding: 16px 20px;
         }
 
         .person-card-vital {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .person-card-vital:last-child {
@@ -1041,7 +1048,7 @@
         }
 
         .person-card-footer {
-            padding: 16px 24px;
+            padding: 12px 20px;
             background: var(--gray02);
             display: flex;
             gap: 12px;
@@ -1049,7 +1056,7 @@
 
         .person-card-btn {
             flex: 1;
-            padding: 12px 20px;
+            padding: 10px 16px;
             border: 1px solid var(--gray30);
             background: white;
             color: var(--gray100);
@@ -1232,12 +1239,11 @@
             <div class="content-grid">
                 <!-- Left Column: Vitals -->
                 <div class="left-column">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h2 class="card-title">Vitals</h2>
+                    </div>
                     <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">Vitals</h2>
-                            <a href="#" class="toggle-link">Edit</a>
-                        </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding-top: 8px;">
                             <div class="vital-item">
                                 <div class="vital-content">
                                     <div class="vital-label">
@@ -1314,11 +1320,10 @@
                     </div>
 
                     <!-- Other Information -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; margin-top: 32px;">
+                        <h2 class="card-title">Other Information</h2>
+                    </div>
                     <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">Other Information</h2>
-                            <a href="#" class="toggle-link">Edit</a>
-                        </div>
                         <div class="card-body">
                             <div class="vital-item">
                                 <div class="vital-content">
@@ -1364,14 +1369,13 @@
 
                 <!-- Middle Column: Family Members -->
                 <div class="middle-column">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h2 class="card-title">Family</h2>
+                    </div>
                     <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">Family</h2>
-                            <a href="#" class="toggle-link">Edit</a>
-                        </div>
                         <div class="card-body">
                             <!-- Spouses and Children -->
-                            <div class="family-section">
+                            <div class="family-section" style="padding-top: 16px;">
                                 <div class="family-section-header">
                                     <h3 class="family-section-title">Spouse and Children</h3>
                                 </div>
@@ -1461,8 +1465,11 @@
                                         <div style="flex: 1;">
                                             <div class="hint-badge" style="margin-bottom: 6px;">Potential Child</div>
                                             <div style="display: flex; align-items: center; gap: 12px;">
-                                                <div class="avatar-small">
-                                                    <img src="female.png" alt="Emma Jane Anderson">
+                                                <div class="avatar-small" style="background: var(--green60); display: flex; align-items: center; justify-content: center; border: 2px solid var(--green60);">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                        <circle cx="12" cy="8" r="3"/>
+                                                        <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+                                                    </svg>
                                                 </div>
                                                 <div class="family-info">
                                                     <div class="family-name">Emma Jane Anderson</div>
@@ -1478,7 +1485,7 @@
                             </div>
 
                             <!-- Another Spouse Section -->
-                            <div class="family-section" style="margin-top: 22px;">
+                            <div class="family-section" style="margin-top: 8px;">
                                 <div class="family-section-header">
                                     <h3 class="family-section-title">Spouse and Children</h3>
                                 </div>
@@ -1498,7 +1505,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="family-member">
+                                    <div class="family-member" style="background: var(--blue02); border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 10px -2px 7px; padding: 8px 2px 8px 5px;">
                                         <div class="avatar-small">
                                             <img src="female.png" alt="Doris Jane Lewis">
                                         </div>
@@ -1550,7 +1557,7 @@
                             </div>
 
                             <!-- Parents and Siblings -->
-                            <div class="family-section" style="margin-top: 32px;">
+                            <div class="family-section" style="margin-top: 8px;">
                                 <div class="family-section-header">
                                     <h3 class="family-section-title">Parents and Siblings</h3>
                                 </div>
@@ -1630,7 +1637,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="family-member">
+                                    <div class="family-member" style="background: var(--blue02); border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 10px -2px 7px; padding: 8px 2px 8px 5px;">
                                         <div class="avatar-small">
                                             <img src="female.png" alt="Doris Jane Lewis">
                                         </div>
@@ -1647,7 +1654,7 @@
                             </div>
 
                             <!-- Other Relationships -->
-                            <div class="family-section" style="margin-top: 32px;">
+                            <div class="family-section" style="margin-top: 8px;">
                                 <div class="family-section-header">
                                     <h3 class="family-section-title">Other Relationships</h3>
                                 </div>
@@ -1666,22 +1673,7 @@
                         <button class="options-btn">⋯</button>
                     </div>
 
-                    <div class="card" style="border: 2px dashed var(--blue40);">
-                        <div class="card-body">
-                            <div class="source-item">
-                                <div class="source-content">
-                                    <div class="hint-badge">Adds Potential Birth Place</div>
-                                    <div class="source-header">
-                                        <div class="source-title">Utah Birth Certificates</div>
-                                    </div>
-                                    <div class="source-meta">Name, Sex, Birth, Parents</div>
-                                </div>
-                                <button class="view-btn">Review</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card" style="border: 2px dashed var(--blue40);">
+                    <div class="card" style="border: 2px dashed var(--green60); background: var(--green02);">
                         <div class="card-body">
                             <div class="source-item" data-marriage="1912">
                                 <div class="source-content">
@@ -1742,6 +1734,7 @@
                         <div class="card-body">
                             <div class="source-item" data-marriage="1939">
                                 <div class="source-content">
+                                    <div class="hint-badge">Adds Potential Child</div>
                                     <div class="source-header">
                                         <div class="source-title">1940 United States Federal Census</div>
                                     </div>
