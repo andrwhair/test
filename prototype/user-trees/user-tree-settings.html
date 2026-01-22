@@ -199,36 +199,32 @@
             color: var(--blue60);
         }
 
-        /* Page Title */
-        .page-header {
-            background-color: var(--white);
+        /* Main Content */
+        .container {
+            max-width: 1070px;
+            margin: 0 auto;
             padding: 24px;
-            border-bottom: 1px solid var(--gray05);
         }
 
         .page-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 600;
             color: var(--gray90);
+            margin-bottom: 32px;
         }
 
-        /* Main Content */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 24px;
+        .content-grid {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 220px 750px;
             gap: 24px;
         }
 
         /* Settings Sidebar */
         .settings-sidebar {
-            background-color: var(--white);
+            background-color: transparent;
             border-radius: 8px;
             padding: 16px;
             height: fit-content;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .settings-section {
@@ -783,6 +779,38 @@
             font-size: 14px;
             color: var(--gray70);
         }
+
+        /* Status Overlay / Toast */
+        .status-overlay {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--gray90);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-size: 15px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-overlay.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .status-overlay-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
@@ -830,14 +858,13 @@
                 <a href="manage-trees.html" style="font-weight: 600; color: var(--gray90);">Manage Trees</a>
             </div>
         </div>
-
-        <div class="page-header">
-            <h1 class="page-title">Tree Settings</h1>
-        </div>
     </header>
 
     <!-- Main Content -->
     <div class="container">
+        <h1 class="page-title">Tree Settings</h1>
+
+        <div class="content-grid">
         <!-- Settings Sidebar -->
         <aside class="settings-sidebar">
             <div class="settings-section">
@@ -849,9 +876,15 @@
                         </a>
                     </li>
                     <li>
+                        <a href="#" class="settings-menu-item" onclick="showPanel('recentChanges'); return false;">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+                            Recent Changes
+                        </a>
+                    </li>
+                    <li>
                         <a href="#" class="settings-menu-item" onclick="showPanel('updateGedcom'); return false;">
                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-                            Upload New Gedcom
+                            Re-upload Gedcom
                         </a>
                     </li>
                     <li>
@@ -876,7 +909,7 @@
                         About This Tree
                     </div>
                     <div class="info-card-content">
-                        This tree contains <strong>1,247 individuals</strong> and was last updated on <strong>January 10, 2026</strong>. It was originally imported from a GEDCOM file on June 15, 2023.
+                        This tree contains <strong>1,247 individuals</strong>. It was originally imported from a GEDCOM file on June 15, 2023.
                     </div>
                 </div>
 
@@ -906,14 +939,14 @@
 
                     <div class="form-group">
                         <label class="form-label">Preferred Tree</label>
-                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: var(--gray02); border-radius: 8px;">
-                            <div style="font-size: 14px; color: var(--gray90);">
-                                The FamilySearch Tree is your preferred tree currently. Would you like to set House of Windsor as your new preferred tree?
-                            </div>
-                            <label class="toggle-switch" style="flex-shrink: 0; margin-left: 16px;">
+                        <div style="display: flex; align-items: center; padding: 16px; background: var(--gray02); border-radius: 8px; gap: 16px;">
+                            <label class="toggle-switch" style="flex-shrink: 0;">
                                 <input type="checkbox" id="preferred-tree" />
                                 <span class="toggle-slider"></span>
                             </label>
+                            <div style="font-size: 14px; color: var(--gray90);">
+                                Set the House of Windsor tree as your preferred tree.
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -923,11 +956,11 @@
                     <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--gray90);">Delete Tree</h3>
                     
                     <p style="font-size: 14px; color: var(--gray70); margin-bottom: 16px; line-height: 1.5;">
-                        Delete your tree from FamilySearch. This includes deleting all people, photos, stories, etc. in your tree
+                        Delete all people, photos, stories, etc. in your tree. If you want to update people in this tree, <a href="#updateGedcom" onclick="showPanel('updateGedcom'); return false;" style="color: var(--blue60); text-decoration: none;">re-upload your gedcom</a>. You can also sync using <a href="#" style="color: var(--blue60); text-decoration: none;">Ancestral Quest</a> or <a href="#" style="color: var(--blue60); text-decoration: none;">Rootsmagic</a> software.
                     </p>
 
-                    <div style="display: flex; align-items: start; gap: 12px; padding: 12px 16px; background: var(--gray02); border-radius: 8px; border-left: 4px solid var(--yellow40); margin-bottom: 16px;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--yellow50)" style="flex-shrink: 0; margin-top: 2px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                    <div style="display: flex; align-items: start; gap: 12px; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 16px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--red50)" style="flex-shrink: 0; margin-top: 2px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
                         <div style="font-size: 14px; color: var(--gray90);">
                             <strong>Warning!</strong> This action cannot be undone!
                         </div>
@@ -937,9 +970,138 @@
                 </div>
             </div>
 
-            <!-- Upload New GEDCOM Panel -->
+            <!-- Recent Changes Panel -->
+            <div id="recentChanges" class="content-panel">
+                <h2 class="panel-title">Latest Changes</h2>
+
+                <div style="display: grid; gap: 1px; background: var(--gray10); border: 1px solid var(--gray10); border-radius: 8px; overflow: hidden;">
+                    <!-- Change Item 1 -->
+                    <div style="display: grid; grid-template-columns: 48px 200px 1fr 200px; gap: 16px; padding: 20px; background: white; align-items: start;">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">D</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 4px;">Daniel W Johnson</div>
+                            <div style="font-size: 13px; color: var(--gray70);">1960–Living • GTXQ-HBX</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 8px;">Name Updated</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 4px;">CHANGED</div>
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 8px;">Daniel W Johnson</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 4px;">PREVIOUS</div>
+                            <div style="font-size: 14px; color: var(--gray90);">Daniel W Johnson (Twin)</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">January 16, 2026</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; justify-content: flex-end;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                RyanLewis
+                            </div>
+                            <a href="#" style="color: var(--blue60); font-size: 14px; font-weight: 500; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">VIEW CHANGE</a>
+                        </div>
+                    </div>
+
+                    <!-- Change Item 2 -->
+                    <div style="display: grid; grid-template-columns: 48px 200px 1fr 200px; gap: 16px; padding: 20px; background: white; align-items: start;">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">D</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 4px;">Daniel W Johnson</div>
+                            <div style="font-size: 13px; color: var(--gray70);">1960–Living • GTXQ-HBX</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 8px;">Name Updated</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 4px;">CHANGED</div>
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 8px;">Daniel W Johnson (Twin)</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 4px;">PREVIOUS</div>
+                            <div style="font-size: 14px; color: var(--gray90);">Daniel W. Johnson (Twin)</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">January 16, 2026</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; justify-content: flex-end;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                RyanLewis
+                            </div>
+                            <a href="#" style="color: var(--blue60); font-size: 14px; font-weight: 500; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">VIEW CHANGE</a>
+                        </div>
+                    </div>
+
+                    <!-- Change Item 3 -->
+                    <div style="display: grid; grid-template-columns: 48px 200px 1fr 200px; gap: 16px; padding: 20px; background: white; align-items: start;">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">P</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 4px;">Peter Gottfried Hoem...</div>
+                            <div style="font-size: 13px; color: var(--gray70);">1935–2019 • GTXQ-WKD</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 8px;">Residence Updated</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 4px;">CHANGED</div>
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 2px;">1940</div>
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 8px;">Queens, New York City, New York, United States</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 4px;">PREVIOUS</div>
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 2px;">1940</div>
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">Assembly District 6, Queens, New York City, Queens, New York, United States</div>
+                            <div style="font-size: 13px; color: var(--red50); font-weight: 500;">Non-standardized Place</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">December 4, 2025</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; justify-content: flex-end;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                RyanLewis
+                            </div>
+                            <a href="#" style="color: var(--blue60); font-size: 14px; font-weight: 500; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">VIEW CHANGE</a>
+                        </div>
+                    </div>
+
+                    <!-- Change Item 4 -->
+                    <div style="display: grid; grid-template-columns: 48px 200px 1fr 200px; gap: 16px; padding: 20px; background: white; align-items: start;">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">M</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 4px;">Mary Magdalene Well...</div>
+                            <div style="font-size: 13px; color: var(--gray70);">1933–2022 • GTXQ-7VY</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 8px;">Death Added</div>
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 2px;">October 2022</div>
+                            <div style="font-size: 14px; color: var(--gray90);">Orem, Utah, Utah, United States</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">July 9, 2024</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; justify-content: flex-end;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                RyanLewis
+                            </div>
+                            <a href="#" style="color: var(--blue60); font-size: 14px; font-weight: 500; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">VIEW CHANGE</a>
+                        </div>
+                    </div>
+
+                    <!-- Change Item 5 -->
+                    <div style="display: grid; grid-template-columns: 48px 200px 1fr 200px; gap: 16px; padding: 20px; background: white; align-items: start;">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">H</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 4px;">Henry Lewis</div>
+                            <div style="font-size: 13px; color: var(--gray70);">1866–1947 • GTX7-7RW</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--gray90); margin-bottom: 8px;">Burial Updated</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 4px;">CHANGED</div>
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 2px;">19 MAY 1947</div>
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 8px;">Elysian Burial Gardens, Millcreek, Salt Lake, Utah, United States</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 4px;">PREVIOUS</div>
+                            <div style="font-size: 14px; color: var(--gray90);">19 MAY 1947</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">July 9, 2024</div>
+                            <div style="font-size: 13px; color: var(--gray70); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; justify-content: flex-end;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                RyanLewis
+                            </div>
+                            <a href="#" style="color: var(--blue60); font-size: 14px; font-weight: 500; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">VIEW CHANGE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Re-upload GEDCOM Panel -->
             <div id="updateGedcom" class="content-panel">
-                <h2 class="panel-title">Upload New Gedcom</h2>
+                <h2 class="panel-title">Re-upload Gedcom</h2>
                 
                 <p style="margin-bottom: 24px;">Upload a GEDCOM file to update your tree with new information.</p>
 
@@ -963,15 +1125,15 @@
                 <!-- Summary Stats -->
                 <div style="display: flex; gap: 16px; margin-bottom: 24px;">
                     <div style="flex: 1; padding: 16px; background: #E8F5E9; border-radius: 8px;">
-                        <div style="font-size: 28px; font-weight: 600; color: var(--green50); margin-bottom: 4px;">47</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--gray90); margin-bottom: 4px;">47</div>
                         <div style="font-size: 13px; color: var(--gray70);">People Added</div>
                     </div>
                     <div style="flex: 1; padding: 16px; background: #FFF3E0; border-radius: 8px;">
-                        <div style="font-size: 28px; font-weight: 600; color: var(--orange40); margin-bottom: 4px;">128</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--gray90); margin-bottom: 4px;">128</div>
                         <div style="font-size: 13px; color: var(--gray70);">People Updated</div>
                     </div>
                     <div style="flex: 1; padding: 16px; background: #FFEBEE; border-radius: 8px;">
-                        <div style="font-size: 28px; font-weight: 600; color: var(--red50); margin-bottom: 4px;">3</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--gray90); margin-bottom: 4px;">3</div>
                         <div style="font-size: 13px; color: var(--gray70);">People Removed</div>
                     </div>
                 </div>
@@ -1213,6 +1375,7 @@
                 </div>
             </div>
         </main>
+        </div>
     </div>
 
     <!-- Loading Spinner Overlay -->
@@ -1222,6 +1385,14 @@
             <div style="color: white; font-size: 16px; font-weight: 500;">Analyzing GEDCOM changes...</div>
             <div style="color: rgba(255, 255, 255, 0.8); font-size: 14px;">This will take up to a minute</div>
         </div>
+    </div>
+
+    <!-- Status Overlay / Toast -->
+    <div id="statusOverlay" class="status-overlay">
+        <svg class="status-overlay-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
+        </svg>
+        <span id="statusOverlayMessage"></span>
     </div>
 
     <script>
@@ -1240,6 +1411,32 @@
                 }
             });
         });
+
+        // Preferred Tree toggle handler
+        const preferredTreeToggle = document.getElementById('preferred-tree');
+        if (preferredTreeToggle) {
+            preferredTreeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    showStatusOverlay('House of Windsor is now your preferred tree');
+                } else {
+                    showStatusOverlay('FamilySearch Tree is now your preferred tree');
+                }
+            });
+        }
+
+        // Status Overlay / Toast
+        function showStatusOverlay(message) {
+            const overlay = document.getElementById('statusOverlay');
+            const messageEl = document.getElementById('statusOverlayMessage');
+            
+            messageEl.textContent = message;
+            overlay.classList.add('show');
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                overlay.classList.remove('show');
+            }, 4000);
+        }
 
         // Show/hide panels
         function showPanel(panelId) {
