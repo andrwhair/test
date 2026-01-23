@@ -2210,6 +2210,90 @@
         </div>
     </div>
 
+    <!-- Cemetery Records Modal -->
+    <div class="census-modal-overlay" id="cemeteryModal">
+        <div class="census-modal">
+            <div class="census-modal-header">
+                <div class="census-modal-title-section">
+                    <div class="census-modal-title">Doris Jane Lewis Hair</div>
+                    <div class="census-modal-subtitle">Burial • Find a Grave Index</div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <button class="census-modal-edit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        EDIT
+                    </button>
+                    <button class="census-modal-close" onclick="closeModal('cemeteryModal')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="census-modal-body">
+                <div class="census-details-section">
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Name</div>
+                        <div class="census-detail-value">Doris Jane Lewis Hair</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birth Date</div>
+                        <div class="census-detail-value">04 Jan 1896</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Death Date</div>
+                        <div class="census-detail-value">22 Sep 1988</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Type</div>
+                        <div class="census-detail-value">Burial</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Place</div>
+                        <div class="census-detail-value">Marion, Summit, Utah, United States of America</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Place (Original)</div>
+                        <div class="census-detail-value">Marion, Summit, Utah, United States of America</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Cemetery</div>
+                        <div class="census-detail-value">Marion Cemetery</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Photograph Included</div>
+                        <div class="census-detail-value">Y</div>
+                    </div>
+                </div>
+                <div class="census-image-section">
+                    <div class="census-document-image">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect fill='%23e8e8e8' width='600' height='400'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='14' fill='%23666' text-anchor='middle'%3EView on findagrave.com%3C/text%3E%3C/svg%3E" alt="Cemetery Record" style="width: 100%; height: auto; display: block;">
+                    </div>
+                    <button class="census-view-original-btn">VIEW ORIGINAL DOCUMENT</button>
+                    <div class="census-similar-records">
+                        <div class="census-similar-title">Similar Records</div>
+                        <div class="census-similar-item">
+                            <div class="census-similar-avatar">
+                                <img src="female.png" alt="Doris J. Lewis Hair">
+                            </div>
+                            <div class="census-similar-info">
+                                <div class="census-similar-name">Doris J. Lewis Hair</div>
+                                <div class="census-similar-meta">BillionGraves Index</div>
+                            </div>
+                        </div>
+                        <div class="census-similar-item">
+                            <div class="census-similar-avatar">
+                                <img src="female.png" alt="Doris Lewis Hair">
+                            </div>
+                            <div class="census-similar-info">
+                                <div class="census-similar-name">Doris Lewis Hair</div>
+                                <div class="census-similar-meta">United States, Social Security Numerical Identification Files (NUMIDENT), 1936-2007</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scroll Down Indicator -->
     <div class="scroll-down-indicator" id="scrollDownIndicator">
         Highlighted content below
@@ -3375,6 +3459,7 @@
             const census1930Modal = document.getElementById('census1930Modal');
             const marriageModal = document.getElementById('marriageModal');
             const deathModal = document.getElementById('deathModal');
+            const cemeteryModal = document.getElementById('cemeteryModal');
 
             // Add click handlers to View/Review buttons for all sources
             document.addEventListener('click', function(e) {
@@ -3404,6 +3489,9 @@
                                 document.body.style.overflow = 'hidden';
                             } else if (titleText.includes('Utah Death Certificates')) {
                                 deathModal.classList.add('show');
+                                document.body.style.overflow = 'hidden';
+                            } else if (titleText.includes('Cemetery Records')) {
+                                cemeteryModal.classList.add('show');
                                 document.body.style.overflow = 'hidden';
                             }
                         }
@@ -3445,6 +3533,12 @@
             deathModal.addEventListener('click', function(e) {
                 if (e.target === deathModal) {
                     closeModal('deathModal');
+                }
+            });
+
+            cemeteryModal.addEventListener('click', function(e) {
+                if (e.target === cemeteryModal) {
+                    closeModal('cemeteryModal');
                 }
             });
 
