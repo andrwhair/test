@@ -3585,15 +3585,14 @@
         // Function to check if highlighted elements are below the viewport
         function checkHighlightedBelowFold() {
             const highlightedElements = document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted');
-            const viewportBottom = window.innerHeight + window.scrollY;
             let hasBelowFold = false;
 
             highlightedElements.forEach(element => {
                 const rect = element.getBoundingClientRect();
-                const elementTop = rect.top + window.scrollY;
-                
+
                 // Check if element is below the current viewport
-                if (elementTop > window.innerHeight + window.scrollY) {
+                // rect.top is relative to viewport, so if it's > viewport height, it's below the fold
+                if (rect.top > window.innerHeight) {
                     hasBelowFold = true;
                 }
             });
@@ -3608,19 +3607,19 @@
         function showScrollIndicator() {
             const indicator = document.getElementById('scrollDownIndicator');
             indicator.classList.add('show');
-            
+
             // Add click handler to scroll to first highlighted element below fold
             indicator.onclick = function() {
                 const highlightedElements = document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted');
-                highlightedElements.forEach(element => {
+                for (let element of highlightedElements) {
                     const rect = element.getBoundingClientRect();
-                    const elementTop = rect.top + window.scrollY;
-                    
-                    if (elementTop > window.innerHeight + window.scrollY) {
+
+                    // If element is below the viewport, scroll to it
+                    if (rect.top > window.innerHeight) {
                         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        return;
+                        break;
                     }
-                });
+                }
             };
         }
 
