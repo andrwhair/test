@@ -3381,11 +3381,8 @@
                     }
                 });
 
-                // Check if any highlighted content is below the fold
-                // Use a small delay to ensure all styles and layout are calculated
-                setTimeout(() => {
-                    checkHighlightedBelowFold();
-                }, 50);
+                // Check if any highlighted content is below the fold immediately
+                checkHighlightedBelowFold();
             });
 
             // Click anywhere to deselect source
@@ -3587,7 +3584,16 @@
 
         // Function to check if highlighted elements are below the viewport
         function checkHighlightedBelowFold() {
+            // Force a reflow to ensure layout is calculated
+            document.body.offsetHeight;
+
             const highlightedElements = document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted');
+
+            if (highlightedElements.length === 0) {
+                hideScrollIndicator();
+                return;
+            }
+
             let hasBelowFold = false;
 
             highlightedElements.forEach(element => {
