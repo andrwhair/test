@@ -3232,6 +3232,7 @@
                             item.classList.remove('highlighted');
                         });
                         activeSource = null;
+                        hideScrollIndicator();
                         return;
                     }
 
@@ -3244,6 +3245,7 @@
                     document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted').forEach(item => {
                         item.classList.remove('highlighted');
                     });
+                    hideScrollIndicator();
 
                     // Add new highlights
                     this.classList.add('active');
