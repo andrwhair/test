@@ -1718,6 +1718,498 @@
         </div>
     </div>
 
+    <!-- 1900 Census Modal -->
+    <div class="census-modal-overlay" id="census1900Modal">
+        <div class="census-modal">
+            <div class="census-modal-header">
+                <div class="census-modal-title-section">
+                    <div class="census-modal-title">Doris Jane Lewis</div>
+                    <div class="census-modal-subtitle">Census • United States, Census, 1900</div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <button class="census-modal-edit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        EDIT
+                    </button>
+                    <button class="census-modal-close" onclick="closeModal('census1900Modal')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="census-modal-body">
+                <div class="census-details-section">
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Name</div>
+                        <div class="census-detail-value">Doris Jane Lewis</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Sex</div>
+                        <div class="census-detail-value">Female</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Age</div>
+                        <div class="census-detail-value">4</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birth Month</div>
+                        <div class="census-detail-value">Jan 1896</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birthplace</div>
+                        <div class="census-detail-value">Utah</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Relationship to Head of Household</div>
+                        <div class="census-detail-value">Daughter</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Type</div>
+                        <div class="census-detail-value">Census</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Date</div>
+                        <div class="census-detail-value">1900</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Place</div>
+                        <div class="census-detail-value">Kamas, Summit, Utah, United States</div>
+                    </div>
+                </div>
+                <div class="census-image-section">
+                    <div class="census-document-image">
+                        <img src="images/1900-census.png" alt="1900 Census Document" style="width: 100%; height: auto; display: block;">
+                    </div>
+                    <button class="census-view-original-btn">VIEW ORIGINAL DOCUMENT</button>
+                </div>
+                <div class="census-spouses-children">
+                    <div class="census-spouses-title">
+                        <span>Doris Jane Lewis's Parents and Siblings</span>
+                    </div>
+                    <div class="census-family-member" onclick="toggleFamilyDetails(event, 'parent-1900-1')">
+                        <div class="census-family-name-cell">William H. Lewis</div>
+                        <div class="census-family-relation">Father</div>
+                        <div class="census-family-sex">M</div>
+                        <div class="census-family-age">35</div>
+                        <div class="census-family-birthplace">Utah</div>
+                        <button class="census-expand-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+                        </button>
+                    </div>
+                    <div class="census-family-details" id="parent-1900-1">
+                        <div class="census-detail-grid">
+                            <div class="census-detail-grid-label">Name</div>
+                            <div class="census-detail-grid-value">William H. Lewis</div>
+                            <div class="census-detail-grid-label">Relationship</div>
+                            <div class="census-detail-grid-value">Head</div>
+                            <div class="census-detail-grid-label">Age</div>
+                            <div class="census-detail-grid-value">35</div>
+                            <div class="census-detail-grid-label">Birthplace</div>
+                            <div class="census-detail-grid-value">Utah</div>
+                        </div>
+                    </div>
+                    <div class="census-family-member" onclick="toggleFamilyDetails(event, 'parent-1900-2')">
+                        <div class="census-family-name-cell">Mary Ann Lewis</div>
+                        <div class="census-family-relation">Mother</div>
+                        <div class="census-family-sex">F</div>
+                        <div class="census-family-age">32</div>
+                        <div class="census-family-birthplace">Utah</div>
+                        <button class="census-expand-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+                        </button>
+                    </div>
+                    <div class="census-family-details" id="parent-1900-2">
+                        <div class="census-detail-grid">
+                            <div class="census-detail-grid-label">Name</div>
+                            <div class="census-detail-grid-value">Mary Ann Lewis</div>
+                            <div class="census-detail-grid-label">Relationship</div>
+                            <div class="census-detail-grid-value">Wife</div>
+                            <div class="census-detail-grid-label">Age</div>
+                            <div class="census-detail-grid-value">32</div>
+                            <div class="census-detail-grid-label">Birthplace</div>
+                            <div class="census-detail-grid-value">Utah</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1910 Census Modal -->
+    <div class="census-modal-overlay" id="census1910Modal">
+        <div class="census-modal">
+            <div class="census-modal-header">
+                <div class="census-modal-title-section">
+                    <div class="census-modal-title">Doris Jane Lewis</div>
+                    <div class="census-modal-subtitle">Census • United States, Census, 1910</div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <button class="census-modal-edit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        EDIT
+                    </button>
+                    <button class="census-modal-close" onclick="closeModal('census1910Modal')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="census-modal-body">
+                <div class="census-details-section">
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Name</div>
+                        <div class="census-detail-value">Doris Jane Lewis</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Sex</div>
+                        <div class="census-detail-value">Female</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Age</div>
+                        <div class="census-detail-value">14</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birth Year (Estimated)</div>
+                        <div class="census-detail-value">1896</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birthplace</div>
+                        <div class="census-detail-value">Utah</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Marital Status</div>
+                        <div class="census-detail-value">Single</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Relationship to Head of Household</div>
+                        <div class="census-detail-value">Daughter</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Type</div>
+                        <div class="census-detail-value">Census</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Date</div>
+                        <div class="census-detail-value">1910</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Place</div>
+                        <div class="census-detail-value">Kamas, Summit, Utah, United States</div>
+                    </div>
+                </div>
+                <div class="census-image-section">
+                    <div class="census-document-image">
+                        <img src="images/1910-census.png" alt="1910 Census Document" style="width: 100%; height: auto; display: block;">
+                    </div>
+                    <button class="census-view-original-btn">VIEW ORIGINAL DOCUMENT</button>
+                </div>
+                <div class="census-spouses-children">
+                    <div class="census-spouses-title">
+                        <span>Doris Jane Lewis's Parents and Siblings</span>
+                    </div>
+                    <div class="census-family-member" onclick="toggleFamilyDetails(event, 'parent-1910-1')">
+                        <div class="census-family-name-cell">William H. Lewis</div>
+                        <div class="census-family-relation">Father</div>
+                        <div class="census-family-sex">M</div>
+                        <div class="census-family-age">45</div>
+                        <div class="census-family-birthplace">Utah</div>
+                        <button class="census-expand-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+                        </button>
+                    </div>
+                    <div class="census-family-details" id="parent-1910-1">
+                        <div class="census-detail-grid">
+                            <div class="census-detail-grid-label">Name</div>
+                            <div class="census-detail-grid-value">William H. Lewis</div>
+                            <div class="census-detail-grid-label">Relationship</div>
+                            <div class="census-detail-grid-value">Head</div>
+                            <div class="census-detail-grid-label">Age</div>
+                            <div class="census-detail-grid-value">45</div>
+                            <div class="census-detail-grid-label">Birthplace</div>
+                            <div class="census-detail-grid-value">Utah</div>
+                        </div>
+                    </div>
+                    <div class="census-family-member" onclick="toggleFamilyDetails(event, 'parent-1910-2')">
+                        <div class="census-family-name-cell">Mary Ann Lewis</div>
+                        <div class="census-family-relation">Mother</div>
+                        <div class="census-family-sex">F</div>
+                        <div class="census-family-age">42</div>
+                        <div class="census-family-birthplace">Utah</div>
+                        <button class="census-expand-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+                        </button>
+                    </div>
+                    <div class="census-family-details" id="parent-1910-2">
+                        <div class="census-detail-grid">
+                            <div class="census-detail-grid-label">Name</div>
+                            <div class="census-detail-grid-value">Mary Ann Lewis</div>
+                            <div class="census-detail-grid-label">Relationship</div>
+                            <div class="census-detail-grid-value">Wife</div>
+                            <div class="census-detail-grid-label">Age</div>
+                            <div class="census-detail-grid-value">42</div>
+                            <div class="census-detail-grid-label">Birthplace</div>
+                            <div class="census-detail-grid-value">Utah</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1930 Census Modal -->
+    <div class="census-modal-overlay" id="census1930Modal">
+        <div class="census-modal">
+            <div class="census-modal-header">
+                <div class="census-modal-title-section">
+                    <div class="census-modal-title">Doris Jane Lewis</div>
+                    <div class="census-modal-subtitle">Census • United States, Census, 1930</div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <button class="census-modal-edit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        EDIT
+                    </button>
+                    <button class="census-modal-close" onclick="closeModal('census1930Modal')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="census-modal-body">
+                <div class="census-details-section">
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Name</div>
+                        <div class="census-detail-value">Doris Jane Emery</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Sex</div>
+                        <div class="census-detail-value">Female</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Age</div>
+                        <div class="census-detail-value">34</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birth Year (Estimated)</div>
+                        <div class="census-detail-value">1896</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birthplace</div>
+                        <div class="census-detail-value">Utah</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Marital Status</div>
+                        <div class="census-detail-value">Married</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Race</div>
+                        <div class="census-detail-value">White</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Relationship to Head of Household</div>
+                        <div class="census-detail-value">Wife</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Type</div>
+                        <div class="census-detail-value">Census</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Date</div>
+                        <div class="census-detail-value">1930</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Place</div>
+                        <div class="census-detail-value">Kamas, Summit, Utah, United States</div>
+                    </div>
+                </div>
+                <div class="census-image-section">
+                    <div class="census-document-image">
+                        <img src="images/1930-census.png" alt="1930 Census Document" style="width: 100%; height: auto; display: block;">
+                    </div>
+                    <button class="census-view-original-btn">VIEW ORIGINAL DOCUMENT</button>
+                </div>
+                <div class="census-spouses-children">
+                    <div class="census-spouses-title">
+                        <span>Doris Jane Emery's Spouse and Children</span>
+                    </div>
+                    <div class="census-family-member" onclick="toggleFamilyDetails(event, 'george-1930')">
+                        <div class="census-family-name-cell">George Rhodes Emery</div>
+                        <div class="census-family-relation">Husband</div>
+                        <div class="census-family-sex">M</div>
+                        <div class="census-family-age">36</div>
+                        <div class="census-family-birthplace">Utah</div>
+                        <button class="census-expand-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+                        </button>
+                    </div>
+                    <div class="census-family-details" id="george-1930">
+                        <div class="census-detail-grid">
+                            <div class="census-detail-grid-label">Name</div>
+                            <div class="census-detail-grid-value">George Rhodes Emery</div>
+                            <div class="census-detail-grid-label">Relationship</div>
+                            <div class="census-detail-grid-value">Head</div>
+                            <div class="census-detail-grid-label">Age</div>
+                            <div class="census-detail-grid-value">36</div>
+                            <div class="census-detail-grid-label">Birthplace</div>
+                            <div class="census-detail-grid-value">Utah</div>
+                        </div>
+                    </div>
+                    <div class="census-family-member" onclick="toggleFamilyDetails(event, 'emma-1930')">
+                        <div class="census-family-name-cell">Emma Jane Anderson</div>
+                        <div class="census-family-relation">Daughter</div>
+                        <div class="census-family-sex">F</div>
+                        <div class="census-family-age">4</div>
+                        <div class="census-family-birthplace">Utah</div>
+                        <button class="census-expand-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+                        </button>
+                    </div>
+                    <div class="census-family-details" id="emma-1930">
+                        <div class="census-detail-grid">
+                            <div class="census-detail-grid-label">Name</div>
+                            <div class="census-detail-grid-value">Emma Jane Anderson</div>
+                            <div class="census-detail-grid-label">Relationship</div>
+                            <div class="census-detail-grid-value">Daughter</div>
+                            <div class="census-detail-grid-label">Age</div>
+                            <div class="census-detail-grid-value">4</div>
+                            <div class="census-detail-grid-label">Birth Year (Estimated)</div>
+                            <div class="census-detail-grid-value">1926</div>
+                            <div class="census-detail-grid-label">Birthplace</div>
+                            <div class="census-detail-grid-value">Utah</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Marriage Certificate Modal -->
+    <div class="census-modal-overlay" id="marriageModal">
+        <div class="census-modal">
+            <div class="census-modal-header">
+                <div class="census-modal-title-section">
+                    <div class="census-modal-title">Doris Jane Lewis & George Rhodes Emery</div>
+                    <div class="census-modal-subtitle">Marriage • Salt Lake County Marriage Records, 1912</div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <button class="census-modal-edit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        EDIT
+                    </button>
+                    <button class="census-modal-close" onclick="closeModal('marriageModal')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="census-modal-body">
+                <div class="census-details-section">
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Bride</div>
+                        <div class="census-detail-value">Doris Jane Lewis</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Bride's Age</div>
+                        <div class="census-detail-value">16</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Bride's Residence</div>
+                        <div class="census-detail-value">Kamas, Summit, Utah</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Groom</div>
+                        <div class="census-detail-value">George Rhodes Emery</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Groom's Age</div>
+                        <div class="census-detail-value">18</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Groom's Residence</div>
+                        <div class="census-detail-value">Kamas, Summit, Utah</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Marriage Date</div>
+                        <div class="census-detail-value">14 March 1912</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Marriage Place</div>
+                        <div class="census-detail-value">Salt Lake City, Salt Lake, Utah, United States</div>
+                    </div>
+                </div>
+                <div class="census-image-section">
+                    <div class="census-document-image">
+                        <img src="images/marriage-certificate.png" alt="Marriage Certificate" style="width: 100%; height: auto; display: block;">
+                    </div>
+                    <button class="census-view-original-btn">VIEW ORIGINAL DOCUMENT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Death Certificate Modal -->
+    <div class="census-modal-overlay" id="deathModal">
+        <div class="census-modal">
+            <div class="census-modal-header">
+                <div class="census-modal-title-section">
+                    <div class="census-modal-title">Doris Jane Lewis</div>
+                    <div class="census-modal-subtitle">Death Certificate • Utah Death Certificates</div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <button class="census-modal-edit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        EDIT
+                    </button>
+                    <button class="census-modal-close" onclick="closeModal('deathModal')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="census-modal-body">
+                <div class="census-details-section">
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Name</div>
+                        <div class="census-detail-value">Doris Jane Lewis</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Sex</div>
+                        <div class="census-detail-value">Female</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Death Date</div>
+                        <div class="census-detail-value">22 September 1988</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Death Place</div>
+                        <div class="census-detail-value">Kamas, Summit, Utah, United States</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Age at Death</div>
+                        <div class="census-detail-value">92</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birth Date</div>
+                        <div class="census-detail-value">4 January 1896</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birthplace</div>
+                        <div class="census-detail-value">Kamas, Summit, Utah, United States</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Father's Name</div>
+                        <div class="census-detail-value">William H. Lewis</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Mother's Name</div>
+                        <div class="census-detail-value">Mary Ann Weller</div>
+                    </div>
+                </div>
+                <div class="census-image-section">
+                    <div class="census-document-image">
+                        <img src="images/death-certificate.png" alt="Death Certificate" style="width: 100%; height: auto; display: block;">
+                    </div>
+                    <button class="census-view-original-btn">VIEW ORIGINAL DOCUMENT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scroll Down Indicator -->
     <div class="scroll-down-indicator" id="scrollDownIndicator">
         Highlighted content below
@@ -2876,35 +3368,91 @@
                 e.stopPropagation();
             });
 
-            // Census Modal functionality
+            // Modal functionality
             const censusModal = document.getElementById('censusModal');
-            
-            // Add click handlers to View buttons for 1940 census sources
+            const census1900Modal = document.getElementById('census1900Modal');
+            const census1910Modal = document.getElementById('census1910Modal');
+            const census1930Modal = document.getElementById('census1930Modal');
+            const marriageModal = document.getElementById('marriageModal');
+            const deathModal = document.getElementById('deathModal');
+
+            // Add click handlers to View/Review buttons for all sources
             document.addEventListener('click', function(e) {
-                // Check if a View button was clicked
+                // Check if a View or Review button was clicked
                 if (e.target.classList.contains('view-btn')) {
                     const sourceItem = e.target.closest('.source-item');
                     if (sourceItem) {
                         const sourceTitle = sourceItem.querySelector('.source-title');
-                        if (sourceTitle && sourceTitle.textContent.includes('1940 United States Federal Census')) {
+                        if (sourceTitle) {
                             e.stopPropagation();
-                            censusModal.classList.add('show');
-                            document.body.style.overflow = 'hidden';
+                            const titleText = sourceTitle.textContent;
+
+                            if (titleText.includes('1940 United States Federal Census')) {
+                                censusModal.classList.add('show');
+                                document.body.style.overflow = 'hidden';
+                            } else if (titleText.includes('1930 United States Federal Census')) {
+                                census1930Modal.classList.add('show');
+                                document.body.style.overflow = 'hidden';
+                            } else if (titleText.includes('1910 United States Federal Census')) {
+                                census1910Modal.classList.add('show');
+                                document.body.style.overflow = 'hidden';
+                            } else if (titleText.includes('1900 United States Federal Census')) {
+                                census1900Modal.classList.add('show');
+                                document.body.style.overflow = 'hidden';
+                            } else if (titleText.includes('Salt Lake County Marriage Records')) {
+                                marriageModal.classList.add('show');
+                                document.body.style.overflow = 'hidden';
+                            } else if (titleText.includes('Utah Death Certificates')) {
+                                deathModal.classList.add('show');
+                                document.body.style.overflow = 'hidden';
+                            }
                         }
                     }
                 }
             });
 
-            // Close modal when clicking overlay
+            // Close modals when clicking overlay
             censusModal.addEventListener('click', function(e) {
                 if (e.target === censusModal) {
                     closeCensusModal();
                 }
             });
 
+            census1900Modal.addEventListener('click', function(e) {
+                if (e.target === census1900Modal) {
+                    closeModal('census1900Modal');
+                }
+            });
+
+            census1910Modal.addEventListener('click', function(e) {
+                if (e.target === census1910Modal) {
+                    closeModal('census1910Modal');
+                }
+            });
+
+            census1930Modal.addEventListener('click', function(e) {
+                if (e.target === census1930Modal) {
+                    closeModal('census1930Modal');
+                }
+            });
+
+            marriageModal.addEventListener('click', function(e) {
+                if (e.target === marriageModal) {
+                    closeModal('marriageModal');
+                }
+            });
+
+            deathModal.addEventListener('click', function(e) {
+                if (e.target === deathModal) {
+                    closeModal('deathModal');
+                }
+            });
+
             // Prevent modal content clicks from closing
-            document.querySelector('.census-modal').addEventListener('click', function(e) {
-                e.stopPropagation();
+            document.querySelectorAll('.census-modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
             });
         });
 
@@ -2913,6 +3461,15 @@
             const censusModal = document.getElementById('censusModal');
             censusModal.classList.remove('show');
             document.body.style.overflow = '';
+        }
+
+        // Global function to close any modal
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
         }
 
         // Global function to toggle family member details
