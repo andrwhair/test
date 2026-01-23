@@ -739,6 +739,47 @@
             color: white;
         }
 
+        /* Scroll Down Indicator */
+        .scroll-down-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--blue60);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 1000;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        .scroll-down-indicator.show {
+            display: flex;
+        }
+
+        .scroll-down-indicator:hover {
+            background: var(--blue70);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
         @media (max-width: 1380px) {
             .content-grid {
                 flex-wrap: wrap;
@@ -1087,9 +1128,572 @@
         .family-name:hover {
             text-decoration: underline;
         }
+
+        /* Census Source Modal */
+        .census-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 20000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .census-modal-overlay.show {
+            display: flex;
+        }
+
+        .census-modal {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .census-modal-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--gray10);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .census-modal-title-section {
+            flex: 1;
+        }
+
+        .census-modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray100);
+            margin-bottom: 4px;
+        }
+
+        .census-modal-subtitle {
+            font-size: 14px;
+            color: var(--gray60);
+        }
+
+        .census-modal-close {
+            background: none;
+            border: none;
+            color: var(--gray60);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .census-modal-close:hover {
+            background: var(--gray10);
+            color: var(--gray100);
+        }
+
+        .census-modal-edit-btn {
+            background: none;
+            border: 1px solid var(--gray30);
+            color: var(--gray100);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 12px;
+        }
+
+        .census-modal-edit-btn:hover {
+            background: var(--gray02);
+        }
+
+        .census-modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 32px;
+        }
+
+        .census-details-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .census-detail-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 16px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--gray05);
+        }
+
+        .census-detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .census-detail-label {
+            font-size: 14px;
+            color: var(--gray60);
+            text-align: right;
+        }
+
+        .census-detail-value {
+            font-size: 14px;
+            color: var(--gray100);
+            font-weight: 600;
+        }
+
+        .census-image-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .census-document-image {
+            width: 100%;
+            border: 1px solid var(--gray20);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .census-document-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .census-view-original-btn {
+            padding: 12px 24px;
+            background: white;
+            border: 1px solid var(--blue60);
+            color: var(--blue60);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .census-view-original-btn:hover {
+            background: var(--blue05);
+        }
+
+        .census-similar-records {
+            grid-column: 1 / -1;
+            margin-top: 16px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray10);
+        }
+
+        .census-similar-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray100);
+            margin-bottom: 16px;
+        }
+
+        .census-similar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--gray02);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .census-similar-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .census-similar-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .census-similar-info {
+            flex: 1;
+        }
+
+        .census-similar-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--blue60);
+            cursor: pointer;
+            margin-bottom: 2px;
+        }
+
+        .census-similar-name:hover {
+            text-decoration: underline;
+        }
+
+        .census-similar-meta {
+            font-size: 12px;
+            color: var(--gray60);
+        }
+
+        .census-spouses-children {
+            grid-column: 1 / -1;
+            margin-top: 16px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray10);
+        }
+
+        .census-spouses-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray100);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .census-open-all {
+            color: var(--blue60);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .census-open-all:hover {
+            text-decoration: underline;
+        }
+
+        .census-family-member {
+            display: grid;
+            grid-template-columns: 200px 80px 80px 80px 1fr auto;
+            gap: 12px;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--gray05);
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .census-family-member:hover {
+            background: var(--gray02);
+        }
+
+        .census-family-name-cell {
+            color: var(--blue60);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .census-family-relation,
+        .census-family-sex,
+        .census-family-age {
+            font-size: 14px;
+            color: var(--gray80);
+            text-align: center;
+        }
+
+        .census-family-birthplace {
+            font-size: 14px;
+            color: var(--gray80);
+        }
+
+        .census-expand-btn {
+            background: none;
+            border: none;
+            color: var(--gray60);
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            transition: transform 0.2s;
+        }
+
+        .census-expand-btn.expanded {
+            transform: rotate(180deg);
+        }
+
+        .census-family-details {
+            display: none;
+            grid-column: 1 / -1;
+            background: var(--gray02);
+            padding: 16px 24px;
+            margin: 0 -12px;
+            border-top: 1px solid var(--gray10);
+        }
+
+        .census-family-details.show {
+            display: block;
+        }
+
+        .census-detail-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 8px 16px;
+        }
+
+        .census-detail-grid-label {
+            font-size: 13px;
+            color: var(--gray60);
+            text-align: right;
+            padding: 4px 0;
+        }
+
+        .census-detail-grid-value {
+            font-size: 13px;
+            color: var(--gray100);
+            font-weight: 600;
+            padding: 4px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .census-modal-body {
+                grid-template-columns: 1fr;
+            }
+
+            .census-similar-records,
+            .census-spouses-children {
+                grid-column: 1;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Census Source Modal -->
+    <div class="census-modal-overlay" id="censusModal">
+        <div class="census-modal">
+            <div class="census-modal-header">
+                <div class="census-modal-title-section">
+                    <div class="census-modal-title">Doris Jane Lewis</div>
+                    <div class="census-modal-subtitle">Census • United States, Census, 1940</div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <button class="census-modal-edit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        EDIT
+                    </button>
+                    <button class="census-modal-close" onclick="closeCensusModal()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="census-modal-body">
+                <div class="census-details-section">
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Name</div>
+                        <div class="census-detail-value">Doris Jane Lewis</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Sex</div>
+                        <div class="census-detail-value">Female</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Age</div>
+                        <div class="census-detail-value">44</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Birthplace</div>
+                        <div class="census-detail-value">Utah</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Residence Date</div>
+                        <div class="census-detail-value">1935</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Residence Place</div>
+                        <div class="census-detail-value">Same House</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Marital Status</div>
+                        <div class="census-detail-value">Married</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Race</div>
+                        <div class="census-detail-value">White</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Relationship to Head of Household</div>
+                        <div class="census-detail-value">Wife</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Type</div>
+                        <div class="census-detail-value">Census</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Date</div>
+                        <div class="census-detail-value">1940</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Place</div>
+                        <div class="census-detail-value">Marion Election Precinct, Summit, Utah, United States</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Event Place (Original)</div>
+                        <div class="census-detail-value">Utah, Summit, Marion Election Precinct</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Enumeration District Number</div>
+                        <div class="census-detail-value">22-12 Marion Election Precinct</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Line Number</div>
+                        <div class="census-detail-value">24</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Sheet Letter</div>
+                        <div class="census-detail-value">A</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Sheet Number</div>
+                        <div class="census-detail-value">1</div>
+                    </div>
+                    <div class="census-detail-row">
+                        <div class="census-detail-label">Affiliate Publication Number</div>
+                        <div class="census-detail-value">T627</div>
+                    </div>
+                </div>
+                <div class="census-image-section">
+                    <div class="census-document-image">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect fill='%23e8e8e8' width='600' height='400'/%3E%3Ctext x='50%25' y='30' font-family='Arial' font-size='12' fill='%23666' text-anchor='middle'%3ESIXTEENTH CENSUS OF THE UNITED STATES: 1940%3C/text%3E%3Ctext x='50%25' y='50' font-family='Arial' font-size='10' fill='%23999' text-anchor='middle'%3ESCHEDULE 1 - POPULATION%3C/text%3E%3Crect x='20' y='70' width='560' height='300' fill='white' stroke='%23999' stroke-width='1'/%3E%3Cline x1='20' y1='100' x2='580' y2='100' stroke='%23ccc' stroke-width='1'/%3E%3Cline x1='20' y1='130' x2='580' y2='130' stroke='%23ccc' stroke-width='1'/%3E%3Cline x1='20' y1='160' x2='580' y2='160' stroke='%23ccc' stroke-width='1'/%3E%3Cline x1='20' y1='190' x2='580' y2='190' stroke='%23ccc' stroke-width='1'/%3E%3Ctext x='30' y='120' font-family='Arial' font-size='9' fill='%23333'%3EDoris Jane Lewis%3C/text%3E%3Ctext x='300' y='90' font-family='Arial' font-size='8' fill='%23666'%3E[Census Document Image]%3C/text%3E%3Ctext x='300' y='200' font-family='Arial' font-size='10' fill='%23999' text-anchor='middle'%3ESave census-1940.jpg to images/ folder%3C/text%3E%3Ctext x='300' y='215' font-family='Arial' font-size='10' fill='%23999' text-anchor='middle'%3Eto display the actual census image%3C/text%3E%3C/svg%3E" alt="1940 Census Document" style="width: 100%; height: auto; display: block;">
+                    </div>
+                    <button class="census-view-original-btn">VIEW ORIGINAL DOCUMENT</button>
+                    <div class="census-similar-records">
+                        <div class="census-similar-title">Similar Records</div>
+                        <div class="census-similar-item">
+                            <div class="census-similar-avatar">
+                                <img src="female.png" alt="Doris Jane Lewis Hair">
+                            </div>
+                            <div class="census-similar-info">
+                                <div class="census-similar-name">Doris Jane Lewis Hair</div>
+                                <div class="census-similar-meta">United States, Obituary Records, 2014-2023</div>
+                            </div>
+                        </div>
+                        <div class="census-similar-item">
+                            <div class="census-similar-avatar">
+                                <img src="female.png" alt="Doris L Hair">
+                            </div>
+                            <div class="census-similar-info">
+                                <div class="census-similar-name">Doris L Hair</div>
+                                <div class="census-similar-meta">United States, Census, 1930</div>
+                            </div>
+                        </div>
+                        <div class="census-similar-item">
+                            <div class="census-similar-avatar">
+                                <img src="female.png" alt="Doris Jane Lewis Hair">
+                            </div>
+                            <div class="census-similar-info">
+                                <div class="census-similar-name">Doris Jane Lewis Hair</div>
+                                <div class="census-similar-meta">United States, GenealogyBank Obituaries, Births, and Marriages, 1980-2015</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="census-spouses-children">
+                    <div class="census-spouses-title">
+                        <span>Doris Jane Lewis's Spouses and Children</span>
+                        <a href="#" class="census-open-all">OPEN ALL</a>
+                    </div>
+                    <div class="census-family-member" onclick="toggleFamilyDetails(event, 'george-emery')">
+                        <div class="census-family-name-cell">George Rhodes Emery</div>
+                        <div class="census-family-relation">Husband</div>
+                        <div class="census-family-sex">M</div>
+                        <div class="census-family-age">46</div>
+                        <div class="census-family-birthplace">Utah</div>
+                        <button class="census-expand-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+                        </button>
+                    </div>
+                    <div class="census-family-details" id="george-emery">
+                        <div class="census-detail-grid">
+                            <div class="census-detail-grid-label">Name</div>
+                            <div class="census-detail-grid-value">George Rhodes Emery</div>
+                            <div class="census-detail-grid-label">Sex</div>
+                            <div class="census-detail-grid-value">Male</div>
+                            <div class="census-detail-grid-label">Age</div>
+                            <div class="census-detail-grid-value">46</div>
+                            <div class="census-detail-grid-label">Birth Year (Estimated)</div>
+                            <div class="census-detail-grid-value">1894</div>
+                            <div class="census-detail-grid-label">Birthplace</div>
+                            <div class="census-detail-grid-value">Utah</div>
+                            <div class="census-detail-grid-label">Marital Status</div>
+                            <div class="census-detail-grid-value">Married</div>
+                            <div class="census-detail-grid-label">Race</div>
+                            <div class="census-detail-grid-value">White</div>
+                            <div class="census-detail-grid-label">Relationship to Head of Household</div>
+                            <div class="census-detail-grid-value">Head</div>
+                            <div class="census-detail-grid-label">Event Type</div>
+                            <div class="census-detail-grid-value">Census</div>
+                            <div class="census-detail-grid-label">Event Date</div>
+                            <div class="census-detail-grid-value">1940</div>
+                            <div class="census-detail-grid-label">Event Place</div>
+                            <div class="census-detail-grid-value">Marion Election Precinct, Summit, Utah, United States</div>
+                        </div>
+                    </div>
+                    <div class="census-family-member" onclick="toggleFamilyDetails(event, 'william-emery')">
+                        <div class="census-family-name-cell">William George Emery</div>
+                        <div class="census-family-relation">Son</div>
+                        <div class="census-family-sex">M</div>
+                        <div class="census-family-age">0</div>
+                        <div class="census-family-birthplace">Utah</div>
+                        <button class="census-expand-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+                        </button>
+                    </div>
+                    <div class="census-family-details" id="william-emery">
+                        <div class="census-detail-grid">
+                            <div class="census-detail-grid-label">Name</div>
+                            <div class="census-detail-grid-value">William George Emery</div>
+                            <div class="census-detail-grid-label">Sex</div>
+                            <div class="census-detail-grid-value">Male</div>
+                            <div class="census-detail-grid-label">Age</div>
+                            <div class="census-detail-grid-value">0</div>
+                            <div class="census-detail-grid-label">Birth Year (Estimated)</div>
+                            <div class="census-detail-grid-value">1940</div>
+                            <div class="census-detail-grid-label">Birthplace</div>
+                            <div class="census-detail-grid-value">Utah</div>
+                            <div class="census-detail-grid-label">Marital Status</div>
+                            <div class="census-detail-grid-value">Single</div>
+                            <div class="census-detail-grid-label">Race</div>
+                            <div class="census-detail-grid-value">White</div>
+                            <div class="census-detail-grid-label">Relationship to Head of Household</div>
+                            <div class="census-detail-grid-value">Son</div>
+                            <div class="census-detail-grid-label">Event Type</div>
+                            <div class="census-detail-grid-value">Census</div>
+                            <div class="census-detail-grid-label">Event Date</div>
+                            <div class="census-detail-grid-value">1940</div>
+                            <div class="census-detail-grid-label">Event Place</div>
+                            <div class="census-detail-grid-value">Marion Election Precinct, Summit, Utah, United States</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Down Indicator -->
+    <div class="scroll-down-indicator" id="scrollDownIndicator">
+        Highlighted content below
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+        </svg>
+    </div>
+
     <!-- Person Card Popup -->
     <div class="person-card-popup" id="personCardPopup">
         <div class="person-card-header">
@@ -2004,6 +2608,11 @@
 
             sourceItems.forEach(source => {
                 source.addEventListener('click', function(e) {
+                    // Don't process if clicking the View button
+                    if (e.target.classList.contains('view-btn') || e.target.closest('.view-btn')) {
+                        return;
+                    }
+
                     e.stopPropagation();
 
                     // If clicking the same source, deselect it
@@ -2161,6 +2770,11 @@
                         });
                     }
                 });
+
+                // Check if any highlighted content is below the fold
+                setTimeout(() => {
+                    checkHighlightedBelowFold();
+                }, 100);
             });
 
             // Click anywhere to deselect source
@@ -2175,6 +2789,7 @@
                         if (btn) btn.classList.remove('active');
                     });
                     activeSource = null;
+                    hideScrollIndicator();
                 }
             });
 
@@ -2228,6 +2843,118 @@
             personCardPopup.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
+
+            // Census Modal functionality
+            const censusModal = document.getElementById('censusModal');
+            
+            // Add click handlers to View buttons for 1940 census sources
+            document.addEventListener('click', function(e) {
+                // Check if a View button was clicked
+                if (e.target.classList.contains('view-btn')) {
+                    const sourceItem = e.target.closest('.source-item');
+                    if (sourceItem) {
+                        const sourceTitle = sourceItem.querySelector('.source-title');
+                        if (sourceTitle && sourceTitle.textContent.includes('1940 United States Federal Census')) {
+                            e.stopPropagation();
+                            censusModal.classList.add('show');
+                            document.body.style.overflow = 'hidden';
+                        }
+                    }
+                }
+            });
+
+            // Close modal when clicking overlay
+            censusModal.addEventListener('click', function(e) {
+                if (e.target === censusModal) {
+                    closeCensusModal();
+                }
+            });
+
+            // Prevent modal content clicks from closing
+            document.querySelector('.census-modal').addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Global function to close census modal
+        function closeCensusModal() {
+            const censusModal = document.getElementById('censusModal');
+            censusModal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // Global function to toggle family member details
+        function toggleFamilyDetails(event, detailsId) {
+            event.stopPropagation();
+            const detailsElement = document.getElementById(detailsId);
+            const row = event.currentTarget;
+            const button = row.querySelector('.census-expand-btn');
+            
+            if (detailsElement.classList.contains('show')) {
+                detailsElement.classList.remove('show');
+                if (button) button.classList.remove('expanded');
+            } else {
+                detailsElement.classList.add('show');
+                if (button) button.classList.add('expanded');
+            }
+        }
+
+        // Function to check if highlighted elements are below the viewport
+        function checkHighlightedBelowFold() {
+            const highlightedElements = document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted');
+            const viewportBottom = window.innerHeight + window.scrollY;
+            let hasBelowFold = false;
+
+            highlightedElements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const elementTop = rect.top + window.scrollY;
+                
+                // Check if element is below the current viewport
+                if (elementTop > window.innerHeight + window.scrollY) {
+                    hasBelowFold = true;
+                }
+            });
+
+            if (hasBelowFold) {
+                showScrollIndicator();
+            } else {
+                hideScrollIndicator();
+            }
+        }
+
+        function showScrollIndicator() {
+            const indicator = document.getElementById('scrollDownIndicator');
+            indicator.classList.add('show');
+            
+            // Add click handler to scroll to first highlighted element below fold
+            indicator.onclick = function() {
+                const highlightedElements = document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted');
+                highlightedElements.forEach(element => {
+                    const rect = element.getBoundingClientRect();
+                    const elementTop = rect.top + window.scrollY;
+                    
+                    if (elementTop > window.innerHeight + window.scrollY) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        return;
+                    }
+                });
+            };
+        }
+
+        function hideScrollIndicator() {
+            const indicator = document.getElementById('scrollDownIndicator');
+            indicator.classList.remove('show');
+        }
+
+        // Hide indicator when scrolling
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                if (document.querySelectorAll('.vital-item.highlighted, .family-member.highlighted').length > 0) {
+                    checkHighlightedBelowFold();
+                }
+            }, 100);
         });
     </script>
 </body>
