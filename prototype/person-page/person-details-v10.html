@@ -3381,8 +3381,14 @@
                     }
                 });
 
-                // Check if any highlighted content is below the fold immediately
-                checkHighlightedBelowFold();
+                // Force reflow to ensure all highlighted classes are applied
+                document.body.offsetHeight;
+
+                // Check if any highlighted content is below the fold
+                // Use setTimeout 0 to ensure this runs after the browser has painted the highlights
+                setTimeout(() => {
+                    checkHighlightedBelowFold();
+                }, 0);
             });
 
             // Click anywhere to deselect source
