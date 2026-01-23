@@ -3382,12 +3382,10 @@
                 });
 
                 // Check if any highlighted content is below the fold
-                // Use requestAnimationFrame to ensure DOM has been updated
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        checkHighlightedBelowFold();
-                    });
-                });
+                // Use a small delay to ensure all styles and layout are calculated
+                setTimeout(() => {
+                    checkHighlightedBelowFold();
+                }, 50);
             });
 
             // Click anywhere to deselect source
