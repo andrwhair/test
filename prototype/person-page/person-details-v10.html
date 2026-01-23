@@ -782,14 +782,14 @@
             transform: translateX(-50%);
             background: var(--blue60);
             color: white;
-            padding: 12px 24px;
-            border-radius: 24px;
+            padding: 12px;
+            border-radius: 50%;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             display: none;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 600;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
             z-index: 1000;
             animation: bounce 2s infinite;
             cursor: pointer;
@@ -2299,8 +2299,7 @@
 
     <!-- Scroll Down Indicator -->
     <div class="scroll-down-indicator" id="scrollDownIndicator">
-        Highlighted content below
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
         </svg>
     </div>
