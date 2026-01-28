@@ -514,6 +514,55 @@
             border-color: var(--blue20);
         }
 
+        /* Member Action Dropdown */
+        .member-actions {
+            position: relative;
+        }
+
+        .member-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            display: none;
+            z-index: 1000;
+            margin-top: 4px;
+        }
+
+        .member-dropdown.show {
+            display: block;
+        }
+
+        .member-dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            text-align: left;
+            border: none;
+            background: none;
+            color: var(--gray90);
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .member-dropdown-item:hover {
+            background: var(--gray02);
+        }
+
+        .member-dropdown-item:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .member-dropdown-item:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
         /* Info Card */
         .info-card {
             background-color: var(--gray02);
@@ -1273,62 +1322,108 @@
 
                 <!-- Members Section -->
                 <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--gray20);">
-                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--gray90);">Contributors</h3>
-                    
-                    <!-- Members -->
+                    <!-- Invite Button -->
                     <div style="margin-bottom: 24px;">
-                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--gray70);">Members</div>
-                        
-                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
+                        <button class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                            Invite
+                        </button>
+                    </div>
+
+                    <!-- Owner Section -->
+                    <div style="margin-bottom: 32px;">
+                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--gray70);">Owner</div>
+                        <div style="font-size: 13px; color: var(--gray60); margin-bottom: 12px;">The owner created and manages this tree.</div>
+
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                    <img src="../person-page/male.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Robert Kehrer">
+                                </div>
+                                <div style="font-size: 15px; color: var(--gray90);">Robert Kehrer</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Co-Owners Section -->
+                    <div style="margin-bottom: 32px;">
+                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--gray70);">Co-Owners</div>
+                        <div style="font-size: 13px; color: var(--gray60); margin-bottom: 12px;">Co-Owners can invite others to this tree, change the starting person, and make edits.</div>
+
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                    <img src="../person-page/female.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Kim Kehrer">
+                                </div>
+                                <div style="font-size: 15px; color: var(--gray90);">Kim Kehrer</div>
+                            </div>
+                            <div class="member-actions">
+                                <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'kim-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                </button>
+                                <div id="kim-menu" class="member-dropdown">
+                                    <button class="member-dropdown-item">Remove as a Co-Owner</button>
+                                    <button class="member-dropdown-item">Remove Kim Kehrer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contributors Section -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--gray70);">Contributors</div>
+                        <div style="font-size: 13px; color: var(--gray60); margin-bottom: 12px;">Contributors can view and edit all data.</div>
+
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray10);">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">S</div>
-                                <div>
-                                    <div style="font-size: 15px; color: var(--gray90);">Sarah Johnson</div>
-                                    <div style="font-size: 13px; color: var(--blue60); font-weight: 500;">Owner</div>
+                                <div style="font-size: 15px; color: var(--gray90);">SierraKehrer</div>
+                            </div>
+                            <div class="member-actions">
+                                <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'sierra-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                </button>
+                                <div id="sierra-menu" class="member-dropdown">
+                                    <button class="member-dropdown-item">Assign as a Co-Owner</button>
+                                    <button class="member-dropdown-item">Remove SierraKehrer</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray10);">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">J</div>
-                                <div style="font-size: 15px; color: var(--gray90);">Julie Diane Alexander</div>
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                    <img src="../person-page/male.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Jim Mosher">
+                                </div>
+                                <div style="font-size: 15px; color: var(--gray90);">Jim Mosher</div>
+                            </div>
+                            <div class="member-actions">
+                                <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'jim-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                </button>
+                                <div id="jim-menu" class="member-dropdown">
+                                    <button class="member-dropdown-item">Assign as a Co-Owner</button>
+                                    <button class="member-dropdown-item">Remove Jim Mosher</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0;">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">E</div>
-                                <div style="font-size: 15px; color: var(--gray90);">Erica Dawn Weller</div>
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                    <img src="../person-page/female.png" style="width: 100%; height: 100%; object-fit: cover;" alt="P Kehrer">
+                                </div>
+                                <div style="font-size: 15px; color: var(--gray90);">P Kehrer</div>
                             </div>
-                        </div>
-
-                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">E</div>
-                                <div style="font-size: 15px; color: var(--gray90);">Esther Grover</div>
+                            <div class="member-actions">
+                                <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'p-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                </button>
+                                <div id="p-menu" class="member-dropdown">
+                                    <button class="member-dropdown-item">Assign as a Co-Owner</button>
+                                    <button class="member-dropdown-item">Remove P Kehrer</button>
+                                </div>
                             </div>
-                        </div>
-
-                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px; margin-bottom: 8px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">R</div>
-                                <div style="font-size: 15px; color: var(--gray90);">Rachel Weller Marchant</div>
-                            </div>
-                        </div>
-
-                        <div style="display: flex; align-items: center; padding: 12px 16px; background: var(--gray02); border-radius: 8px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">M</div>
-                                <div style="font-size: 15px; color: var(--gray90);">Marilyn Van Sickle</div>
-                            </div>
-                        </div>
-
-                        <div style="display: flex; justify-content: flex-start; margin-top: 12px;">
-                            <button class="btn btn-secondary" style="display: flex; align-items: center; gap: 8px;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                                Create Invite
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -1569,6 +1664,31 @@
                         menuItem.classList.add('active');
                     }
                 }
+            }
+        });
+
+        // Toggle member dropdown menu
+        function toggleMemberMenu(event, menuId) {
+            event.stopPropagation();
+
+            // Close all other dropdowns
+            document.querySelectorAll('.member-dropdown').forEach(dropdown => {
+                if (dropdown.id !== menuId) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            // Toggle the clicked dropdown
+            const menu = document.getElementById(menuId);
+            menu.classList.toggle('show');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.member-actions')) {
+                document.querySelectorAll('.member-dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
             }
         });
     </script>
