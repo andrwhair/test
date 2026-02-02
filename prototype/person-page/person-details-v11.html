@@ -598,6 +598,10 @@
             border-radius: 8px;
         }
 
+        .source-item:has(.hint-badge):hover {
+            background: var(--green02);
+        }
+
         .source-content {
             flex: 1;
         }
@@ -807,16 +811,6 @@
             background: var(--green02) !important;
             border: 2px dashed var(--green60) !important;
             border-radius: 8px;
-        }
-
-        .family-member.highlighted-green .hint-badge {
-            background: var(--green60) !important;
-            color: white !important;
-            border: none !important;
-        }
-
-        .family-member.highlighted-green .view-btn {
-            color: white !important;
         }
 
         /* Green highlighting active/sticky state (click state) */
@@ -3838,9 +3832,9 @@
                         <button class="options-btn">⋯</button>
                     </div>
 
-                    <div class="card" style="border: 2px dashed var(--green60);">
-                        <div class="card-body">
-                            <div class="source-item" data-marriage="1912">
+                    <div class="card">
+                        <div class="card-body" style="padding: 6px 0;">
+                            <div class="source-item" data-marriage="1912" style="margin: 12px; border: 2px dashed var(--green60); border-radius: 8px; padding: 12px;">
                                 <div class="source-content">
                                     <div class="hint-badge">Adds Potential Child</div>
                                     <div class="source-header">
@@ -3850,12 +3844,8 @@
                                 </div>
                                 <button class="view-btn">Review</button>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="source-item">
+                            <div class="source-item" style="margin: 12px;">
                                 <div class="source-content">
                                     <div class="source-header">
                                         <div class="source-title">1900 United States Federal Census</div>
@@ -3864,12 +3854,8 @@
                                 </div>
                                 <button class="view-btn">View</button>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="source-item">
+                            <div class="source-item" style="margin: 12px;">
                                 <div class="source-content">
                                     <div class="source-header">
                                         <div class="source-title">1910 United States Federal Census</div>
@@ -3878,12 +3864,8 @@
                                 </div>
                                 <button class="view-btn">View</button>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="source-item" data-marriage="1912">
+                            <div class="source-item" data-marriage="1912" style="margin: 12px;">
                                 <div class="source-content">
                                     <div class="source-header">
                                         <div class="source-title">Salt Lake County Marriage Records, 1912</div>
@@ -3892,12 +3874,8 @@
                                 </div>
                                 <button class="view-btn">View</button>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="source-item" data-marriage="1939">
+                            <div class="source-item" data-marriage="1939" style="margin: 12px;">
                                 <div class="source-content">
                                     <div class="source-header">
                                         <div class="source-title">1940 United States Federal Census</div>
@@ -3906,12 +3884,8 @@
                                 </div>
                                 <button class="view-btn">View</button>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="source-item">
+                            <div class="source-item" style="margin: 12px;">
                                 <div class="source-content">
                                     <div class="source-header">
                                         <div class="source-title">Utah Death Certificates</div>
@@ -3920,12 +3894,8 @@
                                 </div>
                                 <button class="view-btn">View</button>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="source-item">
+                            <div class="source-item" style="margin: 12px;">
                                 <div class="source-content">
                                     <div class="source-header">
                                         <div class="source-title">Find a Grave Index</div>
@@ -3955,69 +3925,65 @@
                         <div style="margin-bottom: 24px;">
                             <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--gray90);">Record Hints (3)</h3>
 
-                            <!-- Record Hint 1 -->
-                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px 0; margin-bottom: 12px;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--blue60)" style="flex-shrink: 0; align-self: flex-start;">
+                            <div style="display: grid; grid-template-columns: 24px 300px 250px auto; gap: 12px; row-gap: 12px; align-items: start;">
+                                <!-- Record Hint 1 -->
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--blue60)" style="padding-top: 16px;">
                                     <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                                 </svg>
-                                <div style="flex: 1; align-self: flex-start;">
+                                <div style="padding-top: 16px;">
                                     <div style="font-weight: 600; color: var(--blue60); margin-bottom: 4px;">
                                         <a href="#" style="color: var(--blue60); text-decoration: none;">George Rhodes Emery</a>
                                     </div>
                                     <div style="font-size: 13px; color: var(--gray70);">United States World War II Draft Registration Cards, 1942</div>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 4px; align-self: center; margin-right: 100px;">
+                                <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px;">
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Spouse: Doris Jane Lewis</div>
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Birth: 1896</div>
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Residence: Salt Lake City, Utah</div>
                                 </div>
-                                <div style="display: flex; gap: 8px; align-items: start; align-self: flex-start;">
+                                <div style="display: flex; gap: 8px; padding-top: 16px;">
                                     <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">REVIEW</button>
                                     <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
                                 </div>
-                            </div>
 
-                            <!-- Record Hint 2 -->
-                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px 0; margin-bottom: 12px;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--blue60)" style="flex-shrink: 0; align-self: flex-start;">
+                                <!-- Record Hint 2 -->
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--blue60)" style="padding-top: 16px;">
                                     <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                                 </svg>
-                                <div style="flex: 1; align-self: flex-start;">
+                                <div style="padding-top: 16px;">
                                     <div style="font-weight: 600; color: var(--blue60); margin-bottom: 4px;">
                                         <a href="#" style="color: var(--blue60); text-decoration: none;">William Thomas Lewis</a>
                                     </div>
                                     <div style="font-size: 13px; color: var(--gray70);">California Death Index, 1940-1997</div>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 4px; align-self: center; margin-right: 100px;">
+                                <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px;">
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Mother: Mary Jane Blount</div>
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Father: Thomas Henry Lewis</div>
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Birth: 1888</div>
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Death: 1965</div>
                                 </div>
-                                <div style="display: flex; gap: 8px; align-items: start; align-self: flex-start;">
+                                <div style="display: flex; gap: 8px; padding-top: 16px;">
                                     <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">REVIEW</button>
                                     <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
                                 </div>
-                            </div>
 
-                            <!-- Record Hint 3 -->
-                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px 0; margin-bottom: 12px;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--blue60)" style="flex-shrink: 0; align-self: flex-start;">
+                                <!-- Record Hint 3 -->
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--blue60)" style="padding-top: 16px;">
                                     <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                                 </svg>
-                                <div style="flex: 1; align-self: flex-start;">
+                                <div style="padding-top: 16px;">
                                     <div style="font-weight: 600; color: var(--blue60); margin-bottom: 4px;">
                                         <a href="#" style="color: var(--blue60); text-decoration: none;">Margaret Ann Lewis</a>
                                     </div>
                                     <div style="font-size: 13px; color: var(--gray70);">United States Social Security Death Index</div>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 4px; align-self: center; margin-right: 100px;">
+                                <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px;">
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Mother: Mary Jane Blount</div>
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Father: Thomas Henry Lewis</div>
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Birth: 1890</div>
                                     <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Death: 1972</div>
                                 </div>
-                                <div style="display: flex; gap: 8px; align-items: start; align-self: flex-start;">
+                                <div style="display: flex; gap: 8px; padding-top: 16px;">
                                     <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">REVIEW</button>
                                     <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
                                 </div>
@@ -4028,16 +3994,16 @@
                         <div style="margin-bottom: 24px;">
                             <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--gray90);">Data Problems (2)</h3>
 
-                            <!-- Data Problem 1 -->
-                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px 0; margin-bottom: 12px;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#F57C00" style="flex-shrink: 0; align-self: flex-start;">
+                            <div style="display: grid; grid-template-columns: 24px 300px 250px auto; gap: 12px; row-gap: 12px; align-items: start;">
+                                <!-- Data Problem 1 -->
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#F57C00" style="padding-top: 16px;">
                                     <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
                                 </svg>
-                                <div style="flex: 1; align-self: flex-start;">
+                                <div style="padding-top: 16px;">
                                     <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Standardized Place Missing</div>
                                     <div style="font-size: 13px; color: var(--gray70);">The birth place needs to be standardized to help other users find this person in location-based searches.</div>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 8px; align-self: center; margin-right: 200px;">
+                                <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 16px;">
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <div class="avatar-small" style="width: 32px; height: 32px;">
                                             <img src="female.png" alt="Doris Jane Lewis">
@@ -4059,21 +4025,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="align-self: flex-start;">
+                                <div style="display: flex; gap: 8px; padding-top: 16px;">
                                     <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
                                 </div>
-                            </div>
 
-                            <!-- Data Problem 2 -->
-                            <div style="display: flex; align-items: center; gap: 12px; padding: 16px 0; margin-bottom: 12px;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#F57C00" style="flex-shrink: 0; align-self: flex-start;">
+                                <!-- Data Problem 2 -->
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#F57C00" style="padding-top: 16px;">
                                     <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
                                 </svg>
-                                <div style="flex: 1; align-self: flex-start;">
+                                <div style="padding-top: 16px;">
                                     <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Multiple Birth Dates</div>
                                     <div style="font-size: 13px; color: var(--gray70);">This person has two different birth dates entered. Review sources to determine the correct date.</div>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 8px; align-self: center; margin-right: 200px;">
+                                <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 16px;">
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <div class="avatar-small" style="width: 32px; height: 32px;">
                                             <img src="male.png" alt="Thomas Henry Lewis">
@@ -4085,7 +4049,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="align-self: flex-start;">
+                                <div style="display: flex; gap: 8px; padding-top: 16px;">
                                     <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
                                 </div>
                             </div>
@@ -4884,11 +4848,6 @@
                     sourceElement.classList.add('highlighted-green');
                     if (makeSticky) {
                         sourceElement.classList.add('active');
-                        // Also add active class to parent card
-                        const parentCard = sourceElement.closest('.card');
-                        if (parentCard) {
-                            parentCard.classList.add('active-green-card');
-                        }
                     }
 
                     // Find and highlight Emma Jane Anderson
