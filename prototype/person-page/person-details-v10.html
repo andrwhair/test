@@ -735,38 +735,48 @@
             color: white;
         }
 
+        /* Hover state - light blue */
         .vital-item.highlighted {
-            background: #00525E;
-            color: white;
+            background: #D8F0F8;
             border-radius: 8px;
-        }
-
-        .vital-item.highlighted .vital-label-text,
-        .vital-item.highlighted .vital-source-count,
-        .vital-item.highlighted .vital-value,
-        .vital-item.highlighted .vital-details {
-            color: white;
-        }
-
-        .vital-item.highlighted .edit-icon-btn {
-            color: white;
         }
 
         .family-member.highlighted {
-            background: #00525E !important;
+            background: #D8F0F8 !important;
             border: none !important;
             padding: 8px 12px !important;
-            color: white;
             border-radius: 8px;
         }
 
-        .family-member.highlighted .family-name,
-        .family-member.highlighted .family-dates,
-        .family-member.highlighted .vital-label-text,
-        .family-member.highlighted .vital-source-count,
-        .family-member.highlighted .vital-details,
-        .family-member.highlighted > div,
-        .family-member.highlighted div {
+        /* Active/clicked state - dark blue */
+        .vital-item.highlighted.active {
+            background: #00525E;
+            color: white;
+        }
+
+        .vital-item.highlighted.active .vital-label-text,
+        .vital-item.highlighted.active .vital-source-count,
+        .vital-item.highlighted.active .vital-value,
+        .vital-item.highlighted.active .vital-details {
+            color: white;
+        }
+
+        .vital-item.highlighted.active .edit-icon-btn {
+            color: white;
+        }
+
+        .family-member.highlighted.active {
+            background: #00525E !important;
+            color: white;
+        }
+
+        .family-member.highlighted.active .family-name,
+        .family-member.highlighted.active .family-dates,
+        .family-member.highlighted.active .vital-label-text,
+        .family-member.highlighted.active .vital-source-count,
+        .family-member.highlighted.active .vital-details,
+        .family-member.highlighted.active > div,
+        .family-member.highlighted.active div {
             color: white !important;
         }
 
@@ -4072,6 +4082,14 @@
                 const sourceTitle = sourceElement.querySelector('.source-title').textContent;
                 const metaText = sourceElement.querySelector('.source-meta').textContent.toLowerCase();
 
+                // Helper function to add highlight classes
+                function addHighlight(element) {
+                    element.classList.add('highlighted');
+                    if (makeSticky) {
+                        element.classList.add('active');
+                    }
+                }
+
                 // Special case for 1930 Census - only highlight Emma with green
                 if (sourceTitle.includes('1930 United States Federal Census')) {
                     sourceElement.classList.add('highlighted-green');
@@ -4113,14 +4131,14 @@
                 if (metaText.includes('name')) {
                     const nameVital = document.querySelector('.vital-item .vital-label-text');
                     if (nameVital && nameVital.textContent === 'Name') {
-                        nameVital.closest('.vital-item').classList.add('highlighted');
+                        addHighlight(nameVital.closest('.vital-item'));
                     }
                 }
                 if (metaText.includes('sex')) {
                     const allVitals = document.querySelectorAll('.vital-item .vital-label-text');
                     allVitals.forEach(vital => {
                         if (vital.textContent === 'Sex') {
-                            vital.closest('.vital-item').classList.add('highlighted');
+                            addHighlight(vital.closest('.vital-item'));
                         }
                     });
                 }
@@ -4128,7 +4146,7 @@
                     const allVitals = document.querySelectorAll('.vital-item .vital-label-text');
                     allVitals.forEach(vital => {
                         if (vital.textContent === 'Birth') {
-                            vital.closest('.vital-item').classList.add('highlighted');
+                            addHighlight(vital.closest('.vital-item'));
                         }
                     });
                 }
@@ -4136,7 +4154,7 @@
                     const allVitals = document.querySelectorAll('.vital-item .vital-label-text');
                     allVitals.forEach(vital => {
                         if (vital.textContent === 'Death') {
-                            vital.closest('.vital-item').classList.add('highlighted');
+                            addHighlight(vital.closest('.vital-item'));
                         }
                     });
                 }
@@ -4144,7 +4162,7 @@
                     const allVitals = document.querySelectorAll('.vital-item .vital-label-text');
                     allVitals.forEach(vital => {
                         if (vital.textContent === 'Burial') {
-                            vital.closest('.vital-item').classList.add('highlighted');
+                            addHighlight(vital.closest('.vital-item'));
                         }
                     });
                 }
@@ -4159,7 +4177,7 @@
                             marriageMembers.forEach(member => {
                                 const marriageLabel = member.querySelector('.vital-label-text');
                                 if (marriageLabel && marriageLabel.textContent === 'Marriage') {
-                                    member.classList.add('highlighted');
+                                    addHighlight(member);
                                 }
                             });
                         }
@@ -4169,7 +4187,7 @@
                         familyMembers.forEach(member => {
                             const marriageLabel = member.querySelector('.vital-label-text');
                             if (marriageLabel && marriageLabel.textContent === 'Marriage') {
-                                member.classList.add('highlighted');
+                                addHighlight(member);
                             }
                         });
                     }
@@ -4187,7 +4205,7 @@
                             spouseMembers.forEach(member => {
                                 const dates = member.querySelector('.family-dates');
                                 if (dates && (dates.textContent.includes('Husband') || dates.textContent.includes('Wife') || dates.textContent.includes('Self') || dates.textContent.includes('married'))) {
-                                    member.classList.add('highlighted');
+                                    addHighlight(member);
                                 }
                             });
                         }
@@ -4197,7 +4215,7 @@
                         familyMembers.forEach(member => {
                             const dates = member.querySelector('.family-dates');
                             if (dates && (dates.textContent.includes('Husband') || dates.textContent.includes('Wife') || dates.textContent.includes('Self') || dates.textContent.includes('married'))) {
-                                member.classList.add('highlighted');
+                                addHighlight(member);
                             }
                         });
                     }
@@ -4208,7 +4226,7 @@
                     familyMembers.forEach(member => {
                         const dates = member.querySelector('.family-dates');
                         if (dates && (dates.textContent.includes('Son') || dates.textContent.includes('Daughter'))) {
-                            member.classList.add('highlighted');
+                            addHighlight(member);
                         }
                     });
                 }
@@ -4218,7 +4236,7 @@
                     familyMembers.forEach(member => {
                         const dates = member.querySelector('.family-dates');
                         if (dates && (dates.textContent.includes('Father') || dates.textContent.includes('Mother'))) {
-                            member.classList.add('highlighted');
+                            addHighlight(member);
                         }
                     });
                 }
@@ -4228,7 +4246,7 @@
                     familyMembers.forEach(member => {
                         const dates = member.querySelector('.family-dates');
                         if (dates && (dates.textContent.includes('Brother') || dates.textContent.includes('Sister') || (dates.textContent.includes('Self') && dates.textContent.includes('1896')))) {
-                            member.classList.add('highlighted');
+                            addHighlight(member);
                         }
                     });
                 }

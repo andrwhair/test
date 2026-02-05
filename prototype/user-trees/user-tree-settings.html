@@ -859,6 +859,54 @@
             height: 20px;
             flex-shrink: 0;
         }
+
+        /* Delete Confirmation Modal */
+        .delete-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-modal.show {
+            display: flex;
+        }
+
+        .delete-modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .delete-modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray90);
+            margin-bottom: 16px;
+        }
+
+        .delete-modal-text {
+            font-size: 14px;
+            color: var(--gray70);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .delete-modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
     </style>
 </head>
 <body>
@@ -976,12 +1024,17 @@
 
                     <div class="form-group">
                         <label class="form-label">Home Person in This Tree</label>
-                        <div class="user-info">
-                            <div class="user-avatar">DL</div>
-                            <div class="user-details">
-                                <div class="user-name">Doris Jane Lewis</div>
-                                <a href="#" class="user-link">change</a>
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--gray02); border-radius: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                    <img src="../person-page/female.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Doris Jane Lewis">
+                                </div>
+                                <div>
+                                    <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">Doris Jane Lewis</div>
+                                    <div style="font-size: 13px; color: var(--gray70);">1891–1963 • 9H6X-Z48</div>
+                                </div>
                             </div>
+                            <a href="#" style="color: var(--blue60); font-size: 14px; font-weight: 500; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;">Change</a>
                         </div>
                     </div>
 
@@ -1000,7 +1053,7 @@
                 </form>
 
                 <!-- Delete Tree Section -->
-                <div style="margin-top: 48px; padding-top: 32px; border-top: 2px solid var(--gray10);">
+                <div style="margin-top: 48px; padding-top: 32px;">
                     <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--gray90);">Delete Tree</h3>
                     
                     <p style="font-size: 14px; color: var(--gray70); margin-bottom: 16px; line-height: 1.5;">
@@ -1014,7 +1067,7 @@
                         </div>
                     </div>
 
-                    <a href="#" style="color: var(--blue60); font-size: 14px; font-weight: 500; text-decoration: none;" onclick="return confirm('Are you sure you want to delete this tree? This will permanently remove 1,247 individuals and all associated data.');">Delete your tree</a>
+                    <a href="#" style="color: var(--red50); font-size: 14px; font-weight: 500; text-decoration: none;" onclick="showDeleteModal(); return false;">Delete your tree</a>
                 </div>
             </div>
 
@@ -1321,41 +1374,45 @@
                 </div>
 
                 <!-- Members Section -->
-                <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--gray20);">
-                    <!-- Invite Button -->
-                    <div style="margin-bottom: 24px;">
-                        <button class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                            Invite
-                        </button>
-                    </div>
+                <div style="margin-top: 32px; padding-top: 24px;">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 24px; color: var(--gray90);">Manage Members</h3>
 
                     <!-- Owner Section -->
-                    <div style="margin-bottom: 32px;">
-                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--gray70);">Owner</div>
-                        <div style="font-size: 13px; color: var(--gray60); margin-bottom: 12px;">The owner created and manages this tree.</div>
+                    <div style="margin-bottom: 24px; padding: 20px; background: var(--gray02); border-radius: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray70)"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                            <div style="font-size: 14px; font-weight: 600; color: var(--gray70);">Owner</div>
+                        </div>
+                        <div style="font-size: 13px; color: var(--gray60); margin-bottom: 16px;">The owner created and manages this tree.</div>
 
-                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--white); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
                                     <img src="../person-page/male.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Robert Kehrer">
                                 </div>
-                                <div style="font-size: 15px; color: var(--gray90);">Robert Kehrer</div>
+                                <div>
+                                    <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">Robert Kehrer</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Co-Owners Section -->
-                    <div style="margin-bottom: 32px;">
-                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--gray70);">Co-Owners</div>
-                        <div style="font-size: 13px; color: var(--gray60); margin-bottom: 12px;">Co-Owners can invite others to this tree, change the starting person, and make edits.</div>
+                    <div style="margin-bottom: 24px; padding: 20px; background: var(--gray02); border-radius: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray70)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            <div style="font-size: 14px; font-weight: 600; color: var(--gray70);">Co-Owners</div>
+                        </div>
+                        <div style="font-size: 13px; color: var(--gray60); margin-bottom: 16px;">Co-Owners can invite others to this tree, change the starting person, and make edits.</div>
 
-                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--white); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
                                     <img src="../person-page/female.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Kim Kehrer">
                                 </div>
-                                <div style="font-size: 15px; color: var(--gray90);">Kim Kehrer</div>
+                                <div>
+                                    <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">Kim Kehrer</div>
+                                </div>
                             </div>
                             <div class="member-actions">
                                 <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'kim-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
@@ -1370,60 +1427,76 @@
                     </div>
 
                     <!-- Contributors Section -->
-                    <div style="margin-bottom: 24px;">
-                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--gray70);">Contributors</div>
-                        <div style="font-size: 13px; color: var(--gray60); margin-bottom: 12px;">Contributors can view and edit all data.</div>
-
-                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray10);">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">S</div>
-                                <div style="font-size: 15px; color: var(--gray90);">SierraKehrer</div>
-                            </div>
-                            <div class="member-actions">
-                                <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'sierra-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                                </button>
-                                <div id="sierra-menu" class="member-dropdown">
-                                    <button class="member-dropdown-item">Assign as a Co-Owner</button>
-                                    <button class="member-dropdown-item">Remove SierraKehrer</button>
-                                </div>
-                            </div>
+                    <div style="margin-bottom: 24px; padding: 20px; background: var(--gray02); border-radius: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray70)"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                            <div style="font-size: 14px; font-weight: 600; color: var(--gray70);">Contributors</div>
                         </div>
+                        <div style="font-size: 13px; color: var(--gray60); margin-bottom: 16px;">Contributors can view and edit all data.</div>
 
-                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray10);">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                                    <img src="../person-page/male.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Jim Mosher">
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--white); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">S</div>
+                                    <div>
+                                        <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">SierraKehrer</div>
+                                    </div>
                                 </div>
-                                <div style="font-size: 15px; color: var(--gray90);">Jim Mosher</div>
-                            </div>
-                            <div class="member-actions">
-                                <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'jim-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                                </button>
-                                <div id="jim-menu" class="member-dropdown">
-                                    <button class="member-dropdown-item">Assign as a Co-Owner</button>
-                                    <button class="member-dropdown-item">Remove Jim Mosher</button>
+                                <div class="member-actions">
+                                    <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'sierra-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                    </button>
+                                    <div id="sierra-menu" class="member-dropdown">
+                                        <button class="member-dropdown-item">Assign as a Co-Owner</button>
+                                        <button class="member-dropdown-item">Remove SierraKehrer</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                                    <img src="../person-page/female.png" style="width: 100%; height: 100%; object-fit: cover;" alt="P Kehrer">
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--white); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                        <img src="../person-page/male.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Jim Mosher">
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">Jim Mosher</div>
+                                    </div>
                                 </div>
-                                <div style="font-size: 15px; color: var(--gray90);">P Kehrer</div>
-                            </div>
-                            <div class="member-actions">
-                                <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'p-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                                </button>
-                                <div id="p-menu" class="member-dropdown">
-                                    <button class="member-dropdown-item">Assign as a Co-Owner</button>
-                                    <button class="member-dropdown-item">Remove P Kehrer</button>
+                                <div class="member-actions">
+                                    <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'jim-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                    </button>
+                                    <div id="jim-menu" class="member-dropdown">
+                                        <button class="member-dropdown-item">Assign as a Co-Owner</button>
+                                        <button class="member-dropdown-item">Remove Jim Mosher</button>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--white); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                        <img src="../person-page/female.png" style="width: 100%; height: 100%; object-fit: cover;" alt="P Kehrer">
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">P Kehrer</div>
+                                    </div>
+                                </div>
+                                <div class="member-actions">
+                                    <button class="member-menu-btn" onclick="toggleMemberMenu(event, 'p-menu')" style="background: none; border: none; cursor: pointer; padding: 8px; color: var(--gray60);">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                    </button>
+                                    <div id="p-menu" class="member-dropdown">
+                                        <button class="member-dropdown-item">Assign as a Co-Owner</button>
+                                        <button class="member-dropdown-item">Remove P Kehrer</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-secondary" style="margin-top: 16px; align-self: flex-start;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                Invite
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1487,6 +1560,23 @@
             <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="white"/>
         </svg>
         <span id="statusOverlayMessage"></span>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="delete-modal">
+        <div class="delete-modal-content">
+            <div class="delete-modal-title">Delete Tree?</div>
+            <div class="delete-modal-text">
+                Are you sure you want to delete this tree? This will permanently remove 1,247 individuals and all associated data.
+            </div>
+            <div class="delete-modal-text">
+                If you want to update your tree instead, consider <a href="#updateGedcom" onclick="closeDeleteModal(); showPanel('updateGedcom'); return false;" style="color: var(--blue60); font-weight: 500; text-decoration: none;">re-uploading your GEDCOM file</a>.
+            </div>
+            <div class="delete-modal-actions">
+                <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Delete Tree</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1689,6 +1779,28 @@
                 document.querySelectorAll('.member-dropdown').forEach(dropdown => {
                     dropdown.classList.remove('show');
                 });
+            }
+        });
+
+        // Delete Modal Functions
+        function showDeleteModal() {
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('show');
+        }
+
+        function confirmDelete() {
+            // Handle actual deletion here
+            alert('Tree deleted successfully');
+            closeDeleteModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeDeleteModal();
             }
         });
     </script>
