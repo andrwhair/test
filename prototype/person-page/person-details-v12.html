@@ -2297,6 +2297,61 @@
             background: var(--gray05);
         }
 
+        .review-family-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .review-family-member {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .review-family-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gray10);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .review-family-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .review-family-info {
+            flex: 1;
+        }
+
+        .review-family-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray90);
+            line-height: 1.3;
+        }
+
+        .review-family-details {
+            font-size: 12px;
+            color: var(--gray70);
+            line-height: 1.3;
+        }
+
+        .review-family-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            background: var(--blue05);
+            color: var(--blue60);
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 3px;
+            margin-left: 6px;
+        }
+
         .review-family-member {
             display: flex;
             align-items: center;
@@ -6186,6 +6241,81 @@
                 } else {
                     reasonText.textContent = 'Names, relationships, and ages align with known family details.';
                 }
+
+                // Handle Family section for census records
+                const reviewFamilySection = document.getElementById('reviewFamilySection');
+                const reviewRecordFamily = document.getElementById('reviewRecordFamily');
+                const reviewTreeFamily = document.getElementById('reviewTreeFamily');
+
+                if (recordData.collection && recordData.collection.includes('Census') && recordData.spouse) {
+                    // Show family section for census records
+                    if (reviewFamilySection) reviewFamilySection.style.display = 'block';
+
+                    // Populate record side family
+                    if (reviewRecordFamily) {
+                        let recordFamilyHTML = '';
+
+                        // Add spouse
+                        recordFamilyHTML += `
+                            <div class="review-family-member">
+                                <div class="review-family-avatar">
+                                    <img src="male.png" alt="${recordData.spouse}">
+                                </div>
+                                <div class="review-family-info">
+                                    <div class="review-family-name">${recordData.spouse}</div>
+                                    <div class="review-family-details">Spouse • Age ${recordData.spouseAge}</div>
+                                </div>
+                            </div>
+                        `;
+
+                        // Add children
+                        if (recordData.children && recordData.children.length > 0) {
+                            recordData.children.forEach(child => {
+                                recordFamilyHTML += `
+                                    <div class="review-family-member">
+                                        <div class="review-family-avatar">
+                                            <img src="female.png" alt="${child.name}">
+                                        </div>
+                                        <div class="review-family-info">
+                                            <div class="review-family-name">${child.name}<span class="review-family-badge">Potential</span></div>
+                                            <div class="review-family-details">Child • Age ${child.age} • Born about ${child.birthYear}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        }
+
+                        reviewRecordFamily.innerHTML = recordFamilyHTML;
+                    }
+
+                    // Populate tree side family
+                    if (reviewTreeFamily) {
+                        let treeFamilyHTML = `
+                            <div class="review-family-member">
+                                <div class="review-family-avatar">
+                                    <img src="male.png" alt="George Rhodes Emery">
+                                </div>
+                                <div class="review-family-info">
+                                    <div class="review-family-name">George Rhodes Emery</div>
+                                    <div class="review-family-details">Spouse</div>
+                                </div>
+                            </div>
+                            <div class="review-family-member">
+                                <div class="review-family-avatar">
+                                    <img src="male.png" alt="William George Emery">
+                                </div>
+                                <div class="review-family-info">
+                                    <div class="review-family-name">William George Emery</div>
+                                    <div class="review-family-details">Child • 1940–</div>
+                                </div>
+                            </div>
+                        `;
+                        reviewTreeFamily.innerHTML = treeFamilyHTML;
+                    }
+                } else {
+                    // Hide family section for non-census records
+                    if (reviewFamilySection) reviewFamilySection.style.display = 'none';
+                }
             }
 
             overlay.classList.add('show');
@@ -6374,6 +6504,23 @@
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                             </svg>
                         </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Section -->
+            <div class="review-section" id="reviewFamilySection" style="display: none;">
+                <div class="review-section-header">Family</div>
+                <div class="review-comparison-row">
+                    <div class="review-cell">
+                        <div class="review-family-list" id="reviewRecordFamily">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="review-cell">
+                        <div class="review-family-list" id="reviewTreeFamily">
+                            <!-- Populated by JavaScript -->
+                        </div>
                     </div>
                 </div>
             </div>
