@@ -210,6 +210,15 @@
             background: var(--blue02);
         }
 
+        .btn-primary {
+            background: var(--blue60);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue70);
+        }
+
         .btn-icon {
             width: 16px;
             height: 16px;
@@ -306,7 +315,7 @@
         }
 
         .right-column .card {
-            background: var(--gray03);
+            background: var(--gray02);
         }
 
         .left-column .card:last-child,
@@ -1987,17 +1996,15 @@
         /* Review Side Panel */
         .review-panel-overlay {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
         }
 
         .review-panel-overlay.show {
             display: block;
+        }
+
+        body.panel-open {
+            margin-right: 460px;
+            transition: margin-right 0.3s ease;
         }
 
         .review-panel {
@@ -2088,12 +2095,12 @@
 
         .review-attach-reason-text {
             font-size: 13px;
-            color: var(--gray70);
+            color: var(--gray90);
             line-height: 1.5;
             padding: 12px;
-            background: var(--gray02);
+            background: white;
             border-radius: 4px;
-            border: 1px solid var(--gray10);
+            border: 1px solid var(--gray20);
         }
 
         .review-column-headers {
@@ -5816,8 +5823,19 @@
                                 censusModal.classList.add('show');
                                 document.body.style.overflow = 'hidden';
                             } else if (titleText.includes('1930 United States Federal Census')) {
-                                census1930Modal.classList.add('show');
-                                document.body.style.overflow = 'hidden';
+                                // Open review panel instead of modal
+                                openReviewPanel({
+                                    collection: 'United States, Census, 1930',
+                                    name: 'Doris Jane Emery',
+                                    sex: 'Female',
+                                    birth: '1896, Utah',
+                                    residence: '1930, Kamas, Summit, Utah, United States',
+                                    spouse: 'George Rhodes Emery',
+                                    spouseAge: '36',
+                                    children: [
+                                        { name: 'Emma Jane Anderson', age: '4', birthYear: '1926' }
+                                    ]
+                                });
                             } else if (titleText.includes('1910 United States Federal Census')) {
                                 census1910Modal.classList.add('show');
                                 document.body.style.overflow = 'hidden';
@@ -6125,17 +6143,53 @@
                 const reviewRecordName = document.getElementById('reviewRecordName');
                 if (reviewRecordName) reviewRecordName.textContent = recordData.name || '';
 
+                const reviewTreeName = document.getElementById('reviewTreeName');
+                if (reviewTreeName) reviewTreeName.textContent = 'Doris Jane Lewis';
+
                 const reviewRecordSex = document.getElementById('reviewRecordSex');
-                if (reviewRecordSex) reviewRecordSex.textContent = 'Male';
+                if (reviewRecordSex) reviewRecordSex.textContent = recordData.sex || 'Male';
+
+                const reviewTreeSex = document.getElementById('reviewTreeSex');
+                if (reviewTreeSex) reviewTreeSex.textContent = 'Female';
 
                 const reviewRecordBirth = document.getElementById('reviewRecordBirth');
                 if (reviewRecordBirth) reviewRecordBirth.textContent = recordData.birth || '';
 
+                const reviewTreeBirth = document.getElementById('reviewTreeBirth');
+                if (reviewTreeBirth) reviewTreeBirth.textContent = '23 Jun 1896';
+
+                // Handle Death/Residence section based on record type
+                const reviewLastSectionHeader = document.getElementById('reviewLastSectionHeader');
                 const reviewRecordDeath = document.getElementById('reviewRecordDeath');
-                if (reviewRecordDeath) reviewRecordDeath.textContent = recordData.death || '';
+                const reviewTreeDeathCell = document.getElementById('reviewTreeDeathCell');
+
+                if (recordData.collection && recordData.collection.includes('Census')) {
+                    // For census records, show Residence
+                    if (reviewLastSectionHeader) reviewLastSectionHeader.textContent = 'Residence';
+                    if (reviewRecordDeath) reviewRecordDeath.textContent = recordData.residence || '';
+                    if (reviewTreeDeathCell) {
+                        reviewTreeDeathCell.innerHTML = '<div class="review-cell-value">1900, Salt Lake City, Salt Lake, Utah, United States</div><div class="review-cell-meta">• 8 sources</div>';
+                    }
+                } else {
+                    // For other records, show Death
+                    if (reviewLastSectionHeader) reviewLastSectionHeader.textContent = 'Death';
+                    if (reviewRecordDeath) reviewRecordDeath.textContent = recordData.death || '';
+                    if (reviewTreeDeathCell) {
+                        reviewTreeDeathCell.innerHTML = '<button class="review-add-button" title="Add death information"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button>';
+                    }
+                }
+
+                // Update reason text for 1930 census
+                const reasonText = document.querySelector('.review-attach-reason-text');
+                if (reasonText && recordData.collection && recordData.collection.includes('1930')) {
+                    reasonText.textContent = 'This 1930 census record matches Doris Jane Lewis and includes her spouse George Rhodes Emery and potential daughter Emma Jane Anderson (age 4, born about 1926).';
+                } else {
+                    reasonText.textContent = 'Names, relationships, and ages align with known family details.';
+                }
             }
 
             overlay.classList.add('show');
+            document.body.classList.add('panel-open');
             setTimeout(() => {
                 panel.classList.add('show');
             }, 10);
@@ -6146,6 +6200,7 @@
             const panel = document.getElementById('reviewPanel');
 
             panel.classList.remove('show');
+            document.body.classList.remove('panel-open');
             setTimeout(() => {
                 overlay.classList.remove('show');
             }, 300);
@@ -6306,14 +6361,14 @@
                 </div>
             </div>
 
-            <!-- Death Section -->
+            <!-- Death/Residence Section -->
             <div class="review-section">
-                <div class="review-section-header">Death</div>
+                <div class="review-section-header" id="reviewLastSectionHeader">Death</div>
                 <div class="review-comparison-row">
                     <div class="review-cell">
                         <div class="review-cell-value" id="reviewRecordDeath">January 8, 1909, Council Bluffs, Iowa, United States</div>
                     </div>
-                    <div class="review-cell">
+                    <div class="review-cell" id="reviewTreeDeathCell">
                         <button class="review-add-button" title="Add death information">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
