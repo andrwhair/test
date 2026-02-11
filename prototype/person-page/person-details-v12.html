@@ -5881,14 +5881,15 @@
                                 // Open review panel instead of modal
                                 openReviewPanel({
                                     collection: 'United States, Census, 1930',
-                                    name: 'Doris Jane Emery',
+                                    name: 'Doris Jane Anderson',
                                     sex: 'Female',
                                     birth: '1896, Utah',
                                     residence: '1930, Kamas, Summit, Utah, United States',
-                                    spouse: 'George Rhodes Emery',
-                                    spouseAge: '36',
+                                    spouse: 'Elmer Anderson',
+                                    spouseAge: '34',
                                     children: [
-                                        { name: 'Emma Jane Anderson', age: '4', birthYear: '1926' }
+                                        { name: 'Emma Jane Anderson', age: '16', birthYear: '1914', inTree: true },
+                                        { name: 'Emma Jane Anderson', age: '4', birthYear: '1926', potential: true }
                                     ]
                                 });
                             } else if (titleText.includes('1910 United States Federal Census')) {
@@ -6237,7 +6238,7 @@
                 // Update reason text for 1930 census
                 const reasonText = document.querySelector('.review-attach-reason-text');
                 if (reasonText && recordData.collection && recordData.collection.includes('1930')) {
-                    reasonText.textContent = 'This 1930 census record matches Doris Jane Lewis and includes her spouse George Rhodes Emery and potential daughter Emma Jane Anderson (age 4, born about 1926).';
+                    reasonText.textContent = 'This 1930 census record matches Doris Jane Lewis and includes her spouse Elmer Anderson and potential daughter Emma Jane Anderson (age 4, born about 1926).';
                 } else {
                     reasonText.textContent = 'Names, relationships, and ages align with known family details.';
                 }
@@ -6271,14 +6272,19 @@
                         // Add children
                         if (recordData.children && recordData.children.length > 0) {
                             recordData.children.forEach(child => {
+                                const badge = child.potential ? '<span class="review-family-badge">Potential</span>' : '';
+                                const details = child.potential
+                                    ? `Child • Age ${child.age} • Born about ${child.birthYear}`
+                                    : `Child • Age ${child.age}`;
+
                                 recordFamilyHTML += `
                                     <div class="review-family-member">
                                         <div class="review-family-avatar">
                                             <img src="female.png" alt="${child.name}">
                                         </div>
                                         <div class="review-family-info">
-                                            <div class="review-family-name">${child.name}<span class="review-family-badge">Potential</span></div>
-                                            <div class="review-family-details">Child • Age ${child.age} • Born about ${child.birthYear}</div>
+                                            <div class="review-family-name">${child.name}${badge}</div>
+                                            <div class="review-family-details">${details}</div>
                                         </div>
                                     </div>
                                 `;
@@ -6293,23 +6299,34 @@
                         let treeFamilyHTML = `
                             <div class="review-family-member">
                                 <div class="review-family-avatar">
-                                    <img src="male.png" alt="George Rhodes Emery">
+                                    <img src="male.png" alt="Elmer Albert Anderson">
                                 </div>
                                 <div class="review-family-info">
-                                    <div class="review-family-name">George Rhodes Emery</div>
+                                    <div class="review-family-name">Elmer Albert Anderson</div>
                                     <div class="review-family-details">Spouse</div>
                                 </div>
                             </div>
-                            <div class="review-family-member">
-                                <div class="review-family-avatar">
-                                    <img src="male.png" alt="William George Emery">
-                                </div>
-                                <div class="review-family-info">
-                                    <div class="review-family-name">William George Emery</div>
-                                    <div class="review-family-details">Child • 1940–</div>
-                                </div>
-                            </div>
                         `;
+
+                        // Add children that are in the tree
+                        if (recordData.children && recordData.children.length > 0) {
+                            recordData.children.forEach(child => {
+                                if (child.inTree) {
+                                    treeFamilyHTML += `
+                                        <div class="review-family-member">
+                                            <div class="review-family-avatar">
+                                                <img src="female.png" alt="${child.name}">
+                                            </div>
+                                            <div class="review-family-info">
+                                                <div class="review-family-name">${child.name}</div>
+                                                <div class="review-family-details">Child • ${child.birthYear}–1997</div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+                            });
+                        }
+
                         reviewTreeFamily.innerHTML = treeFamilyHTML;
                     }
                 } else {
