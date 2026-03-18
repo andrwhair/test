@@ -133,16 +133,16 @@
 
         /* Person Header */
         .person-header {
-            background: white;
+            background: var(--gray90);
             padding: 32px 0 32px 0;
         }
 
         .person-header-content {
             max-width: 1720px;
             margin: 0 auto;
-            padding: 0 117px 0 117px;
+            padding: 0 120px 0 120px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             gap: 24px;
         }
@@ -181,13 +181,13 @@
         .person-name {
             font-size: 27px;
             font-weight: 700;
-            color: var(--gray100);
+            color: white;
             line-height: 1.2;
         }
 
         .person-details {
             font-size: 16px;
-            color: rgba(0, 3, 7, 0.67);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .header-actions {
@@ -223,6 +223,15 @@
             background: var(--blue70);
         }
 
+        .person-header .btn {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .person-header .btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
         .btn-icon {
             width: 16px;
             height: 16px;
@@ -231,10 +240,10 @@
 
         /* Tabs */
         .tabs {
-            background: white;
+            background: var(--gray03);
             display: flex;
             justify-content: center;
-            padding: 0 120px;
+            padding: 16px 120px 8px 120px;
         }
 
         .tabs-container {
@@ -248,18 +257,19 @@
             padding: 12px 16px;
             text-align: center;
             font-size: 14px;
-            text-transform: uppercase;
+            font-weight: 600;
             letter-spacing: 0.175px;
-            color: var(--gray100);
-            background: none;
+            color: var(--gray90);
+            background: transparent;
             border: none;
             cursor: pointer;
             position: relative;
+            border-radius: 8px;
         }
 
         .tab.active {
-            color: var(--blue60);
-            box-shadow: inset 0px -3px 0px 0px #397b99;
+            color: var(--gray100);
+            background: #C8C8C8;
             font-weight: 700;
         }
 
@@ -267,7 +277,7 @@
         .container {
             max-width: 1720px;
             margin: 0 auto;
-            padding: 24px 120px;
+            padding: 12px 120px 24px 120px;
         }
 
         /* Tab Content */
@@ -284,8 +294,11 @@
             display: grid;
             grid-template-columns: 1fr 1fr 400px;
             gap: 16px;
-            max-width: 1480px;
+            max-width: min(1480px, 100%);
+            width: 100%;
             margin: 0 auto;
+            box-sizing: border-box;
+            overflow-x: hidden;
         }
 
         .vitals-row {
@@ -326,6 +339,8 @@
             background: white;
             border-radius: 8px;
             border: none;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .left-column .card,
@@ -537,6 +552,8 @@
 
         .card-body {
             padding: 0;
+            box-sizing: border-box;
+            max-width: 100%;
         }
 
         .vital-item {
@@ -1348,10 +1365,12 @@
 
         @media (max-width: 1380px) {
             .content-grid {
-                flex-wrap: wrap;
+                grid-template-columns: 1fr 1fr;
+                max-width: 100%;
             }
 
             .right-column {
+                grid-column: 1 / -1;
                 width: 100%;
                 max-width: none;
             }
@@ -1359,13 +1378,15 @@
 
         @media (max-width: 768px) {
             .content-grid {
-                flex-direction: column;
+                grid-template-columns: 1fr;
+                max-width: 100%;
             }
 
             .left-column,
             .middle-column,
             .right-column {
                 width: 100%;
+                grid-column: 1;
             }
         }
 
@@ -1448,6 +1469,10 @@
         .memories-grid {
             column-count: 4;
             column-gap: 16px;
+            max-width: min(1480px, 100%);
+            width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
         }
 
         .memory-card {
@@ -1459,6 +1484,8 @@
             border: none;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-block;
+            width: 100%;
         }
 
         .memory-card:hover {
@@ -1602,32 +1629,36 @@
         /* Research Tab Responsive Grids */
         .research-tab-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 2fr 1fr;
             gap: 16px;
-            max-width: 1480px;
-            margin: -12px auto 0 auto;
+            max-width: min(1480px, 100%);
+            width: 100%;
+            margin: 0 auto;
+            align-items: start;
+            box-sizing: border-box;
+            overflow-x: hidden;
         }
 
-        .research-tab-grid > div:first-child {
-            grid-column: 1 / 3;
-            margin-bottom: 24px;
+        .research-tab-grid > div {
+            min-width: 0;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
-        .research-tab-grid > div:nth-child(2) {
-            grid-column: 1;
+        .research-tab-grid .card {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .research-tab-grid .card-body {
+            overflow: hidden;
         }
 
         @media (max-width: 1200px) {
             .research-tab-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .research-tab-grid > div:first-child {
-                grid-column: 1 / 3;
-            }
-
-            .research-tab-grid > div:nth-child(2) {
-                grid-column: 1 / 3;
+                grid-template-columns: 1fr;
+                max-width: 100%;
             }
         }
 
@@ -1635,20 +1666,25 @@
             .research-tab-grid {
                 grid-template-columns: 1fr;
                 gap: 16px;
-            }
-
-            .research-tab-grid > div:first-child,
-            .research-tab-grid > div:nth-child(2) {
-                grid-column: 1;
+                max-width: 100%;
             }
         }
 
         .research-hint-grid {
             display: grid;
-            grid-template-columns: 40px minmax(200px, 300px) minmax(150px, 250px) auto;
+            grid-template-columns: 40px minmax(0, 300px) minmax(0, 250px) auto;
             gap: 12px;
             row-gap: 12px;
             align-items: start;
+            max-width: 100%;
+            width: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .research-hint-grid > * {
+            min-width: 0;
+            overflow-wrap: break-word;
         }
 
         @media (max-width: 1200px) {
@@ -5001,25 +5037,25 @@
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <div style="display: flex; align-items: center; gap: 16px;">
                         <div class="avatar-large">
-                            <img src="female.png" alt="Doris Jane Lewis">
+                            <img src="images/doris6.png" alt="Doris Jane Lewis" style="transform: scaleX(-1);">
                         </div>
                         <div class="person-data">
                             <h1 class="person-name">Doris Jane Lewis</h1>
                             <p class="person-details">4 January 1896 – 22 December 1988 • KWCL-QCX</p>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 16px; margin-left: 96px;">
-                        <a href="#" style="display: flex; align-items: center; gap: 6px; color: var(--blue60); text-decoration: none; font-size: 14px; font-weight: 600;">
+                    <div style="display: flex; gap: 26px; margin-left: 96px;">
+                        <a href="#" style="display: flex; align-items: center; gap: 6px; color: white; text-decoration: none; font-size: 14px; font-weight: 600;">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M20 4v4h-3V4h3Zm0 12v4h-3v-4h3ZM4 14v-4h3v4H4ZM15 3v2h-1a3 3 0 0 0-3 3v3H9V9a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-2h2v3a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1Z" class="rtlFlipCss_r1nl3sf1"></path></svg>
-                            VIEW TREE
+                            View Tree
                         </a>
-                        <a href="#" style="display: flex; align-items: center; gap: 6px; color: var(--blue60); text-decoration: none; font-size: 14px; font-weight: 600;">
+                        <a href="#" style="display: flex; align-items: center; gap: 6px; color: white; text-decoration: none; font-size: 14px; font-weight: 600;">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M6 23a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h2v-2a3 3 0 0 1 3-3h3a1 1 0 0 0 1-1V8h-2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-2v2a3 3 0 0 1-3 3h-3a1 1 0 0 0-1 1v2h2a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H6ZM18 3h-4v3h4V3Zm-7 15H7v3h4v-3Z" class="rtlFlipCss_r1nl3sf1"></path></svg>
-                            VIEW RELATIONSHIP
+                            View Relationship
                         </a>
-                        <a href="#" style="display: flex; align-items: center; gap: 6px; color: var(--blue60); text-decoration: none; font-size: 14px; font-weight: 600;">
+                        <a href="#" style="display: flex; align-items: center; gap: 6px; color: white; text-decoration: none; font-size: 14px; font-weight: 600;">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16a1 1 0 0 1 .56.16l3.73 2.5-1.29-4.4a1 1 0 0 1 .25-1l3.3-3.3H15a1 1 0 0 1-.9-.55L12 5.2 9.9 9.42A1 1 0 0 1 9 10H5.41l3.3 3.3a1 1 0 0 1 .25 1l-1.25 4.35 3.73-2.5A1 1 0 0 1 12 16Zm6 6a1 1 0 0 1-.56-.17L12 18.19l-5.44 3.64a1 1 0 0 1-1.4-.18 1 1 0 0 1-.16-.93l1.84-6.45-4.55-4.59A1 1 0 0 1 3 8h5.38l2.72-5.49a1 1 0 0 1 1.34-.46 1 1 0 0 1 .46.46L15.62 8H21a1 1 0 0 1 1 1 1 1 0 0 1-.3.72l-4.58 4.58L19 20.72a1 1 0 0 1-.61 1.28h-.07a.86.86 0 0 1-.32 0Z"></path></svg>
-                            FOLLOWING
+                            Following
                         </a>
                     </div>
                 </div>
@@ -5128,6 +5164,12 @@
                             </a>
                             <a href="#" class="dropdown-item" style="padding: 12px 16px; display: flex; align-items: center; gap: 12px; color: var(--gray100); text-decoration: none;">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink: 0;">
+                                    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                                </svg>
+                                <span>Latest Changes</span>
+                            </a>
+                            <a href="#" class="dropdown-item" style="padding: 12px 16px; display: flex; align-items: center; gap: 12px; color: var(--gray100); text-decoration: none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink: 0;">
                                     <path fill-rule="evenodd" d="M9 12a3.5 3.5 0 1 0-3.5-3.5A3.5 3.5 0 0 0 9 12Zm-7 5.25c0-2.33 4.66-3.5 7-3.5s7 1.17 7 3.5V19H2Zm7-1.5A9.76 9.76 0 0 0 4.34 17h9.32A9.76 9.76 0 0 0 9 15.75Zm1.5-7.25A1.5 1.5 0 1 0 9 10a1.5 1.5 0 0 0 1.5-1.5Zm5.5 5.31a4.19 4.19 0 0 1 2 3.44V19h4v-1.75c0-2.02-3.5-3.17-6-3.44Zm2.5-5.31A3.5 3.5 0 0 1 15 12a3.4 3.4 0 0 1-1.5-.35 5.47 5.47 0 0 0 0-6.3A3.4 3.4 0 0 1 15 5a3.5 3.5 0 0 1 3.5 3.5Z"/>
                                 </svg>
                                 <span>Possible Duplicates (0)</span>
@@ -5165,8 +5207,8 @@
         <div class="tabs">
             <div class="tabs-container">
                 <button class="tab active" data-tab="details">Details</button>
-                <button class="tab" data-tab="research">Research</button>
-                <button class="tab" data-tab="memories">Memories (22)</button>
+                <button class="tab" data-tab="research">Hints (5)</button>
+                <button class="tab" data-tab="memories">Memories (8)</button>
                 <button class="tab" data-tab="timeline">Timeline</button>
             </div>
         </div>
@@ -5699,7 +5741,6 @@
                     </div>
                 </div>
             </div>
-        </div>
 
         <!-- Research Tab Content -->
         <div id="research-tab" class="tab-content">
@@ -5707,325 +5748,183 @@
             <div class="research-tab-grid">
                 <!-- Research Helps Section (Spans first 2 columns) -->
                 <div>
-                <div class="card">
+                <!-- Record Hints Card -->
+                <div class="card" style="margin-bottom: 16px;">
                     <div class="card-body" style="padding: 24px;">
-                        <h2 class="card-title" style="margin-bottom: 16px;">Research Helps</h2>
-                        <!-- Record Hints Section -->
-                        <div style="margin-bottom: 24px;">
-                            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--gray90);">Record Hints (3)</h3>
+                        <h2 class="card-title" style="margin-bottom: 16px;">Record Hints (3)</h2>
 
-                            <div class="research-hint-grid">
-                                <!-- Record Hint 1 -->
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--blue60)" style="padding-top: 20px;">
-                                    <path d="M18.5 18c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5Zm0 1C16 19 14 21.2 14 24h9c0-2.8-2-5-4.5-5ZM9 16h5v-2H9v2Zm-1-3h7v-2H8v2Zm5.14 7H6V4h8v4h4v3.05c.17-.02.33-.05.5-.05.53 0 1.03.1 1.5.27V6.59L15.41 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h6.27c.2-.72.49-1.4.87-2Z"></path>
-                                </svg>
-                                <div style="padding-top: 16px;">
-                                    <div style="font-weight: 600; color: var(--blue60); margin-bottom: 4px;">
-                                        <a href="#" style="color: var(--blue60); text-decoration: none;">George Rhodes Emery</a>
-                                    </div>
-                                    <div style="font-size: 13px; color: var(--gray70);">United States World War II Draft Registration Cards, 1942</div>
+                        <div class="research-hint-grid">
+                            <!-- Record Hint 1 -->
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--blue60)" style="padding-top: 20px;">
+                                <path d="M18.5 18c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5Zm0 1C16 19 14 21.2 14 24h9c0-2.8-2-5-4.5-5ZM9 16h5v-2H9v2Zm-1-3h7v-2H8v2Zm5.14 7H6V4h8v4h4v3.05c.17-.02.33-.05.5-.05.53 0 1.03.1 1.5.27V6.59L15.41 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h6.27c.2-.72.49-1.4.87-2Z"></path>
+                            </svg>
+                            <div style="padding-top: 16px;">
+                                <div style="font-weight: 600; color: var(--blue60); margin-bottom: 4px;">
+                                    <a href="#" style="color: var(--blue60); text-decoration: none;">George Rhodes Emery</a>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px;">
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Spouse: Doris Jane Lewis</div>
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Birth: 1896</div>
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Residence: Salt Lake City, Utah</div>
-                                </div>
-                                <div style="display: flex; gap: 8px; padding-top: 16px;">
-                                    <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">REVIEW</button>
-                                    <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
-                                </div>
+                                <div style="font-size: 13px; color: var(--gray70);">United States World War II Draft Registration Cards, 1942</div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px;">
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Spouse: Doris Jane Lewis</div>
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Birth: 1896</div>
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Residence: Salt Lake City, Utah</div>
+                            </div>
+                            <div style="display: flex; gap: 8px; padding-top: 16px; justify-content: flex-end;">
+                                <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">REVIEW</button>
+                                <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
+                            </div>
 
-                                <!-- Record Hint 2 -->
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--blue60)" style="padding-top: 20px;">
-                                    <path d="M18.5 18c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5Zm0 1C16 19 14 21.2 14 24h9c0-2.8-2-5-4.5-5ZM9 16h5v-2H9v2Zm-1-3h7v-2H8v2Zm5.14 7H6V4h8v4h4v3.05c.17-.02.33-.05.5-.05.53 0 1.03.1 1.5.27V6.59L15.41 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h6.27c.2-.72.49-1.4.87-2Z"></path>
-                                </svg>
-                                <div style="padding-top: 16px;">
-                                    <div style="font-weight: 600; color: var(--blue60); margin-bottom: 4px;">
-                                        <a href="#" style="color: var(--blue60); text-decoration: none;">William Thomas Lewis</a>
-                                    </div>
-                                    <div style="font-size: 13px; color: var(--gray70);">California Death Index, 1940-1997</div>
+                            <!-- Record Hint 2 -->
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--blue60)" style="padding-top: 20px;">
+                                <path d="M18.5 18c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5Zm0 1C16 19 14 21.2 14 24h9c0-2.8-2-5-4.5-5ZM9 16h5v-2H9v2Zm-1-3h7v-2H8v2Zm5.14 7H6V4h8v4h4v3.05c.17-.02.33-.05.5-.05.53 0 1.03.1 1.5.27V6.59L15.41 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h6.27c.2-.72.49-1.4.87-2Z"></path>
+                            </svg>
+                            <div style="padding-top: 16px;">
+                                <div style="font-weight: 600; color: var(--blue60); margin-bottom: 4px;">
+                                    <a href="#" style="color: var(--blue60); text-decoration: none;">William Thomas Lewis</a>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px;">
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Mother: Mary Jane Blount</div>
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Father: Thomas Henry Lewis</div>
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Birth: 1888</div>
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Death: 1965</div>
-                                </div>
-                                <div style="display: flex; gap: 8px; padding-top: 16px;">
-                                    <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">REVIEW</button>
-                                    <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
-                                </div>
+                                <div style="font-size: 13px; color: var(--gray70);">California Death Index, 1940-1997</div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px;">
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Mother: Mary Jane Blount</div>
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Father: Thomas Henry Lewis</div>
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Birth: 1888</div>
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Death: 1965</div>
+                            </div>
+                            <div style="display: flex; gap: 8px; padding-top: 16px; justify-content: flex-end;">
+                                <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">REVIEW</button>
+                                <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
+                            </div>
 
-                                <!-- Record Hint 3 -->
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--blue60)" style="padding-top: 20px;">
-                                    <path d="M18.5 18c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5Zm0 1C16 19 14 21.2 14 24h9c0-2.8-2-5-4.5-5ZM9 16h5v-2H9v2Zm-1-3h7v-2H8v2Zm5.14 7H6V4h8v4h4v3.05c.17-.02.33-.05.5-.05.53 0 1.03.1 1.5.27V6.59L15.41 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h6.27c.2-.72.49-1.4.87-2Z"></path>
-                                </svg>
-                                <div style="padding-top: 16px;">
-                                    <div style="font-weight: 600; color: var(--blue60); margin-bottom: 4px;">
-                                        <a href="#" style="color: var(--blue60); text-decoration: none;">Margaret Ann Lewis</a>
+                            <!-- Record Hint 3 -->
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--blue60)" style="padding-top: 20px;">
+                                <path d="M18.5 18c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5Zm0 1C16 19 14 21.2 14 24h9c0-2.8-2-5-4.5-5ZM9 16h5v-2H9v2Zm-1-3h7v-2H8v2Zm5.14 7H6V4h8v4h4v3.05c.17-.02.33-.05.5-.05.53 0 1.03.1 1.5.27V6.59L15.41 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h6.27c.2-.72.49-1.4.87-2Z"></path>
+                            </svg>
+                            <div style="padding-top: 16px;">
+                                <div style="font-weight: 600; color: var(--blue60); margin-bottom: 4px;">
+                                    <a href="#" style="color: var(--blue60); text-decoration: none;">Margaret Ann Lewis</a>
+                                </div>
+                                <div style="font-size: 13px; color: var(--gray70);">United States Social Security Death Index</div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px;">
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Mother: Mary Jane Blount</div>
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Father: Thomas Henry Lewis</div>
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Birth: 1890</div>
+                                <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Death: 1972</div>
+                            </div>
+                            <div style="display: flex; gap: 8px; padding-top: 16px; justify-content: flex-end;">
+                                <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">REVIEW</button>
+                                <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Problems Card -->
+                <div class="card" style="margin-bottom: 16px;">
+                    <div class="card-body" style="padding: 24px;">
+                        <h2 class="card-title" style="margin-bottom: 16px;">Data Problems (2)</h2>
+
+                        <div class="research-hint-grid">
+                            <!-- Data Problem 1 -->
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="#F57C00" style="padding-top: 20px;">
+                                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                            </svg>
+                            <div style="padding-top: 16px;">
+                                <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Standardized Place Missing</div>
+                                <div style="font-size: 13px; color: var(--gray70);">The birth place needs to be standardized to help other users find this person in location-based searches.</div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 16px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="avatar-small" style="width: 32px; height: 32px;">
+                                        <img src="female.png" alt="Doris Jane Lewis">
                                     </div>
-                                    <div style="font-size: 13px; color: var(--gray70);">United States Social Security Death Index</div>
+                                    <div style="font-size: 13px;">
+                                        <div style="color: var(--gray60);">Person</div>
+                                        <div style="font-weight: 600; color: var(--gray90);">Doris Jane Lewis</div>
+                                        <div style="color: var(--gray60);">1896-1988 • KWZB-8F4</div>
+                                    </div>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 16px;">
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Mother: Mary Jane Blount</div>
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Father: Thomas Henry Lewis</div>
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Birth: 1890</div>
-                                    <div style="font-size: 13px; color: var(--gray70); line-height: 1.5;">Death: 1972</div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="avatar-small" style="width: 32px; height: 32px;">
+                                        <img src="male.png" alt="George Rhodes Emery">
+                                    </div>
+                                    <div style="font-size: 13px;">
+                                        <div style="color: var(--gray60);">Spouse</div>
+                                        <div style="font-weight: 600; color: var(--gray90);">George Rhodes Emery</div>
+                                        <div style="color: var(--gray60);">1896-1972 • KWZC-9G5</div>
+                                    </div>
                                 </div>
-                                <div style="display: flex; gap: 8px; padding-top: 16px;">
-                                    <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">REVIEW</button>
-                                    <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
+                            </div>
+                            <div style="display: flex; gap: 8px; padding-top: 16px; justify-content: flex-end;">
+                                <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
+                            </div>
+
+                            <!-- Data Problem 2 -->
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="#F57C00" style="padding-top: 20px;">
+                                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                            </svg>
+                            <div style="padding-top: 16px;">
+                                <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Multiple Birth Dates</div>
+                                <div style="font-size: 13px; color: var(--gray70);">This person has two different birth dates entered. Review sources to determine the correct date.</div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 16px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="avatar-small" style="width: 32px; height: 32px;">
+                                        <img src="male.png" alt="Thomas Henry Lewis">
+                                    </div>
+                                    <div style="font-size: 13px;">
+                                        <div style="color: var(--gray60);">Father</div>
+                                        <div style="font-weight: 600; color: var(--gray90);">Thomas Henry Lewis</div>
+                                        <div style="color: var(--gray60);">1851-1936 • KWZD-1H6</div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div style="display: flex; gap: 8px; padding-top: 16px; justify-content: flex-end;">
+                                <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Research Suggestions Card -->
+                <div class="card" style="margin-bottom: 16px;">
+                    <div class="card-body" style="padding: 24px;">
+                        <h2 class="card-title" style="margin-bottom: 16px;">Research Suggestions (2)</h2>
+
+                        <!-- Research Suggestion 1 -->
+                        <div style="display: flex; align-items: start; gap: 12px; padding: 16px 0; margin-bottom: 12px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#9C27B0" style="flex-shrink: 0;">
+                                <path fill-rule="evenodd" d="M6 6h11.59l1 1-1 1H6Zm12 8v2H6.41l-1-1 1-1Zm0-4a1 1 0 0 0 .71-.29l2-2a1 1 0 0 0 0-1.41l-2-2A1 1 0 0 0 18 4h-5V2h-2v2H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h6v2H6a1 1 0 0 0-.71.29l-2 2a1 1 0 0 0 0 1.41l2 2A1 1 0 0 0 6 18h5v4h2v-4h6a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-6v-2Z"></path>
+                            </svg>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Search 1950 United States Census</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-bottom: 8px;">The 1950 census may contain additional information about Doris Jane Lewis and her family during this time period.</div>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: start;">
+                                <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">SEARCH RECORDS</button>
+                                <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
                             </div>
                         </div>
 
-                        <!-- Data Problems Section -->
-                        <div style="margin-bottom: 24px;">
-                            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--gray90);">Data Problems (2)</h3>
-
-                            <div class="research-hint-grid">
-                                <!-- Data Problem 1 -->
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="#F57C00" style="padding-top: 20px;">
-                                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                                </svg>
-                                <div style="padding-top: 16px;">
-                                    <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Standardized Place Missing</div>
-                                    <div style="font-size: 13px; color: var(--gray70);">The birth place needs to be standardized to help other users find this person in location-based searches.</div>
-                                </div>
-                                <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 16px;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <div class="avatar-small" style="width: 32px; height: 32px;">
-                                            <img src="female.png" alt="Doris Jane Lewis">
-                                        </div>
-                                        <div style="font-size: 13px;">
-                                            <div style="color: var(--gray60);">Person</div>
-                                            <div style="font-weight: 600; color: var(--gray90);">Doris Jane Lewis</div>
-                                            <div style="color: var(--gray60);">1896-1988 • KWZB-8F4</div>
-                                        </div>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <div class="avatar-small" style="width: 32px; height: 32px;">
-                                            <img src="male.png" alt="George Rhodes Emery">
-                                        </div>
-                                        <div style="font-size: 13px;">
-                                            <div style="color: var(--gray60);">Spouse</div>
-                                            <div style="font-weight: 600; color: var(--gray90);">George Rhodes Emery</div>
-                                            <div style="color: var(--gray60);">1896-1972 • KWZC-9G5</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; gap: 8px; padding-top: 16px;">
-                                    <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
-                                </div>
-
-                                <!-- Data Problem 2 -->
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="#F57C00" style="padding-top: 20px;">
-                                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                                </svg>
-                                <div style="padding-top: 16px;">
-                                    <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Multiple Birth Dates</div>
-                                    <div style="font-size: 13px; color: var(--gray70);">This person has two different birth dates entered. Review sources to determine the correct date.</div>
-                                </div>
-                                <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 16px;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <div class="avatar-small" style="width: 32px; height: 32px;">
-                                            <img src="male.png" alt="Thomas Henry Lewis">
-                                        </div>
-                                        <div style="font-size: 13px;">
-                                            <div style="color: var(--gray60);">Father</div>
-                                            <div style="font-weight: 600; color: var(--gray90);">Thomas Henry Lewis</div>
-                                            <div style="color: var(--gray60);">1851-1936 • KWZD-1H6</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; gap: 8px; padding-top: 16px;">
-                                    <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
-                                </div>
+                        <!-- Research Suggestion 2 -->
+                        <div style="display: flex; align-items: start; gap: 12px; padding: 16px 0;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#9C27B0" style="flex-shrink: 0;">
+                                <path fill-rule="evenodd" d="M6 6h11.59l1 1-1 1H6Zm12 8v2H6.41l-1-1 1-1Zm0-4a1 1 0 0 0 .71-.29l2-2a1 1 0 0 0 0-1.41l-2-2A1 1 0 0 0 18 4h-5V2h-2v2H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h6v2H6a1 1 0 0 0-.71.29l-2 2a1 1 0 0 0 0 1.41l2 2A1 1 0 0 0 6 18h5v4h2v-4h6a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-6v-2Z"></path>
+                            </svg>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Search Utah Obituaries</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-bottom: 8px;">Obituaries can reveal family relationships, burial locations, and other biographical details about Doris Jane Lewis and her relatives.</div>
                             </div>
-                        </div>
-
-                        <!-- Research Suggestions Section -->
-                        <div style="margin-bottom: 16px;">
-                            <h3 style="font-size: 16px; font-weight: 600; margin: 24px 0 8px 0; color: var(--gray90);">Research Suggestions (2)</h3>
-
-                            <!-- Research Suggestion 1 -->
-                            <div style="display: flex; align-items: start; gap: 12px; padding: 16px 0; margin-bottom: 12px;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#9C27B0" style="flex-shrink: 0;">
-                                    <path fill-rule="evenodd" d="M6 6h11.59l1 1-1 1H6Zm12 8v2H6.41l-1-1 1-1Zm0-4a1 1 0 0 0 .71-.29l2-2a1 1 0 0 0 0-1.41l-2-2A1 1 0 0 0 18 4h-5V2h-2v2H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h6v2H6a1 1 0 0 0-.71.29l-2 2a1 1 0 0 0 0 1.41l2 2A1 1 0 0 0 6 18h5v4h2v-4h6a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-6v-2Z"></path>
-                                </svg>
-                                <div style="flex: 1;">
-                                    <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Search 1950 United States Census</div>
-                                    <div style="font-size: 13px; color: var(--gray70); margin-bottom: 8px;">The 1950 census may contain additional information about Doris Jane Lewis and her family during this time period.</div>
-                                </div>
-                                <div style="display: flex; gap: 8px; align-items: start;">
-                                    <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">SEARCH RECORDS</button>
-                                    <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
-                                </div>
+                            <div style="display: flex; gap: 8px; align-items: start;">
+                                <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">SEARCH RECORDS</button>
+                                <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
                             </div>
-
-                            <!-- Research Suggestion 2 -->
-                            <div style="display: flex; align-items: start; gap: 12px; padding: 16px 0;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#9C27B0" style="flex-shrink: 0;">
-                                    <path fill-rule="evenodd" d="M6 6h11.59l1 1-1 1H6Zm12 8v2H6.41l-1-1 1-1Zm0-4a1 1 0 0 0 .71-.29l2-2a1 1 0 0 0 0-1.41l-2-2A1 1 0 0 0 18 4h-5V2h-2v2H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h6v2H6a1 1 0 0 0-.71.29l-2 2a1 1 0 0 0 0 1.41l2 2A1 1 0 0 0 6 18h5v4h2v-4h6a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-6v-2Z"></path>
-                                </svg>
-                                <div style="flex: 1;">
-                                    <div style="font-weight: 600; color: var(--gray90); margin-bottom: 4px;">Search Utah Obituaries</div>
-                                    <div style="font-size: 13px; color: var(--gray70); margin-bottom: 8px;">Obituaries can reveal family relationships, burial locations, and other biographical details about Doris Jane Lewis and her relatives.</div>
-                                </div>
-                                <div style="display: flex; gap: 8px; align-items: start;">
-                                    <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 13px;">SEARCH RECORDS</button>
-                                    <button class="btn btn-text" style="padding: 6px 16px; font-size: 13px; color: var(--blue60);">DISMISS</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Show All Link -->
-                        <div style="text-align: right; margin-top: 16px;">
-                            <a href="#" style="color: var(--blue60); text-decoration: none; font-size: 14px; font-weight: 600;">SHOW ALL</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Left Column: Latest Changes, Collaborate, & Tools -->
-            <div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div style="padding: 24px;">
-                                <h2 class="card-title" style="margin-bottom: 12px;">Latest Changes</h2>
-                                <div style="margin-bottom: 12px;">
-                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
-                                        </svg>
-                                        <span style="font-size: 13px; color: var(--gray60);">January 26, 2025</span>
-                                    </div>
-                                    <div style="font-size: 14px; margin-left: 24px;">
-                                        <strong>by</strong> <a href="#" style="color: var(--blue60); text-decoration: none;">Likesecampbell</a>
-                                    </div>
-                                    <div style="font-size: 14px; margin-left: 24px; margin-top: 4px;">
-                                        Death: Date Changed
-                                    </div>
-                                </div>
-
-                                <div style="margin-bottom: 12px;">
-                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
-                                        </svg>
-                                        <span style="font-size: 13px; color: var(--gray60);">December 16, 2023</span>
-                                    </div>
-                                    <div style="font-size: 14px; margin-left: 24px;">
-                                        <strong>by</strong> <a href="#" style="color: var(--blue60); text-decoration: none;">DS-brookshirec</a>
-                                    </div>
-                                    <div style="font-size: 14px; margin-left: 24px; margin-top: 4px;">
-                                        Relationship: Claimed
-                                    </div>
-                                </div>
-
-                                <div style="margin-bottom: 12px;">
-                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
-                                        </svg>
-                                        <span style="font-size: 13px; color: var(--gray60);">May 19, 2023</span>
-                                    </div>
-                                    <div style="font-size: 14px; margin-left: 24px;">
-                                        <strong>by</strong> <a href="#" style="color: var(--blue60); text-decoration: none;">DS-brookshirec</a>
-                                    </div>
-                                    <div style="font-size: 14px; margin-left: 24px; margin-top: 4px;">
-                                        Merge Completed
-                                    </div>
-                                </div>
-
-                                <a href="#" style="color: var(--blue60); text-decoration: none; font-size: 14px;">SHOW ALL</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Middle Column: Search Records & Collaborate -->
-                <div style="grid-column: 2;">
-                    <!-- Search Records Section -->
-                    <div class="card" style="margin-bottom: 16px;">
-                        <div class="card-body">
-                            <div class="collapsible-header" onclick="toggleSearchRecords()">
-                                <h2 class="card-title">Search Records</h2>
-                                <svg class="collapsible-chevron" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                                </svg>
-                            </div>
-                            <div class="collapsible-content" id="searchRecordsContent">
-                                <div style="padding: 0 0 12px 0;">
-                                    <a href="#" class="search-link">
-                                        <svg class="search-icon" viewBox="0 0 24 24" fill="#85B940">
-                                            <path d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                                        </svg>
-                                        <span>FamilySearch</span>
-                                    </a>
-                                    <a href="#" class="search-link">
-                                        <svg class="search-icon" viewBox="0 0 24 24" fill="#6B9552">
-                                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.7-2.44c1.76.63 4.13.96 6.59.96 8.97 0 16-3.59 16-8S21.97 8 13 8zM7.9 14.3c-.7 0-1.3-.6-1.3-1.3s.6-1.3 1.3-1.3 1.3.6 1.3 1.3-.6 1.3-1.3 1.3zm4.2 0c-.7 0-1.3-.6-1.3-1.3s.6-1.3 1.3-1.3 1.3.6 1.3 1.3-.6 1.3-1.3 1.3zm4.2 0c-.7 0-1.3-.6-1.3-1.3s.6-1.3 1.3-1.3 1.3.6 1.3 1.3-.6 1.3-1.3 1.3z"/>
-                                        </svg>
-                                        <span>Ancestry</span>
-                                    </a>
-                                    <a href="#" class="search-link">
-                                        <svg class="search-icon" viewBox="0 0 48 48" fill="none">
-                                            <text x="4" y="32" font-family="Inter, sans-serif" font-size="24" font-weight="bold" fill="#D32F2F">my</text>
-                                        </svg>
-                                        <span>Findmypast</span>
-                                    </a>
-                                    <a href="#" class="search-link">
-                                        <svg class="search-icon" viewBox="0 0 24 24" fill="#FF6B35">
-                                            <circle cx="12" cy="12" r="10" fill="#FF6B35"/>
-                                            <path d="M12 2L15 9h7l-5.5 4.5L18 21l-6-4.5L6 21l1.5-7.5L2 9h7z" fill="white"/>
-                                        </svg>
-                                        <span>MyHeritage</span>
-                                    </a>
-                                    <a href="#" class="search-link">
-                                        <svg class="search-icon" viewBox="0 0 24 24" fill="#3A7338">
-                                            <circle cx="12" cy="12" r="10"/>
-                                            <path d="M12 6v12M8 8l4-2 4 2M8 16l4 2 4-2" stroke="white" stroke-width="1.5" fill="none"/>
-                                        </svg>
-                                        <span>Geneanet</span>
-                                    </a>
-                                    <a href="#" class="search-link">
-                                        <svg class="search-icon" viewBox="0 0 24 24" fill="#D32F2F">
-                                            <path d="M4 4h4v16H4V4zm6 0h4v16h-4V4zm6 0h4v16h-4V4z"/>
-                                        </svg>
-                                        <span>Storied</span>
-                                    </a>
-                                    <a href="#" class="search-link">
-                                        <svg class="search-icon" viewBox="0 0 24 24" fill="#1A3746">
-                                            <path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/>
-                                        </svg>
-                                        <span>Filae</span>
-                                    </a>
-                                    <a href="#" class="search-link">
-                                        <svg class="search-icon" viewBox="0 0 24 24">
-                                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                                        </svg>
-                                        <span>Google</span>
-                                    </a>
-
-                                    <div class="search-section-title">Search Trees</div>
-
-                                    <a href="#" class="search-link">
-                                        <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                                        </svg>
-                                        <span>FamilySearch Trees</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Notes and Discussions Section -->
+            <!-- Collaborate Section -->
                     <div class="card">
                         <div class="card-body">
                             <div style="padding: 24px;">
@@ -6055,276 +5954,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Right Column: Family Members -->
-                <div style="grid-column: 3; grid-row: 1 / span 10;" id="research-family-column" data-tab="research">
-                    <!-- Family Members -->
-                    <div class="card">
-                        <div class="card-body">
-                            <div style="padding: 24px 24px 8px 24px;">
-                                <h2 class="card-title">Family Members</h2>
-                            </div>
-                            <!-- Spouses and Children -->
-                            <div class="family-section" style="padding-top: 8px;">
-                                <div class="family-section-header">
-                                    <h3 class="family-section-title">Spouse and Children</h3>
-                                </div>
-
-                                <div class="family-group" data-marriage="1912">
-                                    <div class="preferred-badge">
-                                        <svg class="check-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                                        Preferred
-                                    </div>
-
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="male.png" alt="Elmer Albert Anderson">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Elmer Albert Anderson</div>
-                                            <div class="family-dates">Husband • 1893–1929</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="female.png" alt="Doris Jane Lewis">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Doris Jane Lewis</div>
-                                            <div class="family-dates">Wife • 1896–1988</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="family-member">
-                                        <div class="family-info">
-                                            <div class="vital-label">
-                                                <span class="vital-label-text">Marriage</span>
-                                                <span class="vital-source-count">• 8 Sources</span>
-                                            </div>
-                                            <div class="vital-details">26 June 1912</div>
-                                            <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="family-group indented">
-                                    <h4 class="family-section-title" style="padding: 12px 0;">Children</h4>
-
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="male.png" alt="Elmer Anderson">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Elmer Anderson</div>
-                                            <div class="family-dates">Son • 1913–1963</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="female.png" alt="Kay Anderson">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Kay Anderson</div>
-                                            <div class="family-dates">Daughter • 1923–1982</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Another Spouse Section -->
-                            <div class="family-section" style="margin-top: 8px;">
-                                <div class="family-section-header">
-                                    <h3 class="family-section-title">Spouse and Children</h3>
-                                </div>
-
-                                <div class="family-group" data-marriage="1939">
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="male.png" alt="George Rhodes Emery">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">George Rhodes Emery</div>
-                                            <div class="family-dates">Husband</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 0 -2px -12px; padding: 12px;">
-                                        <div class="avatar-small">
-                                            <img src="female.png" alt="Doris Jane Lewis">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Doris Jane Lewis</div>
-                                            <div class="family-dates">Self</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="family-member" style="margin-top: 2px;">
-                                        <div class="family-info">
-                                            <div class="vital-label">
-                                                <span class="vital-label-text">Marriage</span>
-                                                <span class="vital-source-count">• 15 Sources</span>
-                                            </div>
-                                            <div class="vital-details">1939</div>
-                                            <div class="vital-details">Salt Lake City, Salt Lake, Utah, United States</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="family-group indented">
-                                    <h4 class="family-section-title" style="padding: 12px 0;">Children</h4>
-
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="male.png" alt="William George Emery">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">William George Emery</div>
-                                            <div class="family-dates">1940–</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- Parents and Siblings -->
-                            <div class="family-section" style="margin-top: 8px;">
-                                <div class="family-section-header">
-                                    <h3 class="family-section-title">Parents and Siblings</h3>
-                                </div>
-
-                                <div class="family-group">
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="male.png" alt="Thomas Henry Lewis">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Thomas Henry Lewis</div>
-                                            <div class="family-dates">Father • 1851–1936</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="female.png" alt="Mary Jane Blount">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Mary Jane Blount</div>
-                                            <div class="family-dates">Mother • 1860–1936</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="family-group indented">
-                                    <h4 class="family-section-title" style="padding: 12px 0;">Siblings</h4>
-
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="male.png" alt="William Thomas Lewis">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">William Thomas Lewis</div>
-                                            <div class="family-dates">Brother • 1888–1965</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="female.png" alt="Margaret Ann Lewis">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Margaret Ann Lewis</div>
-                                            <div class="family-dates">Sister • 1890–1972</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="family-member">
-                                        <div class="avatar-small">
-                                            <img src="male.png" alt="Robert James Lewis">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Robert James Lewis</div>
-                                            <div class="family-dates">Brother • 1893–1958</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 0 -2px -12px; padding: 12px;">
-                                        <div class="avatar-small">
-                                            <img src="female.png" alt="Doris Jane Lewis">
-                                        </div>
-                                        <div class="family-info">
-                                            <div class="family-name">Doris Jane Lewis</div>
-                                            <div class="family-dates">Self • 1896–1988</div>
-                                        </div>
-                                        <button class="edit-icon-btn" title="Edit">
-                                            <svg class="edit-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-                                            <span class="edit-text">Edit</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
 
         <!-- Memories Tab Content -->
         <div id="memories-tab" class="tab-content">
