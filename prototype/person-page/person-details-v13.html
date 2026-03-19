@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doris Jane Source Centric v13 - Two Column Layout</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="zion-colors.css">
 
     <!-- Leaflet CSS -->
@@ -28,8 +28,8 @@
         }
 
         body {
-            font-family: 'Noto Sans', sans-serif;
-            background: var(--gray02);
+            font-family: 'Inter', sans-serif;
+            background: var(--gray03);
             color: var(--gray100);
             line-height: 1.5;
         }
@@ -259,6 +259,7 @@
         .tab.active {
             color: var(--blue60);
             box-shadow: inset 0px -3px 0px 0px #397b99;
+            font-weight: 700;
         }
 
         /* Main Content */
@@ -332,7 +333,7 @@
         }
 
         .right-column .card {
-            background: var(--gray02);
+            background: var(--gray03);
             margin-bottom: 12px;
         }
 
@@ -424,13 +425,68 @@
             padding: 0 12px;
         }
 
+        /* Custom Select Dropdown Styling */
+        .custom-select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: 12px 40px 12px 16px;
+            border: 1px solid var(--gray20);
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            background: var(--gray05);
+            color: var(--gray100);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .custom-select:hover {
+            border-color: var(--gray40);
+            background: var(--gray00);
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: var(--blue60);
+            box-shadow: 0 0 0 3px rgba(5, 111, 148, 0.1);
+        }
+
+        .custom-select option {
+            padding: 12px;
+            font-size: 15px;
+        }
+
+        .custom-select optgroup {
+            font-weight: 600;
+            color: var(--gray60);
+            font-size: 13px;
+            padding: 8px 0;
+        }
+
+        .select-chevron {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--gray60);
+        }
+
         .card-body {
             padding: 0;
         }
 
         .vital-item {
             padding: 12px;
-            margin: 0 0 0 -12px;
+            margin: 0 20px 0 -12px;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -606,8 +662,8 @@
             border: 2px dashed var(--green60);
             border-radius: 8px;
             background: white;
-            margin: 4px 12px;
-            padding: 8px;
+            margin: 4px 0 4px -12px;
+            padding: 12px;
         }
 
         .family-member.potential .avatar-small {
@@ -677,6 +733,10 @@
             align-items: center;
             gap: 6px;
             width: fit-content;
+        }
+
+        .add-button.add-source {
+            background: var(--gray05);
         }
 
         .add-button:hover {
@@ -3939,7 +3999,7 @@
                 </div>
                 <div class="census-image-section">
                     <div class="census-document-image">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect fill='%23e8e8e8' width='600' height='400'/%3E%3Ctext x='300' y='200' font-family='Arial' font-size='14' fill='%23666' text-anchor='middle'%3EView on findagrave.com%3C/text%3E%3C/svg%3E" alt="Cemetery Record" style="width: 100%; height: auto; display: block;">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect fill='%23e8e8e8' width='600' height='400'/%3E%3Ctext x='300' y='200' font-family='Inter' font-size='14' fill='%23666' text-anchor='middle'%3EView on findagrave.com%3C/text%3E%3C/svg%3E" alt="Cemetery Record" style="width: 100%; height: auto; display: block;">
                     </div>
                     <button class="census-view-original-btn">VIEW ORIGINAL DOCUMENT</button>
                 </div>
@@ -3981,17 +4041,17 @@
 
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Date</label>
-                        <input type="text" value="4 January 1896" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="4 January 1896" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Place</label>
-                        <input type="text" value="Kamas, Summit, Utah, United States" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="Kamas, Summit, Utah, United States" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Reason This Information Is Correct:</label>
-                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif; resize: vertical; min-height: 80px;">Family records</textarea>
+                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 80px;">Family records</textarea>
                     </div>
 
                     <div style="padding: 12px 0; border-top: 1px solid var(--gray10); margin-top: 24px;">
@@ -4143,17 +4203,17 @@
 
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Date</label>
-                        <input type="text" value="22 September 1988" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="22 September 1988" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Place</label>
-                        <input type="text" value="Kamas, Summit, Utah, United States" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="Kamas, Summit, Utah, United States" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Reason This Information Is Correct:</label>
-                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif; resize: vertical; min-height: 80px;">Death certificate</textarea>
+                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 80px;">Death certificate</textarea>
                     </div>
 
                     <div style="padding: 12px 0; border-top: 1px solid var(--gray10); margin-top: 24px;">
@@ -4254,17 +4314,17 @@
 
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Date</label>
-                        <input type="text" value="22 September 1988" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="22 September 1988" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Place</label>
-                        <input type="text" value="Marion Cemetery, Salt Lake City, Salt Lake, Utah, United States" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="Marion Cemetery, Salt Lake City, Salt Lake, Utah, United States" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Reason This Information Is Correct:</label>
-                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif; resize: vertical; min-height: 80px;">Find a Grave memorial</textarea>
+                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 80px;">Find a Grave memorial</textarea>
                     </div>
 
                     <div style="padding: 12px 0; border-top: 1px solid var(--gray10); margin-top: 24px;">
@@ -4333,17 +4393,17 @@
 
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Date</label>
-                        <input type="text" value="1900" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="1900" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Place</label>
-                        <input type="text" value="Salt Lake City, Salt Lake, Utah, United States" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="Salt Lake City, Salt Lake, Utah, United States" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Reason This Information Is Correct:</label>
-                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif; resize: vertical; min-height: 80px;">Census records</textarea>
+                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 80px;">Census records</textarea>
                     </div>
 
                     <div style="padding: 12px 0; border-top: 1px solid var(--gray10); margin-top: 24px;">
@@ -4488,22 +4548,22 @@
 
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Given Names</label>
-                        <input type="text" value="Doris Jane" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="Doris Jane" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Surname</label>
-                        <input type="text" value="Lewis" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="Lewis" style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Suffix</label>
-                        <input type="text" value="" placeholder="Jr., Sr., III, etc." style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif;">
+                        <input type="text" value="" placeholder="Jr., Sr., III, etc." style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif;">
                     </div>
 
                     <div style="margin-bottom: 24px;">
                         <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--gray90); font-size: 14px;">Reason This Information Is Correct:</label>
-                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: Verdana, Arial, sans-serif; resize: vertical; min-height: 80px;">Birth certificate and census records</textarea>
+                        <textarea style="width: 100%; padding: 10px 12px; border: 1px solid var(--gray30); border-radius: 4px; font-size: 14px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 80px;">Birth certificate and census records</textarea>
                     </div>
 
                     <div style="padding: 12px 0; border-top: 1px solid var(--gray10); margin-top: 24px;">
@@ -5164,7 +5224,7 @@
                                                 </button>
                                             </div>
 
-                                            <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 10px -2px 7px; padding: 8px 2px 8px 5px;">
+                                            <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 0 -2px -12px; padding: 12px;">
                                                 <div class="avatar-small">
                                                     <img src="female.png" alt="Doris Jane Lewis">
                                                 </div>
@@ -5299,7 +5359,7 @@
                                                 </button>
                                             </div>
 
-                                            <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 10px -2px 7px; padding: 8px 2px 8px 5px;">
+                                            <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 0 -2px -12px; padding: 12px;">
                                                 <div class="avatar-small">
                                                     <img src="female.png" alt="Doris Jane Lewis">
                                                 </div>
@@ -5348,7 +5408,7 @@
                                         </div>
                                         <div class="source-meta">Name, Sex, Birth, Spouse, Children</div>
                                     </div>
-                                    <button class="view-btn" style="color: var(--green60);" onclick="openReviewPanel({collection: 'United States, Census, 1920', name: 'Doris Jane Anderson', sex: 'Female', birth: '1896, Utah', residence: '1920, Kamas, Summit, Utah, United States', spouse: 'Elmer Albert Anderson', spouseAge: 27, children: [{name: 'Elmer Anderson', age: '7', birthYear: '1913', inTree: true}], father: 'Raymond McRae Anderson', mother: 'Louella Henderson'})">Review</button>
+                                    <button class="view-btn" style="color: var(--green60);" onclick="openReviewPanel({collection: 'United States, Census, 1920', name: 'Doris Jane Anderson', sex: 'Female', birth: '1896, Utah', age: 24, residence: '1920, Kamas, Summit, Utah, United States', spouse: 'Elmer Albert Anderson', spouseAge: 27, children: [{name: 'Elmer Anderson', age: '7', birthYear: '1913', inTree: true}]})">Review</button>
                                 </div>
 
                                 <div class="source-item potential-source" data-marriage="1912" style="margin: 12px; border: 2px dashed var(--green60); border-radius: 8px; padding: 12px;">
@@ -5429,7 +5489,36 @@
                             </div>
 
                             <div style="padding: 12px;">
-                                <button class="add-button">+ Add Source</button>
+                                <button class="add-button add-source">+ Add Source</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search Records Card -->
+                    <div class="card" style="margin-top: 12px;">
+                        <div class="card-body" style="padding: 16px;">
+                            <h2 class="card-title" style="margin-bottom: 12px;">Search Records</h2>
+
+                            <div class="custom-select-wrapper">
+                                <select id="searchRecordsSelect" onchange="openSearchProvider(this.value)" class="custom-select">
+                                    <option value="">Select a Provider</option>
+                                    <optgroup label="Search Records">
+                                        <option value="familysearch">🛡️ FamilySearch</option>
+                                        <option value="ancestry">🌿 Ancestry</option>
+                                        <option value="findmypast">📝 Findmypast</option>
+                                        <option value="myheritage">🔶 MyHeritage</option>
+                                        <option value="geneanet">🌳 Geneanet</option>
+                                        <option value="storied">📄 Storied</option>
+                                        <option value="filae">🏛️ Filae</option>
+                                        <option value="google">🔍 Google</option>
+                                    </optgroup>
+                                    <optgroup label="Search Trees">
+                                        <option value="familysearch-trees">🔎 FamilySearch Trees</option>
+                                    </optgroup>
+                                </select>
+                                <svg class="select-chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                                </svg>
                             </div>
                         </div>
                     </div>
@@ -5582,7 +5671,7 @@
 
                         <!-- Research Suggestions Section -->
                         <div style="margin-bottom: 16px;">
-                            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--gray90);">Research Suggestions (2)</h3>
+                            <h3 style="font-size: 16px; font-weight: 600; margin: 24px 0 8px 0; color: var(--gray90);">Research Suggestions (2)</h3>
 
                             <!-- Research Suggestion 1 -->
                             <div style="display: flex; align-items: start; gap: 12px; padding: 16px 0; margin-bottom: 12px;">
@@ -5627,7 +5716,7 @@
             <div>
                     <div class="card">
                         <div class="card-body">
-                            <div style="padding: 12px;">
+                            <div style="padding: 24px;">
                                 <h2 class="card-title" style="margin-bottom: 12px;">Latest Changes</h2>
                                 <div style="margin-bottom: 12px;">
                                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
@@ -5681,7 +5770,7 @@
 
                     <div class="card" style="margin-top: 20px;">
                         <div class="card-body">
-                            <div style="padding: 12px;">
+                            <div style="padding: 24px;">
                                 <h2 class="card-title" style="margin-bottom: 12px;">Tools</h2>
                                 <div class="vital-item" style="padding: 8px 0;">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -5779,7 +5868,7 @@
                                     </a>
                                     <a href="#" class="search-link">
                                         <svg class="search-icon" viewBox="0 0 48 48" fill="none">
-                                            <text x="4" y="32" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#D32F2F">my</text>
+                                            <text x="4" y="32" font-family="Inter, sans-serif" font-size="24" font-weight="bold" fill="#D32F2F">my</text>
                                         </svg>
                                         <span>Findmypast</span>
                                     </a>
@@ -5835,7 +5924,7 @@
                     <!-- Notes and Discussions Section -->
                     <div class="card">
                         <div class="card-body">
-                            <div style="padding: 12px;">
+                            <div style="padding: 24px;">
                                 <h2 class="card-title" style="margin-bottom: 16px;">Collaborate</h2>
                                 <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--gray90);">Notes (3)</h3>
 
@@ -5981,7 +6070,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 10px -2px 7px; padding: 8px 2px 8px 5px;">
+                                    <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 0 -2px -12px; padding: 12px;">
                                         <div class="avatar-small">
                                             <img src="female.png" alt="Doris Jane Lewis">
                                         </div>
@@ -6112,7 +6201,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 10px -2px 7px; padding: 8px 2px 8px 5px;">
+                                    <div class="family-member" style="border: 2px solid var(--blue30); border-radius: 8px; margin: -2px 0 -2px -12px; padding: 12px;">
                                         <div class="avatar-small">
                                             <img src="female.png" alt="Doris Jane Lewis">
                                         </div>
@@ -6463,10 +6552,18 @@
                     familyMembers.forEach(member => {
                         const nameEl = member.querySelector('.family-name');
                         if (nameEl) {
-                            const name = nameEl.textContent;
-                            // Highlight spouse and son who appear in the 1920 census
-                            if (name.includes('Elmer Albert Anderson') ||
-                                (name.includes('Elmer Clyde Anderson') && member.querySelector('.family-dates')?.textContent.includes('Son'))) {
+                            const name = nameEl.textContent.trim();
+                            const dates = member.querySelector('.family-dates')?.textContent || '';
+
+                            // Highlight spouse Elmer Albert Anderson (Husband)
+                            if (name === 'Elmer Albert Anderson' && dates.includes('Husband')) {
+                                member.classList.add('highlighted-green');
+                                if (makeSticky) {
+                                    member.classList.add('active');
+                                }
+                            }
+                            // Highlight son Elmer Anderson (born 1913)
+                            if (name === 'Elmer Anderson' && dates.includes('Son') && dates.includes('1913')) {
                                 member.classList.add('highlighted-green');
                                 if (makeSticky) {
                                     member.classList.add('active');
@@ -7135,7 +7232,7 @@
                         // Add children
                         if (recordData.children && recordData.children.length > 0) {
                             recordData.children.forEach(child => {
-                                const badge = child.potential ? '<span class="review-family-badge">Potential</span>' : '';
+                                const badge = child.potential ? '<span class="review-family-badge" style="display: block; margin-left: 0; margin-bottom: 4px;">Potential</span>' : '';
                                 const details = child.potential
                                     ? `Child • Age ${child.age} • Born about ${child.birthYear}`
                                     : `Child • Age ${child.age}`;
@@ -7149,7 +7246,8 @@
                                             <img src="${gender}" alt="${child.name}">
                                         </div>
                                         <div class="review-family-info">
-                                            <div class="review-family-name">${child.name}${badge}</div>
+                                            ${badge}
+                                            <div class="review-family-name">${child.name}</div>
                                             <div class="review-family-details">${details}</div>
                                         </div>
                                     </div>
@@ -7262,6 +7360,33 @@
             } else {
                 content.classList.add('collapsed');
                 header.classList.add('collapsed');
+            }
+        }
+
+        // Open search provider from dropdown
+        function openSearchProvider(provider) {
+            // Define search URLs for each provider
+            const searchUrls = {
+                'familysearch': 'https://www.familysearch.org/search/record/results',
+                'ancestry': 'https://www.ancestry.com/search/',
+                'findmypast': 'https://www.findmypast.com/search',
+                'myheritage': 'https://www.myheritage.com/research',
+                'geneanet': 'https://www.geneanet.org/search',
+                'storied': 'https://www.storied.com/search',
+                'filae': 'https://www.filae.com/search.php',
+                'google': 'https://www.google.com/search?q=Doris+Jane+Lewis',
+                'familysearch-trees': 'https://www.familysearch.org/tree/find/name'
+            };
+
+            if (provider && searchUrls[provider]) {
+                // Open the search URL in a new tab
+                window.open(searchUrls[provider], '_blank');
+
+                // Reset the select dropdown
+                const select = document.getElementById('searchRecordsSelect');
+                if (select) {
+                    select.value = '';
+                }
             }
         }
 
@@ -7510,7 +7635,7 @@
                         // Add children
                         if (recordData.children && recordData.children.length > 0) {
                             recordData.children.forEach(child => {
-                                const badge = child.potential ? '<span class="review-family-badge">Potential</span>' : '';
+                                const badge = child.potential ? '<span class="review-family-badge" style="display: block; margin-left: 0; margin-bottom: 4px;">Potential</span>' : '';
                                 const details = child.potential
                                     ? `Child • Age ${child.age} • Born about ${child.birthYear}`
                                     : `Child • Age ${child.age}`;
@@ -7524,7 +7649,8 @@
                                             <img src="${gender}" alt="${child.name}">
                                         </div>
                                         <div class="review-family-info">
-                                            <div class="review-family-name">${child.name}${badge}</div>
+                                            ${badge}
+                                            <div class="review-family-name">${child.name}</div>
                                             <div class="review-family-details">${details}</div>
                                         </div>
                                     </div>

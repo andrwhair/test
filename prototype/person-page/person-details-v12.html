@@ -4487,7 +4487,7 @@
                                     </div>
                                     <div class="source-meta">Name, Sex, Birth, Spouse, Children</div>
                                 </div>
-                                <button class="view-btn">Review</button>
+                                <button class="view-btn" onclick="openReviewPanel({collection: 'United States, Census, 1930', name: 'Doris Jane Anderson', sex: 'Female', birth: '1896, Utah', residence: '1930, Kamas, Summit, Utah, United States', spouse: 'George Rhodes Emery', children: 'Emma Jane Anderson', father: 'Raymond McRae Anderson', mother: 'Louella Henderson'})">Review</button>
                             </div>
 
                             <div class="source-item" style="margin: 12px;">
@@ -6026,6 +6026,15 @@
             if (modal) {
                 modal.classList.remove('show');
                 document.body.style.overflow = '';
+            }
+        }
+
+        // Global function to open any modal
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
             }
         }
 

@@ -325,7 +325,22 @@
         }
 
         .collapsible-section.expanded .chevron {
-            transform: rotate(180deg);
+            transform: rotate(90deg);
+        }
+
+        /* Conflict Resolution Styles */
+        .conflict-item label {
+            display: block;
+        }
+
+        .conflict-item label:hover > div {
+            border-color: var(--blue40) !important;
+        }
+
+        .conflict-item input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
         }
 
         .collapsible-content {
@@ -942,7 +957,7 @@
         <div class="sub-nav">
             <div class="breadcrumb">
                 <button class="breadcrumb-dropdown">
-                    FamilySearch Tree
+                    House of Windsor
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(90deg);"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
                 </button>
                 <a href="#">Tree</a>
@@ -1224,31 +1239,200 @@
                 <p style="margin-bottom: 20px; color: var(--gray70);">Review the changes that will be made to your tree. You can expand each section to see details.</p>
                 
                 <!-- Summary Stats -->
-                <div style="display: flex; gap: 16px; margin-bottom: 24px;">
-                    <div style="flex: 1; padding: 16px; background: #E8F5E9; border-radius: 8px;">
+                <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                    <div style="flex: 1; padding: 16px; background: #D8F0F8; border: 1px solid var(--gray10); border-radius: 8px; position: relative;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray50)" style="position: absolute; top: 16px; right: 16px;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                         <div style="font-size: 28px; font-weight: 600; color: var(--gray90); margin-bottom: 4px;">47</div>
                         <div style="font-size: 13px; color: var(--gray70);">People Added</div>
                     </div>
-                    <div style="flex: 1; padding: 16px; background: #FFF3E0; border-radius: 8px;">
+                    <div style="flex: 1; padding: 16px; background: #D8F0F8; border: 1px solid var(--gray10); border-radius: 8px; position: relative;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray50)" style="position: absolute; top: 16px; right: 16px;"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                         <div style="font-size: 28px; font-weight: 600; color: var(--gray90); margin-bottom: 4px;">128</div>
                         <div style="font-size: 13px; color: var(--gray70);">People Updated</div>
                     </div>
-                    <div style="flex: 1; padding: 16px; background: #FFEBEE; border-radius: 8px;">
+                    <div style="flex: 1; padding: 16px; background: #D8F0F8; border: 1px solid var(--gray10); border-radius: 8px; position: relative;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray50)" style="position: absolute; top: 16px; right: 16px;"><path d="M19 13H5v-2h14v2z"/></svg>
                         <div style="font-size: 28px; font-weight: 600; color: var(--gray90); margin-bottom: 4px;">3</div>
                         <div style="font-size: 13px; color: var(--gray70);">People Removed</div>
+                    </div>
+                    <div style="flex: 1; padding: 16px; background: #D8F0F8; border: 1px solid var(--gray10); border-radius: 8px; position: relative;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray50)" style="position: absolute; top: 16px; right: 16px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--gray90); margin-bottom: 4px;">5</div>
+                        <div style="font-size: 13px; color: var(--gray70);">Conflicts</div>
                     </div>
                 </div>
 
                 <!-- Changes List -->
-                <div style="max-height: 400px; overflow-y: auto; border: 1px solid var(--gray20); border-radius: 8px;">
+                <div style="border: 1px solid var(--gray20); border-radius: 8px;">
+                    <!-- Conflicts -->
+                    <div style="border-bottom: 1px solid var(--gray20);">
+                        <div style="padding: 12px 16px; background: var(--white); cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleDiffSection(this)">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray50)"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                                <span style="font-weight: 600; color: var(--gray90);">Conflicts (5)</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 13px; color: var(--gray70);" id="conflicts-resolved-count">0 of 5 resolved</span>
+                                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 17.17 14.68 12 9.4 6.83l1.4-1.43 6.73 6.6-6.73 6.6zM6.47 12"/></svg>
+                            </div>
+                        </div>
+                        <div class="diff-content" style="display: none; padding: 16px; background: white;">
+                            <div style="padding: 12px; background: #FFF3E0; border-left: 3px solid var(--orange40); border-radius: 4px; margin-bottom: 16px;">
+                                <div style="font-size: 13px; color: var(--gray90); line-height: 1.5;">
+                                    You made changes online that differ from your re-uploaded GEDCOM. Choose which version to keep for each conflict. <strong>If you don't choose, the most recent change (online version) will be kept.</strong>
+                                </div>
+                            </div>
+
+                        <!-- Conflict Item 1 -->
+                        <div class="conflict-item" style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--gray10);">
+                            <div style="font-weight: 600; color: var(--gray90); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                <span>Prince William Windsor</span>
+                                <span style="font-size: 12px; font-weight: 500; color: var(--gray70); background: var(--gray10); padding: 2px 8px; border-radius: 4px;">Birth Date</span>
+                            </div>
+
+                            <div style="display: flex; gap: 16px; margin-bottom: 8px;">
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-1" value="online" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--blue60); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Online Version (Most Recent)</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">June 21, 1982</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">Changed: Feb 28, 2026</div>
+                                    </div>
+                                </label>
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-1" value="gedcom" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--green50); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">GEDCOM Version</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">June 21, 1982</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">From re-upload</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div style="font-size: 12px; color: var(--gray60); padding: 8px 12px; background: var(--gray02); border-radius: 4px;">If no choice is made, the online version (most recent) will be kept.</div>
+                        </div>
+
+                        <!-- Conflict Item 2 -->
+                        <div class="conflict-item" style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--gray10);">
+                            <div style="font-weight: 600; color: var(--gray90); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                <span>Catherine Elizabeth Middleton</span>
+                                <span style="font-size: 12px; font-weight: 500; color: var(--gray70); background: var(--gray10); padding: 2px 8px; border-radius: 4px;">Marriage Date</span>
+                            </div>
+
+                            <div style="display: flex; gap: 16px; margin-bottom: 8px;">
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-2" value="online" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--blue60); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Online Version (Most Recent)</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">April 29, 2011</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">Changed: Mar 1, 2026</div>
+                                    </div>
+                                </label>
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-2" value="gedcom" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--green50); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">GEDCOM Version</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">April 30, 2011</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">From re-upload</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div style="font-size: 12px; color: var(--gray60); padding: 8px 12px; background: var(--gray02); border-radius: 4px;">If no choice is made, the online version (most recent) will be kept.</div>
+                        </div>
+
+                        <!-- Conflict Item 3 -->
+                        <div class="conflict-item" style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--gray10);">
+                            <div style="font-weight: 600; color: var(--gray90); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                <span>Prince Harry Windsor</span>
+                                <span style="font-size: 12px; font-weight: 500; color: var(--gray70); background: var(--gray10); padding: 2px 8px; border-radius: 4px;">Birth Place</span>
+                            </div>
+
+                            <div style="display: flex; gap: 16px; margin-bottom: 8px;">
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-3" value="online" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--blue60); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Online Version (Most Recent)</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">St Mary's Hospital, London</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">Changed: Feb 15, 2026</div>
+                                    </div>
+                                </label>
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-3" value="gedcom" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--green50); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">GEDCOM Version</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">London, England</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">From re-upload</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div style="font-size: 12px; color: var(--gray60); padding: 8px 12px; background: var(--gray02); border-radius: 4px;">If no choice is made, the online version (most recent) will be kept.</div>
+                        </div>
+
+                        <!-- Conflict Item 4 -->
+                        <div class="conflict-item" style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--gray10);">
+                            <div style="font-weight: 600; color: var(--gray90); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                <span>Queen Elizabeth II</span>
+                                <span style="font-size: 12px; font-weight: 500; color: var(--gray70); background: var(--gray10); padding: 2px 8px; border-radius: 4px;">Death Date</span>
+                            </div>
+
+                            <div style="display: flex; gap: 16px; margin-bottom: 8px;">
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-4" value="online" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--blue60); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Online Version (Most Recent)</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">September 8, 2022</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">Changed: Mar 2, 2026</div>
+                                    </div>
+                                </label>
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-4" value="gedcom" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--green50); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">GEDCOM Version</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">September 9, 2022</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">From re-upload</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div style="font-size: 12px; color: var(--gray60); padding: 8px 12px; background: var(--gray02); border-radius: 4px;">If no choice is made, the online version (most recent) will be kept.</div>
+                        </div>
+
+                        <!-- Conflict Item 5 -->
+                        <div class="conflict-item" style="margin-bottom: 0;">
+                            <div style="font-weight: 600; color: var(--gray90); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                <span>Prince Charles Windsor</span>
+                                <span style="font-size: 12px; font-weight: 500; color: var(--gray70); background: var(--gray10); padding: 2px 8px; border-radius: 4px;">Occupation</span>
+                            </div>
+
+                            <div style="display: flex; gap: 16px; margin-bottom: 8px;">
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-5" value="online" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--blue60); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Online Version (Most Recent)</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">King of the United Kingdom</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">Changed: Feb 20, 2026</div>
+                                    </div>
+                                </label>
+                                <label style="flex: 1; cursor: pointer; position: relative;">
+                                    <input type="radio" name="conflict-5" value="gedcom" onchange="updateConflictCount()">
+                                    <div style="padding: 12px; border: 2px solid var(--gray20); border-radius: 6px; transition: all 0.2s;">
+                                        <div style="font-size: 12px; font-weight: 600; color: var(--green50); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">GEDCOM Version</div>
+                                        <div style="font-size: 14px; color: var(--gray90); margin-bottom: 4px;">Prince of Wales</div>
+                                        <div style="font-size: 12px; color: var(--gray60);">From re-upload</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div style="font-size: 12px; color: var(--gray60); padding: 8px 12px; background: var(--gray02); border-radius: 4px;">If no choice is made, the online version (most recent) will be kept.</div>
+                        </div>
+                        </div>
+                    </div>
+
                     <!-- Added People -->
                     <div style="border-bottom: 1px solid var(--gray20);">
-                        <div style="padding: 12px 16px; background: #F9FFF9; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleDiffSection(this)">
+                        <div style="padding: 12px 16px; background: var(--white); cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleDiffSection(this)">
                             <div style="display: flex; align-items: center; gap: 8px;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--green50)"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray50)"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                                 <span style="font-weight: 600; color: var(--gray90);">47 People Added</span>
                             </div>
-                            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+                            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 17.17 14.68 12 9.4 6.83l1.4-1.43 6.73 6.6-6.73 6.6zM6.47 12"/></svg>
                         </div>
                         <div class="diff-content" style="display: none; padding: 16px; background: white;">
                             <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--green50);">
@@ -1259,18 +1443,50 @@
                                 <div style="font-weight: 500; color: var(--gray90);">Catherine Elizabeth Windsor</div>
                                 <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Born: 1988 • New person</div>
                             </div>
-                            <div style="padding: 8px; color: var(--gray60); font-size: 13px; text-align: center;">+ 45 more people</div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--green50);">
+                                <div style="font-weight: 500; color: var(--gray90);">Prince George Alexander Louis</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Born: 2013 • New person</div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--green50);">
+                                <div style="font-weight: 500; color: var(--gray90);">Princess Charlotte Elizabeth Diana</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Born: 2015 • New person</div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--green50);">
+                                <div style="font-weight: 500; color: var(--gray90);">Prince Louis Arthur Charles</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Born: 2018 • New person</div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--green50);">
+                                <div style="font-weight: 500; color: var(--gray90);">Archie Harrison Mountbatten-Windsor</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Born: 2019 • New person</div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--green50);">
+                                <div style="font-weight: 500; color: var(--gray90);">Lilibet Diana Mountbatten-Windsor</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Born: 2021 • New person</div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--green50);">
+                                <div style="font-weight: 500; color: var(--gray90);">Meghan Rachel Markle</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Born: 1981 • New person</div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--green50);">
+                                <div style="font-weight: 500; color: var(--gray90);">Diana Frances Spencer</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Born: 1961 • New person</div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--green50);">
+                                <div style="font-weight: 500; color: var(--gray90);">Charles Philip Arthur George Windsor</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Born: 1948 • New person</div>
+                            </div>
+                            <button style="display: block; width: 100%; padding: 10px; margin-top: 12px; background: var(--white); color: var(--blue60); border: 1px solid var(--gray20); border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.background='var(--gray02)'" onmouseout="this.style.background='var(--white)'">Show More (37 remaining)</button>
                         </div>
                     </div>
 
                     <!-- Updated People -->
                     <div style="border-bottom: 1px solid var(--gray20);">
-                        <div style="padding: 12px 16px; background: #FFFBF0; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleDiffSection(this)">
+                        <div style="padding: 12px 16px; background: var(--white); cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleDiffSection(this)">
                             <div style="display: flex; align-items: center; gap: 8px;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--orange40)"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray50)"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                                 <span style="font-weight: 600; color: var(--gray90);">128 People Updated</span>
                             </div>
-                            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+                            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 17.17 14.68 12 9.4 6.83l1.4-1.43 6.73 6.6-6.73 6.6zM6.47 12"/></svg>
                         </div>
                         <div class="diff-content" style="display: none; padding: 16px; background: white;">
                             <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--orange40);">
@@ -1299,32 +1515,76 @@
                                     <div>Mother: <span style="text-decoration: line-through; color: var(--red50);">Elizabeth Mary Spencer</span> → <span style="color: var(--green50);">Diana Frances Spencer</span></div>
                                 </div>
                             </div>
-                            <div style="padding: 8px; color: var(--gray60); font-size: 13px; text-align: center;">+ 124 more updates</div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--orange40);">
+                                <div style="font-weight: 500; color: var(--gray90);">Queen Elizabeth II</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 4px;">
+                                    <div>Death date: <span style="color: var(--green50);">Added: September 8, 2022</span></div>
+                                    <div>Death place: <span style="color: var(--green50);">Added: Balmoral Castle, Scotland</span></div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--orange40);">
+                                <div style="font-weight: 500; color: var(--gray90);">Prince Philip Mountbatten</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 4px;">
+                                    <div>Death date: <span style="color: var(--green50);">Added: April 9, 2021</span></div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--orange40);">
+                                <div style="font-weight: 500; color: var(--gray90);">King Charles III</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 4px;">
+                                    <div>Title: <span style="text-decoration: line-through; color: var(--red50);">Prince of Wales</span> → <span style="color: var(--green50);">King of the United Kingdom</span></div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--orange40);">
+                                <div style="font-weight: 500; color: var(--gray90);">Princess Anne Elizabeth Alice Louise</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 4px;">
+                                    <div>Occupation: <span style="color: var(--green50);">Added: Royal duties, equestrian</span></div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--orange40);">
+                                <div style="font-weight: 500; color: var(--gray90);">Prince Andrew Albert Christian Edward</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 4px;">
+                                    <div>Birth place: <span style="color: var(--green50);">Added: Buckingham Palace, London</span></div>
+                                </div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--orange40);">
+                                <div style="font-weight: 500; color: var(--gray90);">Prince Edward Antony Richard Louis</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 4px;">
+                                    <div>Title: <span style="text-decoration: line-through; color: var(--red50);">Earl of Wessex</span> → <span style="color: var(--green50);">Duke of Edinburgh</span></div>
+                                </div>
+                            </div>
+                            <button style="display: block; width: 100%; padding: 10px; margin-top: 12px; background: var(--white); color: var(--blue60); border: 1px solid var(--gray20); border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.background='var(--gray02)'" onmouseout="this.style.background='var(--white)'">Show More (118 remaining)</button>
                         </div>
                     </div>
 
                     <!-- Removed People -->
                     <div>
-                        <div style="padding: 12px 16px; background: #FFF5F5; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleDiffSection(this)">
+                        <div style="padding: 12px 16px; background: var(--white); cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleDiffSection(this)">
                             <div style="display: flex; align-items: center; gap: 8px;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--red50)"><path d="M19 13H5v-2h14v2z"/></svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray50)"><path d="M19 13H5v-2h14v2z"/></svg>
                                 <span style="font-weight: 600; color: var(--gray90);">3 People Removed</span>
                             </div>
-                            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+                            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 17.17 14.68 12 9.4 6.83l1.4-1.43 6.73 6.6-6.73 6.6zM6.47 12"/></svg>
                         </div>
                         <div class="diff-content" style="display: none; padding: 16px; background: white;">
                             <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--red50);">
                                 <div style="font-weight: 500; color: var(--gray90); text-decoration: line-through;">John Duplicate Entry</div>
                                 <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Duplicate person - will be merged</div>
                             </div>
-                            <div style="padding: 8px; color: var(--gray60); font-size: 13px; text-align: center;">+ 2 more removals</div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--red50);">
+                                <div style="font-weight: 500; color: var(--gray90); text-decoration: line-through;">Sarah Incorrect Surname</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">Wrong family connection - removing</div>
+                            </div>
+                            <div style="padding: 8px 12px; margin-bottom: 8px; background: #F5F5F5; border-radius: 4px; border-left: 3px solid var(--red50);">
+                                <div style="font-weight: 500; color: var(--gray90); text-decoration: line-through;">Robert Unknown Person</div>
+                                <div style="font-size: 13px; color: var(--gray70); margin-top: 2px;">No supporting sources found</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="panel-actions" style="justify-content: flex-start;">
                     <button class="btn btn-secondary" onclick="showPanel('updateGedcom')">Back</button>
-                    <button class="btn btn-primary">Apply Changes</button>
+                    <button class="btn btn-primary" id="apply-changes-btn" disabled>Apply Changes</button>
                 </div>
             </div>
 
@@ -1387,9 +1647,7 @@
 
                         <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--white); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                                    <img src="../person-page/male.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Robert Kehrer">
-                                </div>
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">RK</div>
                                 <div>
                                     <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">Robert Kehrer</div>
                                 </div>
@@ -1407,9 +1665,7 @@
 
                         <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--white); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                                    <img src="../person-page/female.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Kim Kehrer">
-                                </div>
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">KK</div>
                                 <div>
                                     <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">Kim Kehrer</div>
                                 </div>
@@ -1455,9 +1711,7 @@
 
                             <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--white); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
                                 <div style="display: flex; align-items: center; gap: 12px;">
-                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                                        <img src="../person-page/male.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Jim Mosher">
-                                    </div>
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">JM</div>
                                     <div>
                                         <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">Jim Mosher</div>
                                     </div>
@@ -1475,9 +1729,7 @@
 
                             <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--white); border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
                                 <div style="display: flex; align-items: center; gap: 12px;">
-                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                                        <img src="../person-page/female.png" style="width: 100%; height: 100%; object-fit: cover;" alt="P Kehrer">
-                                    </div>
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray10); display: flex; align-items: center; justify-content: center; color: var(--gray90); font-weight: 600; font-size: 16px;">PK</div>
                                     <div>
                                         <div style="font-size: 15px; font-weight: 500; color: var(--gray90);">P Kehrer</div>
                                     </div>
@@ -1708,11 +1960,55 @@
             const chevron = header.querySelector('.chevron');
             if (content.style.display === 'none' || content.style.display === '') {
                 content.style.display = 'block';
-                chevron.style.transform = 'rotate(180deg)';
+                chevron.style.transform = 'rotate(90deg)';
             } else {
                 content.style.display = 'none';
                 chevron.style.transform = 'rotate(0deg)';
             }
+        }
+
+        // Conflict resolution counter
+        function updateConflictCount() {
+            const totalConflicts = 5;
+            let resolvedCount = 0;
+
+            // Count how many conflicts have a selection
+            for (let i = 1; i <= totalConflicts; i++) {
+                const radios = document.querySelectorAll(`input[name="conflict-${i}"]`);
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        resolvedCount++;
+                        break;
+                    }
+                }
+            }
+
+            // Update counter display
+            const counterEl = document.getElementById('conflicts-resolved-count');
+            if (counterEl) {
+                counterEl.textContent = `${resolvedCount} of ${totalConflicts} resolved`;
+            }
+
+            // Enable/disable Apply Changes button
+            const applyBtn = document.getElementById('apply-changes-btn');
+            if (applyBtn) {
+                applyBtn.disabled = (resolvedCount < totalConflicts);
+            }
+
+            // Update selected radio border styles
+            document.querySelectorAll('.conflict-item label').forEach(label => {
+                const radio = label.querySelector('input[type="radio"]');
+                const box = label.querySelector('div');
+                if (radio && box) {
+                    if (radio.checked) {
+                        box.style.borderColor = 'var(--blue60)';
+                        box.style.backgroundColor = 'var(--blue02)';
+                    } else {
+                        box.style.borderColor = 'var(--gray20)';
+                        box.style.backgroundColor = 'white';
+                    }
+                }
+            });
         }
 
         // Collapsible functionality
