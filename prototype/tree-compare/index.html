@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Compare</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Verdana, Arial, sans-serif;
+            background: #EAECEC;
+            color: #202121;
+            min-height: 100vh;
+            overflow-x: auto;
+        }
+
+        /* Header */
+        .header {
+            background: #F5F6F6;
+            border-bottom: 3px solid #6A992D; /* green40 */
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #6A992D; /* green40 */
+            letter-spacing: 0.3px;
+        }
+
+        /* Toggle Controls */
+        .toggle-controls {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+        .tree-label {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .tree-label.tree-a {
+            background: #6A992D; /* green40 */
+            color: white;
+        }
+
+        .tree-label.tree-b {
+            background: #E8EEF0;
+            color: #555;
+        }
+
+        .tree-label.active.tree-a {
+            background: #6A992D; /* green40 */
+            color: white;
+        }
+
+        .tree-label.active.tree-b {
+            background: #056F94; /* blue60 */
+            color: white;
+        }
+
+        .tree-label:not(.active) {
+            background: #E8EEF0;
+            color: #888;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.on {
+            background: #6A992D; /* green40 */
+        }
+
+        .toggle-switch .toggle-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.on .toggle-knob {
+            transform: translateX(20px);
+        }
+
+        .toggle-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Tree Container */
+        .tree-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 105px 20px 60px;
+            min-width: 1200px;
+            position: relative;
+            transition: margin-right 0.3s ease;
+        }
+
+        body.sheet-open .tree-container {
+            margin-right: 440px;
+        }
+
+        /* Generation Row */
+        .generation {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        /* Couple Container */
+        .couple {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            position: relative;
+        }
+
+        /* Person Card Wrapper - holds both tree cards stacked */
+        .person-slot {
+            position: relative;
+            width: 155px;
+            height: 195px;
+        }
+
+        .person-card {
+            width: 130px;
+            height: 170px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 8px 8px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .person-card .tree-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .person-card.tree-a .tree-bar {
+            background: #6A992D; /* green40 */
+        }
+
+        .person-card.tree-b .tree-bar {
+            background: #2396BF; /* blue40 */
+        }
+
+
+        /* Foreground card (primary tree) — pushes forward */
+        .person-card.foreground {
+            z-index: 2;
+            opacity: 1;
+            transform: translate(0, 0);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            animation: pushForward 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+        }
+
+        /* Background card (secondary tree) — visible card behind */
+        .person-card.background {
+            z-index: 1;
+            opacity: 0.5;
+            transform: translate(24px, 20px);
+            animation: pushBack 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        /* When overlay is OFF, show only foreground with color bars */
+        .person-card.overlay-off {
+            z-index: 2;
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        .person-card.overlay-off.tree-b {
+            display: none;
+        }
+
+        /* Ghost card - exists only in background tree */
+        .person-card.ghost {
+            z-index: 1;
+            opacity: 0.4;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px dashed #bbb;
+            transform: translate(0, 0);
+            animation: ghostIn 0.7s ease both;
+        }
+
+        .person-card.ghost.tree-a {
+            border-color: #6A992D; /* green40 */
+            background: rgba(106, 153, 45, 0.08);
+        }
+
+        .person-card.ghost.tree-b {
+            border-color: #2396BF; /* blue40 */
+            background: rgba(35, 150, 191, 0.08);
+        }
+
+        /* Only-in-foreground: no shadow behind */
+        .person-card.solo {
+            z-index: 2;
+            opacity: 1;
+            transform: translate(0, 0);
+            animation: soloIn 0.6s ease both;
+        }
+
+        /* Keyframe animations */
+        @keyframes pushForward {
+            0% {
+                transform: translate(24px, 20px);
+                opacity: 0.7;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            }
+            40% {
+                transform: translate(-5px, -6px) scale(1.05);
+                opacity: 1;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            }
+            70% {
+                transform: translate(1px, 1px) scale(1.01);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            }
+        }
+
+        @keyframes pushBack {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            }
+            30% {
+                transform: translate(-4px, -5px) scale(1.02);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(24px, 20px);
+                opacity: 0.5;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        /* Swap animations — card physically moves between front and back */
+        @keyframes swapToFront {
+            0% {
+                transform: translate(24px, 20px);
+                opacity: 0.5;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            30% {
+                transform: translate(10px, 8px) scale(1.04);
+                opacity: 0.75;
+                z-index: 3;
+            }
+            55% {
+                transform: translate(0px, -6px) scale(1.06);
+                opacity: 1;
+                box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+            }
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                background: white;
+                box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            }
+        }
+
+        @keyframes swapToBack {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                background: white;
+                box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+            }
+            30% {
+                transform: translate(6px, 5px) scale(0.98);
+                opacity: 0.75;
+            }
+            55% {
+                transform: translate(16px, 13px) scale(0.97);
+                opacity: 0.6;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            }
+            100% {
+                transform: translate(24px, 20px);
+                opacity: 0.5;
+                background: white;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        @keyframes ghostIn {
+            0% {
+                opacity: 0;
+                transform: translate(12px, 12px) scale(0.85);
+            }
+            60% {
+                opacity: 0.5;
+                transform: translate(-2px, -2px) scale(1.02);
+            }
+            100% {
+                opacity: 0.4;
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        @keyframes soloIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.9);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-3px) scale(1.03);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        .person-card .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #D8D8D8;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .person-card .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .person-card .avatar.male {
+            background: #c8e0c6; /* green tint for FS */
+        }
+
+        .person-card .avatar.female {
+            background: #d6ecd4; /* green tint for FS */
+        }
+
+        .person-card.tree-b .avatar.male {
+            background: #d0e2f0;
+        }
+
+        .person-card.tree-b .avatar.female {
+            background: #f0d0e0;
+        }
+
+        .person-card .name {
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.3;
+            color: #202121;
+            max-width: 110px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .person-card .dates {
+            font-size: 10px;
+            color: #666;
+            margin-top: 2px;
+            text-align: center;
+        }
+
+        .person-card .pid {
+            font-size: 9px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        /* Conflict indicator */
+        .conflict-badge {
+            display: none;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: #7E57C2;
+            font-size: 9px;
+            font-weight: 500;
+            color: white;
+            margin-top: 4px;
+            white-space: nowrap;
+        }
+
+        /* Connector Lines */
+        .connectors {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .connectors svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Generation labels */
+        .gen-label {
+            font-size: 10px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        /* Tree info labels */
+        .tree-info {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+            padding: 12px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .tree-info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .tree-info-dot {
+            width: 12px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .tree-info-dot.a { background: #6A992D; /* green40 */ }
+        .tree-info-dot.b { background: #2396BF; /* blue40 */ }
+
+        /* SVG connector lines */
+        .tree-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .tree-svg .connector-a {
+            stroke: #999;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .tree-svg .connector-b {
+            stroke: #6A992D; /* green40 */
+            stroke-width: 1.5;
+            fill: none;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .tree-svg.overlay-on .connector-b {
+            opacity: 0.5;
+        }
+
+        /* Selected card state */
+        /* Selected: FamilySearch (tree-a) = green */
+        .person-slot.selected .person-card.tree-a.foreground,
+        .person-slot.selected .person-card.tree-a.solo,
+        .person-slot.selected .person-card.tree-a.overlay-off {
+            outline: 3px solid #6A992D; /* green40 */
+            outline-offset: 0px;
+            box-shadow: 0 0 0 6px rgba(106, 153, 45, 0.15), 0 3px 12px rgba(0,0,0,0.12);
+        }
+
+        .person-slot.selected .person-card.tree-a.background {
+            outline: 3px solid #6A992D; /* green40 */
+            outline-offset: 0px;
+            opacity: 1;
+            box-shadow: 0 0 0 6px rgba(106, 153, 45, 0.15), 0 2px 10px rgba(0,0,0,0.12);
+        }
+
+        /* Selected: My Tree (tree-b) = blue */
+        .person-slot.selected .person-card.tree-b.foreground,
+        .person-slot.selected .person-card.tree-b.solo,
+        .person-slot.selected .person-card.tree-b.overlay-off {
+            outline: 3px solid #056F94; /* blue60 */
+            outline-offset: 0px;
+            box-shadow: 0 0 0 6px rgba(5, 111, 148, 0.15), 0 3px 12px rgba(0,0,0,0.12);
+        }
+
+        .person-slot.selected .person-card.tree-b.background {
+            outline: 3px solid #056F94; /* blue60 */
+            outline-offset: 0px;
+            opacity: 1;
+            box-shadow: 0 0 0 6px rgba(5, 111, 148, 0.15), 0 2px 10px rgba(5, 111, 148, 0.25);
+        }
+
+        /* Side Sheet — no dim overlay */
+
+        .side-sheet {
+            position: fixed;
+            top: 0;
+            right: -440px;
+            width: 440px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+            z-index: 201;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-sheet.open {
+            right: 0;
+        }
+
+        body.sheet-open .toggle-controls {
+            transform: translateX(calc(-50% - 220px));
+        }
+
+        body.sheet-open .tree-info {
+            margin-right: 440px;
+        }
+
+        .side-sheet-header {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .side-sheet-header h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #202121;
+        }
+
+        .side-sheet-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 4px;
+            flex-shrink: 0;
+        }
+
+        .side-sheet-body {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* Source label above question */
+        .review-source-label {
+            padding: 20px 24px 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6a992e;
+        }
+
+        /* Review panel question */
+        .review-question {
+            padding: 0 24px 20px;
+            font-size: 20px;
+            line-height: 1.35;
+            color: #333;
+        }
+
+        .review-question strong {
+            font-weight: 700;
+        }
+
+        /* Source tabs */
+        .review-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .review-tab {
+            padding: 10px 16px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .review-tab.source {
+            background: #056F94; /* blue60 - My Tree */
+        }
+
+        .review-tab.tree {
+            background: #6A992D; /* green40 - FamilySearch */
+        }
+
+        /* Person cards in header */
+        .review-persons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .review-person-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 12px 16px;
+            text-align: center;
+        }
+
+        .review-person-card:first-child {
+            border-right: 1px solid #ddd;
+        }
+
+        .review-person-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            object-fit: cover;
+        }
+
+        .review-person-card .person-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #c8d7e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .review-person-card .person-icon svg {
+            width: 34px;
+            height: 34px;
+            fill: #6b88a8;
+        }
+
+        .review-person-card .person-card-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #202121;
+            margin-top: 2px;
+        }
+
+        .review-person-card .person-card-role {
+            font-size: 11px;
+            color: #888;
+            margin-top: 3px;
+        }
+
+        .review-person-card .person-card-dates {
+            font-size: 11px;
+            color: #888;
+            margin-top: 3px;
+        }
+
+        /* Section header — centered text with bg color */
+        .review-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #333;
+            background: #F0F1F1;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .review-section-header.clickable {
+            cursor: pointer;
+        }
+
+        .review-section-header svg {
+            width: 14px;
+            height: 14px;
+            fill: #333;
+            transition: transform 0.2s;
+        }
+
+        .review-section-header.collapsed svg {
+            transform: rotate(180deg);
+        }
+
+        /* Family member rows */
+        .review-family-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .review-family-col {
+            padding: 0;
+        }
+
+        .review-family-col.right {
+            background: #F7F8F8;
+            border-left: 1px solid #E8E8E8;
+        }
+
+        .review-family-role {
+            font-size: 11px;
+            color: #888;
+            font-weight: 700;
+            padding: 12px 20px 0;
+        }
+
+        .review-family-member {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 4px 20px 12px;
+        }
+
+        .review-family-member .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .review-family-member .dot.blue {
+            background: #3366aa;
+            border-radius: 2px;
+        }
+
+        .review-family-member .dot.pink {
+            background: #cc3366;
+            border-radius: 50%;
+        }
+
+        .review-family-member .member-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .review-family-member .member-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #202121;
+            line-height: 1.3;
+        }
+
+        .review-family-member .member-dates {
+            font-size: 11px;
+            color: #888;
+            margin-top: 1px;
+        }
+
+        /* Comparison rows */
+        .review-compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .review-field {
+            padding: 14px 20px;
+            border-bottom: 1px solid #E8E8E8;
+            position: relative;
+        }
+
+        .review-field.right {
+            border-left: 1px solid #E8E8E8;
+            background: #F7F8F8;
+        }
+
+        .review-field-label {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 3px;
+            font-weight: 700;
+        }
+
+        .source-count {
+            font-size: 10px;
+            color: #aaa;
+            font-weight: 400;
+            margin-left: 6px;
+        }
+
+        .source-count a {
+            color: #056F94;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .source-count a:hover {
+            text-decoration: underline;
+        }
+
+        .review-field-value {
+            font-size: 15px;
+            color: #202121;
+            line-height: 1.4;
+        }
+
+        .review-field-value.bold {
+            font-weight: 400;
+        }
+
+        .review-field-value.empty {
+            color: #ccc;
+            font-style: italic;
+        }
+
+        .diff-tag {
+            display: inline-block;
+            background: #7E57C2;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 12px;
+            margin-top: 8px;
+        }
+
+        .edit-icon {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            cursor: pointer;
+        }
+
+        .edit-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #999;
+        }
+
+        .edit-icon:hover svg {
+            fill: #666;
+        }
+
+        /* Add button (inline in cell) */
+        .review-add-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        .review-add-btn .add-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #6a992e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            background: white;
+        }
+
+        .review-add-btn .add-circle:hover {
+            background: #f0f7e8;
+        }
+
+        .review-add-btn .add-circle svg {
+            width: 18px;
+            height: 18px;
+            fill: #6a992e;
+        }
+
+        .review-add-btn .add-label {
+            font-size: 11px;
+            color: #6a992e;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* Legacy toggle - kept for compat */
+
+        /* Action buttons at bottom */
+        .review-actions {
+            padding: 16px 24px;
+            display: flex;
+            gap: 12px;
+            border-top: 1px solid #E0E0E0;
+            background: white;
+        }
+
+        .review-btn-primary {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: Verdana, Arial, sans-serif;
+            cursor: pointer;
+            text-transform: uppercase;
+            background: #6A992D; /* green40 */
+            color: white;
+        }
+
+        .review-btn-primary:hover {
+            background: #508535; /* green50 */
+        }
+
+        .review-btn-secondary {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: Verdana, Arial, sans-serif;
+            cursor: pointer;
+            text-transform: uppercase;
+            background: white;
+            color: #555;
+        }
+
+        .review-btn-secondary:hover {
+            background: #f5f5f5;
+        }
+
+        /* Empty slot indicator */
+        .empty-slot {
+            width: 130px;
+            height: 170px;
+            border: 2px dashed #ccc;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #bbb;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .empty-slot.tree-a-only {
+            border-color: #6A992D; /* green40 */
+            color: #6A992D;
+            background: rgba(106, 153, 45, 0.05);
+        }
+
+        .empty-slot.tree-b-only {
+            border-color: #2396BF; /* blue40 */
+            color: #2396BF;
+            background: rgba(35, 150, 191, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Tree Compare</h1>
+</div>
+
+<div class="toggle-controls">
+    <span class="tree-label tree-b" id="labelB">My Tree</span>
+    <span class="tree-label tree-a active" id="labelA">FamilySearch</span>
+</div>
+
+<div class="tree-container" id="treeContainer">
+    <!-- Tree is rendered by JS -->
+</div>
+
+<div class="tree-info">
+    <div class="tree-info-item">
+        <div class="tree-info-dot b"></div>
+        <span>My Tree (GEDCOM)</span>
+    </div>
+    <div class="tree-info-item">
+        <div class="tree-info-dot a"></div>
+        <span>FamilySearch Tree</span>
+    </div>
+</div>
+
+<!-- Side Sheet -->
+<div class="side-sheet-overlay" id="sideSheetOverlay" onclick="closeSideSheet()"></div>
+<div class="side-sheet" id="sideSheet">
+    <div class="side-sheet-header">
+        <h2 id="sideSheetTitle">Tree Compare</h2>
+        <button class="side-sheet-close" onclick="closeSideSheet()">&times;</button>
+    </div>
+    <div class="side-sheet-body" id="sideSheetBody">
+    </div>
+</div>
+
+<script>
+// ============================================================
+// SAMPLE TREE DATA
+// ============================================================
+// Tree A = FamilySearch, Tree B = User's GEDCOM
+
+const treeA = {
+    // Great-grandparents (generation 3) — 4 couples = 8 people
+    'gg-pp-hus': { name: 'James William Hair', dates: '1840-1910', pid: 'KWCL-111', gender: 'male' },
+    'gg-pp-wife': { name: 'Margaret Ann Scott', dates: '1845-1918', pid: 'KWCL-112', gender: 'female' },
+    'gg-pm-hus': { name: 'Thomas Edward Lewis', dates: '1842-1905', pid: 'KWCL-113', gender: 'male' },
+    'gg-pm-wife': { name: 'Sarah Jane Morgan', dates: '1848-1920', pid: 'KWCL-114', gender: 'female' },
+    'gg-mp-hus': { name: 'Friedrich August Weller', dates: '1838-1902', pid: 'KWCL-115', gender: 'male' },
+    'gg-mp-wife': { name: 'Anna Marie Braun', dates: '1843-1915', pid: 'KWCL-116', gender: 'female' },
+    'gg-mm-hus': { name: 'Heinrich Karl Martin', dates: '1841-1908', pid: 'KWCL-117', gender: 'male' },
+    'gg-mm-wife': { name: 'Elisabeth Hoffman', dates: '1846-1922', pid: 'KWCL-118', gender: 'female' },
+
+    // Grandparents (generation 2)
+    'gp-pat-hus': { name: 'John William Hair', dates: '1891-1965', pid: 'KWCL-QC6', gender: 'male' },
+    'gp-pat-wife': { name: 'Doris Jane Lewis', dates: '1896-1988', pid: 'KWCL-QCX', gender: 'female' },
+    'gp-mat-hus': { name: 'Gustav August Weller', dates: '1890-1971', pid: 'KWCQ-R2D', gender: 'male' },
+    'gp-mat-wife': { name: 'Gertrud Marie Martin', dates: '1894-1978', pid: 'KW2S-P6G', gender: 'female' },
+
+    // Parents (generation 1)
+    'par-hus': { name: 'Dale William Hair', dates: '1932-2019', pid: 'LNWC-D92', gender: 'male' },
+    'par-wife': { name: 'Mary Magdal. Weller', dates: '1933-2022', pid: 'LNHY-RN8', gender: 'female' },
+
+    // Focus person (generation 0)
+    'focus': { name: 'Andrew Dale Hair', dates: '1974-Living', pid: 'KW4Y-36B', gender: 'male' },
+    'focus-spouse': { name: 'Wendy Michelle Sheley', dates: '1972-Living', pid: 'LNHY-R4L', gender: 'female' },
+};
+
+const treeB = {
+    // Great-grandparents — missing maternal-maternal couple
+    'gg-pp-hus': { name: 'James William Hair', dates: '1840-1910', pid: 'USR-001', gender: 'male' },
+    'gg-pp-wife': { name: 'Margaret Ann Scott', dates: '1845-1919', pid: 'USR-002', gender: 'female' },
+    'gg-pm-hus': { name: 'Thomas E. Lewis', dates: '1842-1906', pid: 'USR-003', gender: 'male' },
+    'gg-pm-wife': { name: 'Sarah J. Morgan', dates: '1847-1920', pid: 'USR-004', gender: 'female' },
+    'gg-mp-hus': { name: 'Friedrich August Weller', dates: '1838-1902', pid: 'USR-013', gender: 'male' },
+    'gg-mp-wife': { name: 'Anna Marie Braun', dates: '1843-1916', pid: 'USR-014', gender: 'female' },
+    // gg-mm couple MISSING from user tree
+
+    // Grandparents
+    'gp-pat-hus': { name: 'John W. Hair', dates: '1890-1965', pid: 'USR-005', gender: 'male' },
+    'gp-pat-wife': { name: 'Doris J. Lewis', dates: '1896-1987', pid: 'USR-006', gender: 'female' },
+    'gp-mat-hus': { name: 'Gustav August Weller', dates: '1890-1971', pid: 'USR-007', gender: 'male' },
+    'gp-mat-wife': { name: 'Gertrude Marie Martin', dates: '1894-1978', pid: 'USR-008', gender: 'female' },
+
+    // Parents
+    'par-hus': { name: 'Dale William Hair', dates: '1932-2019', pid: 'USR-009', gender: 'male' },
+    'par-wife': { name: 'Mary Magdal. Weller', dates: '1933-2022', pid: 'USR-010', gender: 'female' },
+
+    // Focus person
+    'focus': { name: 'Andrew Dale Hair', dates: '1974-Living', pid: 'USR-011', gender: 'male' },
+    'focus-spouse': { name: 'Wendy Michelle Sheley', dates: '1972-Living', pid: 'USR-012', gender: 'female' },
+
+    // Extra sibling only in user tree
+    'focus-sibling': { name: 'Robert Dean Hair', dates: '1970-Living', pid: 'USR-015', gender: 'male' },
+};
+
+// Match map: which keys in tree A align with keys in tree B
+const matches = {
+    'gg-pp-hus': 'gg-pp-hus',
+    'gg-pp-wife': 'gg-pp-wife',
+    'gg-pm-hus': 'gg-pm-hus',
+    'gg-pm-wife': 'gg-pm-wife',
+    'gg-mp-hus': 'gg-mp-hus',
+    'gg-mp-wife': 'gg-mp-wife',
+    // gg-mm couple has no match in tree B
+    'gp-pat-hus': 'gp-pat-hus',
+    'gp-pat-wife': 'gp-pat-wife',
+    'gp-mat-hus': 'gp-mat-hus',
+    'gp-mat-wife': 'gp-mat-wife',
+    'par-hus': 'par-hus',
+    'par-wife': 'par-wife',
+    'focus': 'focus',
+    'focus-spouse': 'focus-spouse',
+};
+
+// Detect conflicts between matched people
+function getConflicts(keyA, keyB) {
+    const a = treeA[keyA];
+    const b = treeB[keyB];
+    if (!a || !b) return [];
+    const conflicts = [];
+    if (a.name !== b.name) conflicts.push({ field: 'Name', a: a.name, b: b.name });
+    if (a.dates !== b.dates) conflicts.push({ field: 'Dates', a: a.dates, b: b.dates });
+    return conflicts;
+}
+
+// ============================================================
+// TREE STRUCTURE (ascending pedigree)
+// ============================================================
+
+// personParents: maps a person key to the couple index (in the generation above) that are their parents
+// Format: { personKey: { genIndex, coupleIndex } }
+// This lets us draw lines from individual people to their parent couples
+const personParents = {
+    // Grandparents -> their great-grandparent couples
+    'gp-pat-hus':  { gen: 0, couple: 0 }, // John Hair's parents = gg-pp couple
+    'gp-pat-wife': { gen: 0, couple: 1 }, // Doris Lewis's parents = gg-pm couple
+    'gp-mat-hus':  { gen: 0, couple: 2 }, // Gustav Weller's parents = gg-mp couple
+    'gp-mat-wife': { gen: 0, couple: 3 }, // Gertrud Martin's parents = gg-mm couple
+    // Parents -> their grandparent couples
+    'par-hus':  { gen: 1, couple: 0 }, // Dale Hair's parents = gp-pat couple
+    'par-wife': { gen: 1, couple: 1 }, // Mary Weller's parents = gp-mat couple
+    // Focus -> their parent couple
+    'focus': { gen: 2, couple: 0 }, // Andrew Hair's parents = par couple
+};
+
+const treeStructure = [
+    {
+        label: 'Great-Grandparents',
+        couples: [
+            { husband: 'gg-pp-hus', wife: 'gg-pp-wife' },
+            { husband: 'gg-pm-hus', wife: 'gg-pm-wife' },
+            { husband: 'gg-mp-hus', wife: 'gg-mp-wife' },
+            { husband: 'gg-mm-hus', wife: 'gg-mm-wife' },
+        ]
+    },
+    {
+        label: 'Grandparents',
+        couples: [
+            { husband: 'gp-pat-hus', wife: 'gp-pat-wife' },
+            { husband: 'gp-mat-hus', wife: 'gp-mat-wife' },
+        ]
+    },
+    {
+        label: 'Parents',
+        couples: [
+            { husband: 'par-hus', wife: 'par-wife' },
+        ]
+    },
+    {
+        label: 'Focus Person',
+        couples: [
+            { husband: 'focus', wife: 'focus-spouse', extraB: ['focus-sibling'] },
+        ]
+    },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+
+let overlayOn = true;
+let primaryTree = 'a'; // 'a' = FamilySearch on top, 'b' = My Tree on top
+
+// ============================================================
+// RENDER
+// ============================================================
+
+function renderTree() {
+    const container = document.getElementById('treeContainer');
+    container.innerHTML = '';
+
+    treeStructure.forEach((gen, genIndex) => {
+        // Generation label
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'gen-label';
+        labelDiv.textContent = gen.label;
+        container.appendChild(labelDiv);
+
+        // Generation row
+        const genDiv = document.createElement('div');
+        genDiv.className = 'generation';
+        genDiv.id = `gen-${genIndex}`;
+
+        gen.couples.forEach((couple, coupleIndex) => {
+            const coupleDiv = document.createElement('div');
+            coupleDiv.className = 'couple';
+            coupleDiv.id = `couple-${genIndex}-${coupleIndex}`;
+
+            // Check for extra people in tree B before the couple
+            if (couple.extraB && primaryTree === 'b') {
+                couple.extraB.forEach(extraKey => {
+                    const slot = createPersonSlot(null, extraKey, 'b-only');
+                    coupleDiv.appendChild(slot);
+                });
+            }
+
+            // Husband slot
+            const husSlot = createPersonSlot(couple.husband, matches[couple.husband] || null);
+            coupleDiv.appendChild(husSlot);
+
+            // Wife slot
+            const wifeSlot = createPersonSlot(couple.wife, matches[couple.wife] || null);
+            coupleDiv.appendChild(wifeSlot);
+
+            // Extra people in tree B after couple (when A is primary)
+            if (couple.extraB && primaryTree === 'a' && overlayOn) {
+                couple.extraB.forEach(extraKey => {
+                    const slot = createPersonSlot(null, extraKey, 'b-only');
+                    coupleDiv.appendChild(slot);
+                });
+            }
+
+            genDiv.appendChild(coupleDiv);
+        });
+
+        container.appendChild(genDiv);
+
+        // Connector space between generations
+        if (genIndex < treeStructure.length - 1) {
+            const spacer = document.createElement('div');
+            spacer.style.height = '60px';
+            spacer.style.position = 'relative';
+            spacer.style.width = '100%';
+            container.appendChild(spacer);
+        }
+    });
+
+    // Draw SVG connectors after layout
+    requestAnimationFrame(() => drawConnectors());
+}
+
+function createPersonSlot(keyA, keyB, mode) {
+    const slot = document.createElement('div');
+    slot.className = 'person-slot';
+    // Set data attribute for connector targeting (use the primary tree's key)
+    const dataKey = keyA || keyB;
+    if (dataKey) slot.setAttribute('data-person-key', dataKey);
+
+    const personA = keyA ? treeA[keyA] : null;
+    const personB = keyB ? treeB[keyB] : null;
+
+    // Determine conflicts
+    const hasConflict = keyA && keyB && personA && personB && getConflicts(keyA, keyB).length > 0;
+
+    if (!overlayOn) {
+        // Overlay OFF — show single card with both color bars
+        const person = personA || personB;
+        if (person) {
+            const card = createCard(person, keyA ? 'tree-a' : 'tree-b', 'overlay-off', hasConflict);
+            // Add second bar if both exist
+            if (personA && personB) {
+                const bar2 = document.createElement('div');
+                bar2.className = 'tree-bar';
+                bar2.style.background = '#2396BF'; /* blue40 - My Tree */
+                bar2.style.top = '4px';
+                bar2.style.height = '3px';
+                bar2.style.borderRadius = '0';
+                card.appendChild(bar2);
+            }
+            card.onclick = () => openSideSheet(keyA, keyB);
+            slot.appendChild(card);
+        }
+    } else {
+        // Overlay ON
+        if (mode === 'b-only') {
+            // Person only in tree B
+            const card = createCard(personB, 'tree-b', 'ghost');
+            card.onclick = () => openSideSheet(null, keyB);
+            slot.appendChild(card);
+        } else if (mode === 'a-only') {
+            // Person only in tree A
+            const card = createCard(personA, 'tree-a', 'solo');
+            card.onclick = () => openSideSheet(keyA, null);
+            slot.appendChild(card);
+        } else if (personA && personB) {
+            // Both trees have this person — stack them
+            if (primaryTree === 'a') {
+                const bgCard = createCard(personB, 'tree-b', 'background', hasConflict);
+                const fgCard = createCard(personA, 'tree-a', 'foreground', hasConflict);
+                fgCard.onclick = () => openSideSheet(keyA, keyB);
+                bgCard.onclick = () => openSideSheet(keyA, keyB);
+                slot.appendChild(bgCard);
+                slot.appendChild(fgCard);
+            } else {
+                const bgCard = createCard(personA, 'tree-a', 'background', hasConflict);
+                const fgCard = createCard(personB, 'tree-b', 'foreground', hasConflict);
+                fgCard.onclick = () => openSideSheet(keyA, keyB);
+                bgCard.onclick = () => openSideSheet(keyA, keyB);
+                slot.appendChild(bgCard);
+                slot.appendChild(fgCard);
+            }
+        } else if (personA && !personB) {
+            // Only in tree A — show as solo (foreground) or ghost (background) depending on primary
+            const isForeground = primaryTree === 'a';
+            const card = createCard(personA, 'tree-a', isForeground ? 'solo' : 'ghost');
+            card.onclick = () => openSideSheet(keyA, null);
+            slot.appendChild(card);
+        } else if (!personA && personB) {
+            const card = createCard(personB, 'tree-b', primaryTree === 'b' ? 'solo' : 'ghost');
+            card.onclick = () => openSideSheet(null, keyB);
+            slot.appendChild(card);
+        }
+    }
+
+    return slot;
+}
+
+function createCard(person, treeClass, stateClass, hasConflict) {
+    const card = document.createElement('div');
+    card.className = `person-card ${treeClass} ${stateClass}`;
+
+    const bar = document.createElement('div');
+    bar.className = 'tree-bar';
+    card.appendChild(bar);
+
+    const avatar = document.createElement('div');
+    avatar.className = `avatar ${person.gender}`;
+
+    if (treeClass === 'tree-b') {
+        // My Tree: generic person icon with blue/pink
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.style.width = '30px';
+        svg.style.height = '30px';
+        svg.style.fill = person.gender === 'male' ? '#4a7fb5' : '#b5547a';
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', 'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z');
+        svg.appendChild(path);
+        avatar.appendChild(svg);
+    } else {
+        // FamilySearch Tree: photo avatars
+        const img = document.createElement('img');
+        img.src = person.gender === 'male' ? 'images/male.png' : 'images/female.png';
+        img.alt = person.gender === 'male' ? 'Male' : 'Female';
+        avatar.appendChild(img);
+    }
+    card.appendChild(avatar);
+
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'name';
+    nameDiv.textContent = person.name;
+    card.appendChild(nameDiv);
+
+    const datesDiv = document.createElement('div');
+    datesDiv.className = 'dates';
+    datesDiv.textContent = person.dates;
+    card.appendChild(datesDiv);
+
+    const pidDiv = document.createElement('div');
+    pidDiv.className = 'pid';
+    pidDiv.textContent = person.pid;
+    card.appendChild(pidDiv);
+
+    if (hasConflict) {
+        const badge = document.createElement('div');
+        badge.className = 'conflict-badge';
+        badge.textContent = 'Different';
+        badge.style.display = 'inline-block';
+        card.appendChild(badge);
+    }
+
+    return card;
+}
+
+// ============================================================
+// CONNECTOR LINES
+// ============================================================
+
+function drawConnectors() {
+    // Remove existing SVG
+    const existingSvg = document.querySelector('.tree-svg');
+    if (existingSvg) existingSvg.remove();
+
+    const container = document.getElementById('treeContainer');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.classList.add('tree-svg');
+    if (overlayOn) svg.classList.add('overlay-on');
+    svg.style.width = container.scrollWidth + 'px';
+    svg.style.height = container.scrollHeight + 'px';
+    container.appendChild(svg);
+
+    const containerRect = container.getBoundingClientRect();
+
+    function rel(el) {
+        const r = el.getBoundingClientRect();
+        return {
+            left: r.left - containerRect.left,
+            right: r.right - containerRect.left,
+            top: r.top - containerRect.top,
+            bottom: r.bottom - containerRect.top,
+            cx: r.left + r.width / 2 - containerRect.left,
+            cy: r.top + r.height / 2 - containerRect.top,
+            width: r.width,
+            height: r.height,
+        };
+    }
+
+    // Get the visible (foreground) card rect within a person-slot
+    function relCard(slotEl) {
+        const card = slotEl.querySelector('.person-card.foreground, .person-card.solo, .person-card.overlay-off, .person-card.ghost');
+        if (card) return rel(card);
+        return rel(slotEl);
+    }
+
+    function drawLine(x1, y1, x2, y2) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.classList.add('connector-a');
+        svg.appendChild(line);
+    }
+
+    function drawPath(d) {
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', d);
+        path.classList.add('connector-a');
+        svg.appendChild(path);
+    }
+
+    // For each couple, compute and store:
+    //   coupleBarY: Y position of the horizontal bar connecting husband + wife (just below cards)
+    //   coupleMidX: X midpoint between husband and wife centers
+    //   dropY: the bottom of the vertical drop line from the couple bar
+    const coupleInfo = {};
+
+    document.querySelectorAll('.couple').forEach(coupleEl => {
+        const id = coupleEl.id;
+        const slots = coupleEl.querySelectorAll('.person-slot');
+        if (slots.length < 2) return;
+
+        // Measure actual visible cards, not the slots
+        const husband = relCard(slots[0]);
+        const wife = relCard(slots[1]);
+
+        // Horizontal bar at the bottom of the cards
+        const barY = Math.max(husband.bottom, wife.bottom) + 8;
+        const midX = (husband.cx + wife.cx) / 2;
+
+        // Vertical stubs from each card bottom down to the bar
+        drawLine(husband.cx, husband.bottom, husband.cx, barY);
+        drawLine(wife.cx, wife.bottom, wife.cx, barY);
+
+        // Horizontal bar connecting husband and wife
+        drawLine(husband.cx, barY, wife.cx, barY);
+
+        coupleInfo[id] = { barY, midX };
+    });
+
+    // For each person with parents, draw the connection
+    Object.entries(personParents).forEach(([personKey, parentRef]) => {
+        const personEl = document.querySelector(`[data-person-key="${personKey}"]`);
+        if (!personEl) return;
+        const person = relCard(personEl);
+
+        const parentId = `couple-${parentRef.gen}-${parentRef.couple}`;
+        const parent = coupleInfo[parentId];
+        if (!parent) return;
+
+        // Rail Y halfway between parent bar and child top
+        const railY = (parent.barY + person.top) / 2;
+
+        // Vertical drop from parent couple bar midpoint to rail
+        drawLine(parent.midX, parent.barY, parent.midX, railY);
+
+        // Horizontal rail from parent drop to above the child
+        drawLine(parent.midX, railY, person.cx, railY);
+
+        // Vertical line from rail down to child top
+        drawLine(person.cx, railY, person.cx, person.top);
+    });
+}
+
+// ============================================================
+// TOGGLE
+// ============================================================
+
+function swapTrees(newPrimary) {
+    if (newPrimary === primaryTree) return;
+    primaryTree = newPrimary;
+
+    document.getElementById('labelA').classList.toggle('active', newPrimary === 'a');
+    document.getElementById('labelB').classList.toggle('active', newPrimary === 'b');
+
+
+    // Step 1: Animate all paired cards (foreground <-> background) in place
+    const slots = document.querySelectorAll('.person-slot');
+
+    slots.forEach(slot => {
+        const fg = slot.querySelector('.person-card.foreground');
+        const bg = slot.querySelector('.person-card.background');
+
+        if (fg && bg) {
+            // Clear previous animations
+            fg.style.animation = 'none';
+            bg.style.animation = 'none';
+            void fg.offsetWidth;
+            void bg.offsetWidth;
+
+            // Disable transitions during swap so they don't interfere
+            fg.style.transition = 'none';
+            bg.style.transition = 'none';
+
+            // Old foreground → swap to back
+            fg.classList.remove('foreground');
+            fg.classList.add('background');
+            fg.style.animation = 'swapToBack 0.8s cubic-bezier(0.4, 0, 0.2, 1) both';
+            fg.style.zIndex = '1';
+
+            // Old background → swap to front
+            bg.classList.remove('background');
+            bg.classList.add('foreground');
+            bg.style.animation = 'swapToFront 0.8s cubic-bezier(0.4, 0, 0.2, 1) both';
+            bg.style.zIndex = '2';
+
+            // Clean up after animation completes
+            setTimeout(() => {
+                fg.style.zIndex = '';
+                bg.style.zIndex = '';
+                fg.style.animation = 'none';
+                bg.style.animation = 'none';
+                fg.style.transition = '';
+                bg.style.transition = '';
+            }, 850);
+        }
+    });
+
+    // Step 2: Re-render ghost/solo cards (they change appearance based on primary tree)
+    // Do this after a brief delay so the swap animation is the star
+    const ghosts = document.querySelectorAll('.person-card.ghost, .person-card.solo');
+    ghosts.forEach(card => {
+        const slot = card.closest('.person-slot');
+        if (!slot) return;
+        const key = slot.getAttribute('data-person-key');
+        const inA = treeA[key];
+        const inB = treeB[key];
+        if (inA && !inB) {
+            card.className = `person-card tree-a ${primaryTree === 'a' ? 'solo' : 'ghost'}`;
+        } else if (!inA && inB) {
+            card.className = `person-card tree-b ${primaryTree === 'b' ? 'solo' : 'ghost'}`;
+        }
+    });
+}
+
+document.getElementById('labelA').addEventListener('click', () => swapTrees('a'));
+document.getElementById('labelB').addEventListener('click', () => swapTrees('b'));
+
+// ============================================================
+// SIDE SHEET
+// ============================================================
+
+function parseDates(dateStr) {
+    if (!dateStr) return { birth: '', death: '' };
+    const parts = dateStr.split('-');
+    return { birth: parts[0] || '', death: parts[1] || '' };
+}
+
+function parseName(name) {
+    if (!name) return { first: '', last: '' };
+    const parts = name.trim().split(' ');
+    return { first: parts.slice(0, -1).join(' '), last: parts[parts.length - 1] };
+}
+
+let currentSheetKey = null;
+
+function openSideSheet(keyA, keyB) {
+    const selectedKey = keyA || keyB;
+
+    // If clicking the same node that's already open, close the panel
+    if (currentSheetKey === selectedKey && document.getElementById('sideSheet').classList.contains('open')) {
+        closeSideSheet();
+        return;
+    }
+    currentSheetKey = selectedKey;
+
+    const personA = keyA ? treeA[keyA] : null;
+    const personB = keyB ? treeB[keyB] : null;
+    const sheet = document.getElementById('sideSheet');
+    const title = document.getElementById('sideSheetTitle');
+    const body = document.getElementById('sideSheetBody');
+
+    // Clear previous selection and highlight the clicked card(s)
+    document.querySelectorAll('.person-slot.selected').forEach(el => el.classList.remove('selected'));
+    if (selectedKey) {
+        const slot = document.querySelector(`[data-person-key="${selectedKey}"]`);
+        if (slot) slot.classList.add('selected');
+    }
+
+    title.textContent = 'Tree Compare';
+
+    const myTreeLabel = 'My Tree';
+    const treeLabel = 'Family Tree';
+
+    // Build the review panel HTML
+    let html = '';
+
+    // Source label + Question header
+    // Source label removed for now
+    // Question removed for now
+
+    // Tabs
+    html += `<div class="review-tabs">`;
+    html += `<div class="review-tab source">${myTreeLabel}</div>`;
+    html += `<div class="review-tab tree">${treeLabel}</div>`;
+    html += `</div>`;
+
+    // Person cards
+    function genericIcon(gender) {
+        const fill = gender === 'male' ? '#4a7fb5' : '#b5547a';
+        const bg = gender === 'male' ? '#d0e2f0' : '#f0d0e0';
+        return `<div class="person-icon" style="background:${bg}"><svg viewBox="0 0 24 24" style="fill:${fill}"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`;
+    }
+    const defaultIcon = `<div class="person-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`;
+
+    html += `<div class="review-persons">`;
+    // Left person (My Tree — generic icon)
+    html += `<div class="review-person-card">`;
+    if (personB) {
+        html += genericIcon(personB.gender);
+        html += `<div class="person-card-name">${personB.name}</div>`;
+        html += `<div class="person-card-role">Head</div>`;
+    } else {
+        html += defaultIcon;
+        html += `<div class="person-card-name" style="color:#ccc;">Not found</div>`;
+    }
+    html += `</div>`;
+    // Right person (FamilySearch Tree — photo avatar)
+    html += `<div class="review-person-card">`;
+    if (personA) {
+        html += `<img src="images/${personA.gender}.png" alt="${personA.name}">`;
+        html += `<div class="person-card-name">${personA.name}</div>`;
+        const aDates = parseDates(personA.dates);
+        html += `<div class="person-card-dates">${aDates.birth}&ndash;${aDates.death}&nbsp;&nbsp;${personA.pid}</div>`;
+    } else {
+        html += defaultIcon;
+        html += `<div class="person-card-name" style="color:#ccc;">Not found</div>`;
+    }
+    html += `</div>`;
+    html += `</div>`;
+
+    // Vitals header
+    html += `<div class="review-section-header">Vitals</div>`;
+
+    // Build comparison fields
+    const conflicts = keyA && keyB ? getConflicts(keyA, keyB) : [];
+    const conflictMap = {};
+    conflicts.forEach(c => { conflictMap[c.field] = c; });
+
+    // Left = My Tree (personB/treeB), Right = FamilySearch (personA/treeA)
+    const datesMyTree = personB ? parseDates(personB.dates) : { birth: '', death: '' };
+    const datesFS = personA ? parseDates(personA.dates) : { birth: '', death: '' };
+
+    const pencilSvg = `<span class="edit-icon"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span>`;
+
+    // Source counts for FamilySearch side (right column)
+    // ~40% should be 0, rest 1-9
+    function getSourceCount(personKey, field) {
+        if (!personKey) return 0;
+        let hash = 0;
+        const str = personKey + field;
+        for (let i = 0; i < str.length; i++) hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash = Math.abs(hash);
+        return (hash % 10) < 4 ? 0 : (hash % 7) + 1;
+    }
+
+    function sourceLabel(count) {
+        if (count === 0) return `<span class="source-count">0 sources</span>`;
+        return `<span class="source-count"><a href="#">${count} source${count > 1 ? 's' : ''}</a></span>`;
+    }
+
+    const fsKey = keyA || '';
+
+    const fields = [
+        { label: 'Name', valueA: personB ? personB.name : '', valueB: personA ? personA.name : '', key: 'Name', srcA: getSourceCount(keyB, 'Name'), srcB: getSourceCount(keyA, 'Name') },
+        { label: 'Sex', valueA: personB ? (personB.gender === 'male' ? 'Male' : 'Female') : '', valueB: personA ? (personA.gender === 'male' ? 'Male' : 'Female') : '', key: 'Sex', srcA: getSourceCount(keyB, 'Sex'), srcB: getSourceCount(keyA, 'Sex') },
+        { label: 'Birth', valueA: datesMyTree.birth, valueB: datesFS.birth, key: 'Dates', srcA: getSourceCount(keyB, 'Birth'), srcB: getSourceCount(keyA, 'Birth') },
+        { label: 'Death', valueA: datesMyTree.death === 'Living' ? '' : datesMyTree.death, valueB: datesFS.death === 'Living' ? '' : datesFS.death, key: 'Death', srcA: getSourceCount(keyB, 'Death'), srcB: getSourceCount(keyA, 'Death') },
+    ];
+
+    const addBtnHtml = `<div class="review-add-btn">
+        <div class="add-circle"><svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg></div>
+        <div class="add-label">Add</div>
+    </div>`;
+
+    html += `<div class="review-compare-grid">`;
+    fields.forEach(f => {
+        const isDiff = f.valueA && f.valueB && f.valueA !== f.valueB;
+
+        // Left cell (My Tree)
+        html += `<div class="review-field">`;
+        html += `<div class="review-field-label">${f.label}${sourceLabel(f.srcA)}</div>`;
+        if (f.valueA) {
+            html += `<div class="review-field-value">${f.valueA}</div>`;
+        } else {
+            html += `<div class="review-field-value empty">&mdash;</div>`;
+        }
+        if (isDiff) {
+            html += addBtnHtml;
+        }
+        html += `</div>`;
+
+        // Right cell (Family Tree)
+        html += `<div class="review-field right">`;
+        if (isDiff) html += pencilSvg;
+        html += `<div class="review-field-label">${f.label}${sourceLabel(f.srcB)}</div>`;
+        if (f.valueB) {
+            html += `<div class="review-field-value bold">${f.valueB}</div>`;
+        } else {
+            html += `<div class="review-field-value empty">&mdash;</div>`;
+        }
+        if (isDiff) {
+            html += `<div class="diff-tag">Different</div>`;
+        }
+        html += `</div>`;
+    });
+
+    // Extra fields only on tree side (Residence, etc.)
+    if (personB && personB.pid) {
+        html += `<div class="review-field"></div>`;
+        html += `<div class="review-field right">`;
+        html += `<div class="review-field-label">Residence</div>`;
+        html += `<div class="review-field-value empty">&mdash;</div>`;
+        html += `</div>`;
+    }
+
+    html += `</div>`;
+
+    // Build family sections based on the person's position in the tree
+    const personKey = keyA || keyB;
+    const person = personA || personB;
+
+    // Helper to render a family member
+    function renderMember(name, dates, gender, bold) {
+        const dotClass = gender === 'female' ? 'pink' : 'blue';
+        const nameClass = bold ? ' style="font-weight:700"' : '';
+        return `<div class="review-family-member">
+            <div class="dot ${dotClass}"></div>
+            <div class="member-info">
+                <div class="member-name">${name}</div>
+                <div class="member-dates">${dates || ''}</div>
+            </div>
+        </div>`;
+    }
+
+    function renderRole(label, personKey, side) {
+        const src = getSourceCount(personKey || '', label + (side || ''));
+        return `<div class="review-family-role">${label}${sourceLabel(src)}</div>`;
+    }
+
+    // Determine family relationships based on tree structure
+    // Find spouse
+    let spouseKeyA = null, spouseKeyB = null, spouseA = null, spouseB = null;
+    let childrenA = [], childrenB = [];
+
+    // Map person keys to their couple and role
+    const coupleKeys = {
+        'focus': { spouse: 'focus-spouse' },
+        'focus-spouse': { spouse: 'focus' },
+        'par-hus': { spouse: 'par-wife' },
+        'par-wife': { spouse: 'par-hus' },
+        'gp-pat-hus': { spouse: 'gp-pat-wife', children: ['par-hus'] },
+        'gp-pat-wife': { spouse: 'gp-pat-hus', children: ['par-hus'] },
+        'gp-mat-hus': { spouse: 'gp-mat-wife', children: ['par-wife'] },
+        'gp-mat-wife': { spouse: 'gp-mat-hus', children: ['par-wife'] },
+        'gg-pp-hus': { spouse: 'gg-pp-wife', children: ['gp-pat-hus'] },
+        'gg-pp-wife': { spouse: 'gg-pp-hus', children: ['gp-pat-hus'] },
+        'gg-pm-hus': { spouse: 'gg-pm-wife', children: ['gp-pat-wife'] },
+        'gg-pm-wife': { spouse: 'gg-pm-hus', children: ['gp-pat-wife'] },
+        'gg-mp-hus': { spouse: 'gg-mp-wife', children: ['gp-mat-hus'] },
+        'gg-mp-wife': { spouse: 'gg-mp-hus', children: ['gp-mat-hus'] },
+        'gg-mm-hus': { spouse: 'gg-mm-wife', children: ['gp-mat-wife'] },
+        'gg-mm-wife': { spouse: 'gg-mm-hus', children: ['gp-mat-wife'] },
+    };
+
+    // Find parent couple for the person
+    let fatherKeyA = null, motherKeyA = null, fatherA = null, motherA = null;
+    let fatherKeyB = null, motherKeyB = null, fatherB = null, motherB = null;
+
+    const parentMap = {
+        'focus': { father: 'par-hus', mother: 'par-wife' },
+        'par-hus': { father: 'gp-pat-hus', mother: 'gp-pat-wife' },
+        'par-wife': { father: 'gp-mat-hus', mother: 'gp-mat-wife' },
+        'gp-pat-hus': { father: 'gg-pp-hus', mother: 'gg-pp-wife' },
+        'gp-pat-wife': { father: 'gg-pm-hus', mother: 'gg-pm-wife' },
+        'gp-mat-hus': { father: 'gg-mp-hus', mother: 'gg-mp-wife' },
+        'gp-mat-wife': { father: 'gg-mm-hus', mother: 'gg-mm-wife' },
+    };
+
+    const rel = coupleKeys[personKey] || {};
+
+    // SPOUSE AND CHILDREN section
+    html += `<div class="review-section-header clickable" onclick="this.classList.toggle('collapsed'); this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? '' : 'none';">`;
+    html += `<span>Spouse and Children</span>`;
+    html += `<svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>`;
+    html += `</div>`;
+    html += `<div class="review-family-content">`;
+    html += `<div class="review-family-grid">`;
+
+    // Left column (My Tree = treeB)
+    html += `<div class="review-family-col">`;
+    if (personB) {
+        const dB = parseDates(personB.dates);
+        html += renderRole('Self', keyB, 'B');
+        html += renderMember(personB.name, `${dB.birth}-`, personB.gender);
+    }
+    if (rel.spouse && treeB[rel.spouse]) {
+        const sp = treeB[rel.spouse];
+        const dSp = parseDates(sp.dates);
+        html += renderRole('Spouse', rel.spouse, 'B');
+        html += renderMember(sp.name, `${dSp.birth}-`, sp.gender);
+    }
+    if (rel.children && rel.children.length > 0) {
+        html += renderRole('Children', personKey, 'B');
+        rel.children.forEach(ck => {
+            if (treeB[ck]) {
+                const ch = treeB[ck];
+                const dCh = parseDates(ch.dates);
+                html += renderMember(ch.name, `${dCh.birth}-`, ch.gender);
+            }
+        });
+    }
+    html += `</div>`;
+
+    // Right column (FamilySearch = treeA)
+    html += `<div class="review-family-col right">`;
+    if (personA) {
+        const dA = parseDates(personA.dates);
+        html += renderRole('Self', keyA, 'A');
+        html += renderMember(personA.name, `${dA.birth}-${dA.death !== 'Living' ? dA.death : 'Deceased'}`, personA.gender);
+    }
+    if (rel.spouse && treeA[rel.spouse]) {
+        const sp = treeA[rel.spouse];
+        const dSp = parseDates(sp.dates);
+        html += renderRole('Spouse', rel.spouse, 'A');
+        html += renderMember(sp.name, `${dSp.birth}-${dSp.death !== 'Living' ? dSp.death : 'Deceased'}`, sp.gender);
+    }
+    if (rel.children && rel.children.length > 0) {
+        html += renderRole('Children', personKey, 'A');
+        rel.children.forEach(ck => {
+            if (treeA[ck]) {
+                const ch = treeA[ck];
+                const dCh = parseDates(ch.dates);
+                html += renderMember(ch.name, `${dCh.birth}-${dCh.death !== 'Living' ? dCh.death : dCh.death}`, ch.gender);
+            }
+        });
+    }
+    html += `</div>`;
+    html += `</div></div>`;
+
+    // PARENTS AND SIBLINGS section
+    const pMap = parentMap[personKey];
+    html += `<div class="review-section-header clickable" onclick="this.classList.toggle('collapsed'); this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? '' : 'none';">`;
+    html += `<span>Parents and Siblings</span>`;
+    html += `<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>`;
+    html += `</div>`;
+    html += `<div class="review-family-content" style="display:none;">`;
+    html += `<div class="review-family-grid">`;
+    // Left = My Tree (treeB)
+    html += `<div class="review-family-col">`;
+    if (pMap) {
+        if (treeB[pMap.father]) {
+            const f = treeB[pMap.father];
+            const dF = parseDates(f.dates);
+            html += renderRole('Father', pMap.father, 'B');
+            html += renderMember(f.name, `${dF.birth}-`, f.gender);
+        }
+        if (treeB[pMap.mother]) {
+            const m = treeB[pMap.mother];
+            const dM = parseDates(m.dates);
+            html += renderRole('Mother', pMap.mother, 'B');
+            html += renderMember(m.name, `${dM.birth}-`, m.gender);
+        }
+    }
+    html += `</div>`;
+    // Right = FamilySearch (treeA)
+    html += `<div class="review-family-col right">`;
+    if (pMap) {
+        if (treeA[pMap.father]) {
+            const f = treeA[pMap.father];
+            const dF = parseDates(f.dates);
+            html += renderRole('Father', pMap.father, 'A');
+            html += renderMember(f.name, `${dF.birth}-${dF.death}`, f.gender);
+        }
+        if (treeA[pMap.mother]) {
+            const m = treeA[pMap.mother];
+            const dM = parseDates(m.dates);
+            html += renderRole('Mother', pMap.mother, 'A');
+            html += renderMember(m.name, `${dM.birth}-${dM.death}`, m.gender);
+        }
+    }
+    html += `</div>`;
+    html += `</div></div>`;
+
+    // OTHER PEOPLE section
+    html += `<div class="review-section-header clickable" onclick="this.classList.toggle('collapsed'); this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? '' : 'none';">`;
+    html += `<span>Other People</span>`;
+    html += `<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>`;
+    html += `</div>`;
+    html += `<div class="review-family-content" style="display:none;">`;
+    html += `<div style="padding: 16px 20px; color: #888; font-size: 12px; font-style: italic;">No other people found</div>`;
+    html += `</div>`;
+
+    body.innerHTML = html;
+    document.getElementById('sideSheetOverlay').classList.add('open');
+    sheet.classList.add('open');
+    document.body.classList.add('sheet-open');
+    setTimeout(() => drawConnectors(), 350);
+}
+
+function renderCompareFields(person, conflictFields) {
+    // Legacy - kept for compatibility
+    return '';
+}
+
+function closeSideSheet() {
+    currentSheetKey = null;
+    document.getElementById('sideSheetOverlay').classList.remove('open');
+    document.getElementById('sideSheet').classList.remove('open');
+    document.body.classList.remove('sheet-open');
+    document.querySelectorAll('.person-slot.selected').forEach(el => el.classList.remove('selected'));
+    setTimeout(() => drawConnectors(), 350);
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSideSheet();
+});
+
+// Redraw connectors on resize
+window.addEventListener('resize', () => {
+    requestAnimationFrame(() => drawConnectors());
+});
+
+// Initial render
+renderTree();
+</script>
+
+</body>
+</html>
