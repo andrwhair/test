@@ -918,7 +918,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 14px;
+            margin-top: 28px; /* Increased to position below Different tag */
         }
 
         .review-add-btn .add-circle {
@@ -930,7 +930,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.3s ease;
             background: white;
         }
 
@@ -942,6 +942,7 @@
             width: 18px;
             height: 18px;
             fill: #6a992e;
+            transition: transform 0.3s ease;
         }
 
         .review-add-btn .add-label {
@@ -949,6 +950,47 @@
             color: #6a992e;
             font-weight: 600;
             margin-top: 3px;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Undo state for button */
+        .review-add-btn.undo .add-circle svg {
+            transform: rotate(180deg);
+        }
+
+        /* Animation for content transfer */
+        .review-field.animating {
+            position: relative;
+            overflow: visible;
+        }
+
+        .review-field .transfer-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px;
+            background: #E1F4F7;
+            border-radius: 4px;
+            z-index: 50;
+            pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .review-field .transfer-content .review-field-value {
+            font-size: 13px;
+            color: #202121;
+        }
+
+        .review-field .transfer-content.moving {
+            transform: translateX(calc(100% + 1px));
+        }
+
+        /* Fade effect for original content */
+        .review-field.transferred .review-field-value {
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
         }
 
         /* Legacy toggle - kept for compat */
@@ -1744,17 +1786,20 @@ function openSideSheet(keyA, keyB) {
         { label: 'Death', valueA: datesMyTree.death === 'Living' ? '' : datesMyTree.death, valueB: datesFS.death === 'Living' ? '' : datesFS.death, key: 'Death', srcA: getSourceCount(keyB, 'Death'), srcB: getSourceCount(keyA, 'Death') },
     ];
 
-    const addBtnHtml = `<div class="review-add-btn">
-        <div class="add-circle"><svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg></div>
-        <div class="add-label">Add</div>
-    </div>`;
+    function createAddBtn(fieldKey) {
+        return `<div class="review-add-btn" data-field="${fieldKey}">
+            <div class="add-circle"><svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg></div>
+            <div class="add-label">Add</div>
+        </div>`;
+    }
 
     html += `<div class="review-compare-grid">`;
     fields.forEach(f => {
         const isDiff = f.valueA && f.valueB && f.valueA !== f.valueB;
+        const fieldId = `field-${f.key.replace(/\s+/g, '-')}`;
 
         // Left cell (My Tree)
-        html += `<div class="review-field">`;
+        html += `<div class="review-field" data-field-id="${fieldId}-left">`;
         html += `<div class="review-field-label">${f.label}${sourceLabel(f.srcA)}</div>`;
         if (f.valueA) {
             html += `<div class="review-field-value">${f.valueA}</div>`;
@@ -1762,12 +1807,12 @@ function openSideSheet(keyA, keyB) {
             html += `<div class="review-field-value empty">&mdash;</div>`;
         }
         if (isDiff) {
-            html += addBtnHtml;
+            html += createAddBtn(fieldId);
         }
         html += `</div>`;
 
         // Right cell (Family Tree)
-        html += `<div class="review-field right">`;
+        html += `<div class="review-field right" data-field-id="${fieldId}-right">`;
         if (isDiff) html += pencilSvg;
         html += `<div class="review-field-label">${f.label}${sourceLabel(f.srcB)}</div>`;
         if (f.valueB) {
@@ -1971,6 +2016,91 @@ function openSideSheet(keyA, keyB) {
     document.getElementById('sideSheetOverlay').classList.add('open');
     sheet.classList.add('open');
     document.body.classList.add('sheet-open');
+
+    // Add click handlers for Add/Undo buttons
+    setTimeout(() => {
+        const addButtons = document.querySelectorAll('.review-add-btn');
+        addButtons.forEach(btn => {
+            // Store original values for undo
+            const fieldId = btn.dataset.field;
+            const rightCell = document.querySelector(`[data-field-id="${fieldId}-right"]`);
+            const rightValue = rightCell.querySelector('.review-field-value');
+            if (rightValue) {
+                btn.dataset.originalValue = rightValue.textContent;
+            }
+
+            btn.addEventListener('click', function() {
+                const fieldId = this.dataset.field;
+                const leftCell = document.querySelector(`[data-field-id="${fieldId}-left"]`);
+                const rightCell = document.querySelector(`[data-field-id="${fieldId}-right"]`);
+                const isUndo = this.classList.contains('undo');
+
+                if (!isUndo) {
+                    // Add mode - animate content from left to right
+                    const leftValue = leftCell.querySelector('.review-field-value');
+                    const rightValue = rightCell.querySelector('.review-field-value');
+
+                    if (leftValue && rightValue) {
+                        // Create a clone for animation with the blue background
+                        const transferDiv = document.createElement('div');
+                        transferDiv.className = 'transfer-content';
+                        const leftLabel = leftCell.querySelector('.review-field-label').cloneNode(true);
+                        transferDiv.appendChild(leftLabel);
+                        transferDiv.appendChild(leftValue.cloneNode(true));
+
+                        // Also include the Add button in the animation
+                        const btnClone = this.cloneNode(true);
+                        btnClone.style.marginTop = '28px';
+                        transferDiv.appendChild(btnClone);
+
+                        leftCell.classList.add('animating');
+                        leftCell.appendChild(transferDiv);
+
+                        // Trigger animation
+                        setTimeout(() => {
+                            transferDiv.classList.add('moving');
+                            leftCell.classList.add('transferred');
+                        }, 10);
+
+                        // After animation, update right cell
+                        setTimeout(() => {
+                            rightValue.textContent = leftValue.textContent;
+                            rightValue.classList.remove('bold');
+                            const diffTag = rightCell.querySelector('.diff-tag');
+                            if (diffTag) diffTag.style.display = 'none';
+
+                            // Change button to UNDO state
+                            this.classList.add('undo');
+                            const label = this.querySelector('.add-label');
+                            if (label) label.textContent = 'Undo';
+
+                            // Clean up animation
+                            transferDiv.remove();
+                            leftCell.classList.remove('animating');
+                        }, 410);
+                    }
+                } else {
+                    // Undo mode - restore original values
+                    const rightValue = rightCell.querySelector('.review-field-value');
+                    const originalValue = this.dataset.originalValue;
+
+                    if (rightValue && originalValue) {
+                        rightValue.textContent = originalValue;
+                        rightValue.classList.add('bold');
+                        const diffTag = rightCell.querySelector('.diff-tag');
+                        if (diffTag) diffTag.style.display = '';
+                    }
+
+                    leftCell.classList.remove('transferred');
+
+                    // Change button back to ADD state
+                    this.classList.remove('undo');
+                    const label = this.querySelector('.add-label');
+                    if (label) label.textContent = 'Add';
+                }
+            });
+        });
+    }, 100);
 }
 
 function renderCompareFields(person, conflictFields) {
