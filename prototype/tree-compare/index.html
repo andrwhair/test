@@ -212,7 +212,7 @@
         .person-card.background {
             z-index: 1;
             opacity: 0.5;
-            transform: translate(24px, 20px);
+            transform: translate(24px, -20px);
             animation: pushBack 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
             background: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -261,7 +261,7 @@
         /* Keyframe animations */
         @keyframes pushForward {
             0% {
-                transform: translate(24px, 20px);
+                transform: translate(24px, -20px);
                 opacity: 0.7;
                 box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             }
@@ -271,7 +271,7 @@
                 box-shadow: 0 8px 24px rgba(0,0,0,0.18);
             }
             70% {
-                transform: translate(1px, 1px) scale(1.01);
+                transform: translate(1px, -1px) scale(1.01);
                 opacity: 1;
             }
             100% {
@@ -292,7 +292,7 @@
                 opacity: 1;
             }
             100% {
-                transform: translate(24px, 20px);
+                transform: translate(24px, -20px);
                 opacity: 0.5;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             }
@@ -301,12 +301,12 @@
         /* Swap animations — card physically moves between front and back */
         @keyframes swapToFront {
             0% {
-                transform: translate(24px, 20px);
+                transform: translate(24px, -20px);
                 opacity: 0.5;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             }
             30% {
-                transform: translate(10px, 8px) scale(1.04);
+                transform: translate(10px, -8px) scale(1.04);
                 opacity: 0.75;
                 z-index: 3;
             }
@@ -331,16 +331,16 @@
                 box-shadow: 0 3px 12px rgba(0,0,0,0.12);
             }
             30% {
-                transform: translate(6px, 5px) scale(0.98);
+                transform: translate(6px, -5px) scale(0.98);
                 opacity: 0.75;
             }
             55% {
-                transform: translate(16px, 13px) scale(0.97);
+                transform: translate(16px, -13px) scale(0.97);
                 opacity: 0.6;
                 box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             }
             100% {
-                transform: translate(24px, 20px);
+                transform: translate(24px, -20px);
                 opacity: 0.5;
                 background: white;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -350,7 +350,7 @@
         @keyframes ghostIn {
             0% {
                 opacity: 0;
-                transform: translate(12px, 12px) scale(0.85);
+                transform: translate(12px, -12px) scale(0.85);
             }
             60% {
                 opacity: 0.5;
@@ -365,7 +365,7 @@
         @keyframes soloIn {
             0% {
                 opacity: 0;
-                transform: translateY(10px) scale(0.9);
+                transform: translateY(-10px) scale(0.9);
             }
             60% {
                 opacity: 1;
@@ -473,6 +473,7 @@
             color: #999;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-top: -20px;
             margin-bottom: 12px;
         }
 
@@ -513,7 +514,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 10; /* Above all person cards */
         }
 
         .tree-svg .connector-a {
@@ -1424,30 +1425,46 @@ function drawConnectors() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.classList.add('tree-svg');
     if (overlayOn) svg.classList.add('overlay-on');
-    svg.style.width = container.scrollWidth + 'px';
-    svg.style.height = container.scrollHeight + 'px';
+    // Don't set explicit width/height - let CSS handle it with width: 100%; height: 100%
     container.appendChild(svg);
 
-    const containerRect = container.getBoundingClientRect();
+    // Use offset-based positioning to avoid getBoundingClientRect scroll issues
+    function getOffsetRelativeTo(el, ancestor) {
+        let x = 0, y = 0;
+        let current = el;
+        while (current && current !== ancestor) {
+            x += current.offsetLeft;
+            y += current.offsetTop;
+            current = current.offsetParent;
+        }
+        return { x, y };
+    }
 
     function rel(el) {
-        const r = el.getBoundingClientRect();
+        const pos = getOffsetRelativeTo(el, container);
+        const w = el.offsetWidth;
+        const h = el.offsetHeight;
         return {
-            left: r.left - containerRect.left,
-            right: r.right - containerRect.left,
-            top: r.top - containerRect.top,
-            bottom: r.bottom - containerRect.top,
-            cx: r.left + r.width / 2 - containerRect.left,
-            cy: r.top + r.height / 2 - containerRect.top,
-            width: r.width,
-            height: r.height,
+            left: pos.x,
+            right: pos.x + w,
+            top: pos.y,
+            bottom: pos.y + h,
+            cx: pos.x + w / 2,
+            cy: pos.y + h / 2,
+            width: w,
+            height: h,
         };
     }
 
-    // Get the visible (foreground) card rect within a person-slot
+    // Get the tree-a (FamilySearch) card rect within a person-slot
+    // Connectors are for tree-a family relationships
     function relCard(slotEl) {
-        const card = slotEl.querySelector('.person-card.foreground, .person-card.solo, .person-card.overlay-off, .person-card.ghost');
+        // Always get tree-a card since connectors show FamilySearch family relationships
+        const card = slotEl.querySelector('.person-card.tree-a');
         if (card) return rel(card);
+        // Fallback to any visible card if no tree-a card exists
+        const fallback = slotEl.querySelector('.person-card.solo, .person-card.ghost');
+        if (fallback) return rel(fallback);
         return rel(slotEl);
     }
 
@@ -1954,7 +1971,6 @@ function openSideSheet(keyA, keyB) {
     document.getElementById('sideSheetOverlay').classList.add('open');
     sheet.classList.add('open');
     document.body.classList.add('sheet-open');
-    setTimeout(() => drawConnectors(), 350);
 }
 
 function renderCompareFields(person, conflictFields) {
@@ -1968,7 +1984,6 @@ function closeSideSheet() {
     document.getElementById('sideSheet').classList.remove('open');
     document.body.classList.remove('sheet-open');
     document.querySelectorAll('.person-slot.selected').forEach(el => el.classList.remove('selected'));
-    setTimeout(() => drawConnectors(), 350);
 }
 
 document.addEventListener('keydown', (e) => {
@@ -1979,6 +1994,28 @@ document.addEventListener('keydown', (e) => {
 window.addEventListener('resize', () => {
     requestAnimationFrame(() => drawConnectors());
 });
+
+// Continuously redraw connectors during tree-container transition
+(function() {
+    let rafId = null;
+    const tc = document.getElementById('treeContainer');
+    function tick() {
+        drawConnectors();
+        rafId = requestAnimationFrame(tick);
+    }
+    tc.addEventListener('transitionstart', (e) => {
+        if (e.propertyName === 'margin-right' && !rafId) {
+            rafId = requestAnimationFrame(tick);
+        }
+    });
+    tc.addEventListener('transitionend', (e) => {
+        if (e.propertyName === 'margin-right' && rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+            drawConnectors();
+        }
+    });
+})();
 
 // Initial render
 renderTree();
