@@ -958,6 +958,11 @@
             transform: rotate(180deg);
         }
 
+        /* Button position in right column */
+        .review-field.right .review-add-btn {
+            margin-top: 12px;
+        }
+
         /* Animation for content transfer */
         .review-field.animating {
             position: relative;
@@ -985,6 +990,15 @@
 
         .review-field .transfer-content.moving {
             transform: translateX(calc(100% + 1px));
+        }
+
+        .review-field.right .transfer-content {
+            left: auto;
+            right: 0;
+        }
+
+        .review-field.right .transfer-content.moving-back {
+            transform: translateX(calc(-100% - 1px));
         }
 
         /* Fade effect for original content */
@@ -2020,6 +2034,7 @@ function openSideSheet(keyA, keyB) {
     // Add click handlers for Add/Undo buttons
     setTimeout(() => {
         const addButtons = document.querySelectorAll('.review-add-btn');
+        console.log('Found', addButtons.length, 'add buttons');
         addButtons.forEach(btn => {
             // Store original values for undo
             const fieldId = btn.dataset.field;
@@ -2029,7 +2044,9 @@ function openSideSheet(keyA, keyB) {
                 btn.dataset.originalValue = rightValue.textContent;
             }
 
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                console.log('Button clicked', this.dataset.field);
                 const fieldId = this.dataset.field;
                 const leftCell = document.querySelector(`[data-field-id="${fieldId}-left"]`);
                 const rightCell = document.querySelector(`[data-field-id="${fieldId}-right"]`);
@@ -2041,6 +2058,9 @@ function openSideSheet(keyA, keyB) {
                     const rightValue = rightCell.querySelector('.review-field-value');
 
                     if (leftValue && rightValue) {
+                        // Store this button reference for the closure
+                        const buttonEl = this;
+
                         // Create a clone for animation with the blue background
                         const transferDiv = document.createElement('div');
                         transferDiv.className = 'transfer-content';
@@ -2048,13 +2068,24 @@ function openSideSheet(keyA, keyB) {
                         transferDiv.appendChild(leftLabel);
                         transferDiv.appendChild(leftValue.cloneNode(true));
 
-                        // Also include the Add button in the animation
-                        const btnClone = this.cloneNode(true);
+                        // Also include a clone of the Add button in the animation
+                        const btnClone = buttonEl.cloneNode(true);
                         btnClone.style.marginTop = '28px';
+                        // Animate arrow rotation during the movement
+                        const svgClone = btnClone.querySelector('svg');
+                        if (svgClone) {
+                            svgClone.style.transition = 'transform 0.4s ease';
+                            setTimeout(() => {
+                                svgClone.style.transform = 'rotate(180deg)';
+                            }, 50);
+                        }
                         transferDiv.appendChild(btnClone);
 
                         leftCell.classList.add('animating');
                         leftCell.appendChild(transferDiv);
+
+                        // Hide the original button during animation
+                        buttonEl.style.opacity = '0';
 
                         // Trigger animation
                         setTimeout(() => {
@@ -2062,41 +2093,108 @@ function openSideSheet(keyA, keyB) {
                             leftCell.classList.add('transferred');
                         }, 10);
 
-                        // After animation, update right cell
+                        // After animation completes
                         setTimeout(() => {
-                            rightValue.textContent = leftValue.textContent;
-                            rightValue.classList.remove('bold');
-                            const diffTag = rightCell.querySelector('.diff-tag');
-                            if (diffTag) diffTag.style.display = 'none';
+                                // Update right cell content
+                                rightValue.textContent = leftValue.textContent;
+                                rightValue.classList.remove('bold');
+                                const diffTag = rightCell.querySelector('.diff-tag');
+                                if (diffTag) diffTag.style.display = 'none';
 
-                            // Change button to UNDO state
-                            this.classList.add('undo');
-                            const label = this.querySelector('.add-label');
-                            if (label) label.textContent = 'Undo';
+                                // Transform button to UNDO state
+                                buttonEl.classList.add('undo');
+                                const label = buttonEl.querySelector('.add-label');
+                                if (label) label.textContent = 'Undo';
+                                // Ensure arrow is rotated
+                                const svg = buttonEl.querySelector('svg');
+                                if (svg) {
+                                    svg.style.transform = 'rotate(180deg)';
+                                }
 
-                            // Clean up animation
-                            transferDiv.remove();
-                            leftCell.classList.remove('animating');
-                        }, 410);
+                                // Move the actual button to the right cell
+                                buttonEl.style.opacity = '1';
+                                console.log('Moving button to right cell', fieldId);
+                                rightCell.appendChild(buttonEl);
+
+                                // Clean up animation elements
+                                transferDiv.remove();
+                                leftCell.classList.remove('animating');
+                            }, 400);
                     }
                 } else {
-                    // Undo mode - restore original values
+                    // Undo mode - animate content back from right to left
                     const rightValue = rightCell.querySelector('.review-field-value');
+                    const leftValue = leftCell.querySelector('.review-field-value');
                     const originalValue = this.dataset.originalValue;
+                    const buttonEl = this;
 
                     if (rightValue && originalValue) {
-                        rightValue.textContent = originalValue;
-                        rightValue.classList.add('bold');
-                        const diffTag = rightCell.querySelector('.diff-tag');
-                        if (diffTag) diffTag.style.display = '';
+                        // Create a reverse animation element
+                        const transferDiv = document.createElement('div');
+                        transferDiv.className = 'transfer-content';
+
+                        // Clone the current right content
+                        const rightLabel = rightCell.querySelector('.review-field-label').cloneNode(true);
+                        transferDiv.appendChild(rightLabel);
+                        const rightValueClone = rightValue.cloneNode(true);
+                        rightValueClone.classList.remove('bold');
+                        transferDiv.appendChild(rightValueClone);
+
+                        // Include the Undo button in reverse animation
+                        const btnClone = buttonEl.cloneNode(true);
+                        btnClone.style.marginTop = '12px';
+                        // Start rotating the arrow back during animation
+                        const svgClone = btnClone.querySelector('svg');
+                        if (svgClone) {
+                            svgClone.style.transition = 'transform 0.4s ease';
+                            setTimeout(() => {
+                                svgClone.style.transform = 'rotate(0deg)';
+                            }, 50);
+                        }
+                        transferDiv.appendChild(btnClone);
+
+                        rightCell.classList.add('animating');
+                        rightCell.appendChild(transferDiv);
+
+                        // Hide the original button during animation
+                        buttonEl.style.opacity = '0';
+
+                        // Trigger reverse animation
+                        setTimeout(() => {
+                            transferDiv.classList.add('moving-back');
+
+                            // After reverse animation completes
+                            setTimeout(() => {
+                                // Restore original right cell value
+                                rightValue.textContent = originalValue;
+                                rightValue.classList.add('bold');
+                                const diffTag = rightCell.querySelector('.diff-tag');
+                                if (diffTag) diffTag.style.display = '';
+
+                                // Remove transferred state from left cell
+                                leftCell.classList.remove('transferred');
+
+                                // Transform button back to ADD state
+                                buttonEl.classList.remove('undo');
+                                const label = buttonEl.querySelector('.add-label');
+                                if (label) label.textContent = 'Add';
+
+                                // Reset arrow rotation
+                                const svg = buttonEl.querySelector('svg');
+                                if (svg) {
+                                    svg.style.transform = 'rotate(0deg)';
+                                }
+
+                                // Move button back to left cell
+                                buttonEl.style.opacity = '1';
+                                leftCell.appendChild(buttonEl);
+
+                                // Clean up
+                                transferDiv.remove();
+                                rightCell.classList.remove('animating');
+                            }, 400);
+                        }, 10);
                     }
-
-                    leftCell.classList.remove('transferred');
-
-                    // Change button back to ADD state
-                    this.classList.remove('undo');
-                    const label = this.querySelector('.add-label');
-                    if (label) label.textContent = 'Add';
                 }
             });
         });
