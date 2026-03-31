@@ -134,7 +134,8 @@
         /* Person Header */
         .person-header {
             background: var(--gray90);
-            padding: 32px 0 32px 0;
+            padding: 32px 0;
+            position: relative;
         }
 
         .person-header-content {
@@ -240,7 +241,7 @@
 
         /* Tabs */
         .tabs {
-            background: var(--gray03);
+            background: white;
             display: flex;
             justify-content: center;
             padding: 16px 120px 8px 120px;
@@ -2679,6 +2680,7 @@
             color: var(--blue60);
         }
 
+        /* Old blue plus button - removed in favor of Add/Undo buttons
         .review-add-button {
             display: inline-flex;
             align-items: center;
@@ -2696,7 +2698,7 @@
 
         .review-add-button:hover {
             background: var(--blue70);
-        }
+        } */
 
         .review-expandable-section {
             border-top: 1px solid var(--gray10);
@@ -3069,6 +3071,7 @@
             color: var(--blue60);
         }
 
+        /* Old blue plus button - removed in favor of Add/Undo buttons
         .review-add-button {
             display: inline-flex;
             align-items: center;
@@ -3086,7 +3089,7 @@
 
         .review-add-button:hover {
             background: var(--blue70);
-        }
+        } */
 
         .review-expandable-section {
             border-top: 1px solid var(--gray10);
@@ -3365,6 +3368,78 @@
         .quality-no-issues {
             font-size: 14px;
             color: var(--gray70);
+        }
+
+        /* Add/Undo button for review panel */
+        .review-add-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .review-add-btn .add-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #6a992e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .review-add-btn .add-circle:hover {
+            background: #f0f7e8;
+        }
+
+        .review-add-btn .add-circle svg {
+            width: 18px;
+            height: 18px;
+            fill: #6a992e;
+            transition: transform 0.3s ease;
+        }
+
+        .review-add-btn .add-label {
+            font-size: 11px;
+            color: #6a992e;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* Undo state */
+        .review-add-btn.undo .add-circle svg {
+            transform: rotate(180deg);
+        }
+
+        /* Animation for content transfer */
+        .review-cell.animating {
+            position: relative;
+            overflow: visible;
+        }
+
+        .review-cell .transfer-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px;
+            background: #E1F4F7;
+            border-radius: 4px;
+            z-index: 50;
+            pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .review-cell .transfer-content.moving {
+            transform: translateX(calc(100% + 1px));
+        }
+
+        .review-cell.transferred .review-cell-value {
+            opacity: 0.4;
         }
     </style>
 </head>
@@ -5258,7 +5333,7 @@
                             <p class="person-details">4 January 1896 – 22 December 1988 • KWCL-QCX</p>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 26px; margin-left: 96px;">
+                    <div style="display: flex; gap: 26px; margin-left: 96px; align-items: center;">
                         <a href="#" style="display: flex; align-items: center; gap: 6px; color: white; text-decoration: none; font-size: 14px; font-weight: 600;">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M20 4v4h-3V4h3Zm0 12v4h-3v-4h3ZM4 14v-4h3v4H4ZM15 3v2h-1a3 3 0 0 0-3 3v3H9V9a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-2h2v3a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1Z" class="rtlFlipCss_r1nl3sf1"></path></svg>
                             View Tree
@@ -5273,6 +5348,7 @@
                         </a>
                     </div>
                 </div>
+                <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; align-self: stretch; position: relative;">
                 <div class="header-actions">
                     <div class="custom-dropdown" id="searchDropdown" style="position: relative; margin-right: 12px;">
                         <button type="button" class="btn" onclick="toggleSearchDropdown()" style="white-space: nowrap;">
@@ -5402,6 +5478,8 @@
                             </a>
                         </div>
                     </div>
+                </div>
+                <span onclick="openQualityPanel()" style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 14px; color: rgba(255,255,255,0.85); cursor: pointer; font-weight: 600; align-self: flex-end;">Quality Score: <span style="background: #E1F4F7; padding: 2px 8px; border-radius: 4px; color: var(--gray90); font-weight: 600;">Medium</span></span>
                 </div>
             </div>
         </div>
@@ -5832,9 +5910,8 @@
                 <div class="right-column">
                     <div class="card">
                         <div class="card-body" style="padding: 6px 0;">
-                            <div style="padding: 12px 12px 0 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="padding: 12px 12px 0 12px;">
                                 <h2 class="card-title">Sources (8)</h2>
-                                <span onclick="openQualityPanel()" style="font-size: 13px; color: var(--gray70); cursor: pointer;">Quality Score: <span style="background: #E1F4F7; padding: 2px 8px; border-radius: 4px; color: var(--gray90); font-weight: 600;">Medium</span></span>
                             </div>
 
                             <!-- Potential Sources Section -->
@@ -7272,8 +7349,8 @@
             }
         }
 
-        // Review Panel Functions
-        function openReviewPanel(recordData) {
+        // Review Panel Functions (DUPLICATE - DISABLED)
+        function openReviewPanelOLD(recordData) {
             const overlay = document.getElementById('reviewPanelOverlay');
             const panel = document.getElementById('reviewPanel');
 
@@ -7354,7 +7431,8 @@
                         }
                     }
                     if (reviewTreeDeathCell) {
-                        reviewTreeDeathCell.innerHTML = '<button class="review-add-button" title="Add death information"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button>';
+                        // Removed old blue plus button - using Add/Undo buttons instead
+                        // reviewTreeDeathCell.innerHTML = '';
                     }
                 }
 
@@ -7475,6 +7553,9 @@
             document.body.classList.add('panel-open');
             setTimeout(() => {
                 panel.classList.add('show');
+
+                // Add Add/Undo buttons where data differs
+                addReviewPanelButtons();
             }, 10);
         }
 
@@ -7492,6 +7573,117 @@
         function attachToTree() {
             alert('Record attached to tree!');
             closeReviewPanel();
+        }
+
+        function addReviewPanelButtons() {
+            const rows = document.querySelectorAll('.review-comparison-row');
+
+            rows.forEach(row => {
+                const leftCell = row.querySelector('.review-cell:first-child');
+                const rightCell = row.querySelector('.review-cell:last-child');
+
+                if (!leftCell || !rightCell) return;
+
+                const leftValue = leftCell.querySelector('.review-cell-value');
+                const rightValue = rightCell.querySelector('.review-cell-value');
+
+                if (!leftValue || !rightValue) return;
+
+                // Check if values are different
+                const leftText = leftValue.textContent.trim();
+                const rightText = rightValue.textContent.trim();
+
+                if (leftText && rightText && leftText !== rightText && leftText !== '—') {
+                    // Remove any existing button
+                    const existingBtn = leftCell.querySelector('.review-add-btn');
+                    if (existingBtn) existingBtn.remove();
+
+                    // Add Add button to left cell
+                    const addBtn = document.createElement('div');
+                    addBtn.className = 'review-add-btn';
+                    addBtn.innerHTML = `
+                        <div class="add-circle">
+                            <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg>
+                        </div>
+                        <div class="add-label">Add</div>
+                    `;
+
+                    leftCell.appendChild(addBtn);
+
+                    // Add click handler
+                    addBtn.addEventListener('click', function() {
+                        handleReviewAddClick(this, leftCell, rightCell, leftValue, rightValue);
+                    });
+                }
+            });
+        }
+
+        function handleReviewAddClick(btn, leftCell, rightCell, leftValue, rightValue) {
+            const isUndo = btn.classList.contains('undo');
+
+            if (!isUndo) {
+                // Store original value for undo
+                btn.dataset.originalValue = rightValue.textContent;
+
+                // Create animation element
+                const transferDiv = document.createElement('div');
+                transferDiv.className = 'transfer-content';
+                transferDiv.innerHTML = leftValue.outerHTML;
+
+                leftCell.classList.add('animating');
+                leftCell.appendChild(transferDiv);
+
+                // Hide button during animation
+                btn.style.opacity = '0';
+
+                // Trigger animation
+                setTimeout(() => {
+                    transferDiv.classList.add('moving');
+                    leftCell.classList.add('transferred');
+                }, 10);
+
+                // After animation, update right cell and move button
+                setTimeout(() => {
+                    // Update right cell value
+                    rightValue.textContent = leftValue.textContent;
+
+                    // Remove diff badge if present
+                    const diffBadge = rightCell.querySelector('.review-diff-badge');
+                    if (diffBadge) diffBadge.style.display = 'none';
+
+                    // Transform button to UNDO
+                    btn.classList.add('undo');
+                    btn.querySelector('.add-label').textContent = 'Undo';
+                    btn.style.opacity = '1';
+
+                    // Move button to right cell
+                    rightCell.appendChild(btn);
+
+                    // Clean up animation
+                    transferDiv.remove();
+                    leftCell.classList.remove('animating');
+                }, 400);
+            } else {
+                // Undo - restore original value
+                const originalValue = btn.dataset.originalValue;
+                if (originalValue) {
+                    rightValue.textContent = originalValue;
+
+                    // Show diff badge again if present
+                    const diffBadge = rightCell.querySelector('.review-diff-badge');
+                    if (diffBadge) diffBadge.style.display = '';
+                }
+
+                // Remove transferred state
+                leftCell.classList.remove('transferred');
+
+                // Transform button back to ADD
+                btn.classList.remove('undo');
+                btn.querySelector('.add-label').textContent = 'Add';
+
+                // Move button back to left cell
+                leftCell.appendChild(btn);
+            }
         }
 
         // Global function to toggle family member details
@@ -7817,7 +8009,8 @@
                         }
                     }
                     if (reviewTreeDeathCell) {
-                        reviewTreeDeathCell.innerHTML = '<button class="review-add-button" title="Add death information"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button>';
+                        // Removed old blue plus button - using Add/Undo buttons instead
+                        // reviewTreeDeathCell.innerHTML = '';
                     }
                 }
 
@@ -7938,6 +8131,9 @@
             document.body.classList.add('panel-open');
             setTimeout(() => {
                 panel.classList.add('show');
+
+                // Add Add/Undo buttons where data differs
+                addReviewPanelButtons();
             }, 10);
         }
 
@@ -8018,6 +8214,9 @@
             document.body.classList.add('panel-open');
             setTimeout(() => {
                 panel.classList.add('show');
+
+                // Add Add/Undo buttons where data differs
+                addReviewPanelButtons();
             }, 10);
         }
 
@@ -8136,11 +8335,7 @@
                         <div class="review-cell-value" id="reviewRecordDeath">January 8, 1909<br>Council Bluffs, Iowa, United States</div>
                     </div>
                     <div class="review-cell" id="reviewTreeDeathCell">
-                        <button class="review-add-button" title="Add death information">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                            </svg>
-                        </button>
+                        <!-- Removed old blue plus button - using Add/Undo buttons instead -->
                     </div>
                 </div>
             </div>
