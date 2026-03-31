@@ -89,6 +89,10 @@
             color: #888;
         }
 
+        .tree-label:not(.active) img {
+            filter: brightness(0.55);
+        }
+
         .toggle-switch {
             position: relative;
             width: 44px;
@@ -1089,8 +1093,14 @@
 </div>
 
 <div class="toggle-controls">
-    <span class="tree-label tree-b" id="labelB">My Tree</span>
-    <span class="tree-label tree-a active" id="labelA">FamilySearch</span>
+    <span class="tree-label tree-b" id="labelB" style="display: flex; align-items: center; gap: 6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M20 4v4h-3V4h3Zm0 12v4h-3v-4h3ZM4 14v-4h3v4H4ZM15 3v2h-1a3 3 0 0 0-3 3v3H9V9a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-2h2v3a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1Z"/></svg>
+        My Tree
+    </span>
+    <span class="tree-label tree-a active" id="labelA" style="display: flex; align-items: center; gap: 6px;">
+        <img src="images/fs.png" width="16" height="16" alt="" style="flex-shrink: 0;">
+        FamilySearch
+    </span>
 </div>
 
 <div class="tree-container" id="treeContainer">
