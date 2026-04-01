@@ -832,7 +832,7 @@
 
         .source-item:has(.hint-badge):hover,
         .source-item.potential-source:hover {
-            background: var(--green02);
+            background: #D8F0F8;
         }
 
         .source-content {
@@ -907,7 +907,7 @@
         }
 
         .family-member.potential .view-btn:hover {
-            background: var(--green05);
+            background: var(--blue02);
         }
 
         .source-item:has(.hint-badge) .view-btn {
@@ -915,11 +915,11 @@
         }
 
         .source-item:has(.hint-badge) .view-btn:hover {
-            background: var(--green05);
+            background: var(--blue02);
         }
 
         .source-item.potential-source .view-btn:hover {
-            background: var(--green05);
+            background: var(--blue02);
         }
 
         .source-item[data-marriage="1939"] .view-btn {
@@ -1043,9 +1043,9 @@
             color: var(--green60) !important;
         }
 
-        /* Green highlighting for potential sources (hover state) */
+        /* Blue highlighting for potential sources (hover state) */
         .vital-item.highlighted-green {
-            background: var(--green02);
+            background: #D8F0F8;
             border-radius: 8px;
         }
 
@@ -1071,7 +1071,7 @@
         }
 
         .family-member.highlighted-green {
-            background: var(--green02) !important;
+            background: #D8F0F8 !important;
             border-radius: 8px;
         }
 
@@ -1108,7 +1108,7 @@
         }
 
         .source-item.highlighted-green {
-            background: var(--green02);
+            background: #D8F0F8;
         }
 
         .source-item.highlighted-green.active {
@@ -3215,11 +3215,11 @@
         .quality-panel {
             position: fixed;
             top: 0;
-            right: -500px;
-            width: 500px;
+            right: -400px;
+            width: 360px;
             height: 100vh;
             background: white;
-            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 4px 4px rgba(0,0,0,0.25);
             transition: right 0.3s ease;
             z-index: 10001;
             overflow-y: auto;
@@ -3233,14 +3233,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 24px;
-            border-bottom: 1px solid var(--gray20);
+            padding: 0 16px;
+            height: 56px;
+            background: var(--gray00, #fefefe);
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
 
         .quality-panel-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--gray90);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray100);
         }
 
         .quality-panel-close {
@@ -3252,25 +3256,210 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 100px;
         }
 
         .quality-panel-close:hover {
+            background: var(--gray05);
             color: var(--gray90);
         }
 
         .quality-panel-body {
-            padding: 24px;
+            padding: 16px 16px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
 
-        .quality-badge-large {
-            display: inline-block;
-            background: var(--green05);
-            color: var(--green60);
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 14px;
+        /* Issues section */
+        .qp-section-heading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .qp-section-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .qp-section-icon.red { background: #c0285c; }
+        .qp-section-icon.purple { background: #7f5998; }
+
+        .qp-section-heading-text {
+            font-size: 21px;
             font-weight: 600;
-            margin-bottom: 12px;
+            color: var(--gray100);
+        }
+
+        .qp-category {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0 16px;
+        }
+
+        .qp-category-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 0 0 0 12px;
+        }
+
+        .qp-category-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray100);
+        }
+
+        .qp-chevron {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+
+        .qp-chevron.expanded { transform: rotate(180deg); }
+
+        .qp-category-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .qp-person-card {
+            background: white;
+            border: 1px solid var(--gray10, #cacdcd);
+            border-radius: 8px;
+            padding: 12px 20px 12px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .qp-person-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qp-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 150px;
+            background: #A7C41A;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qp-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .qp-person-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray100);
+            line-height: 1.2;
+        }
+
+        .qp-person-dates {
+            font-size: 12px;
+            color: rgba(0,3,5,0.74);
+            margin-top: 2px;
+        }
+
+        .qp-inline-btn {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--blue60);
+            text-transform: uppercase;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 0;
+            white-space: nowrap;
+        }
+
+        .qp-issue-item {
+            padding: 0 0 0 24px;
+            display: flex;
+            gap: 5px;
+            align-items: flex-start;
+        }
+
+        .qp-issue-text-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .qp-issue-text {
+            font-size: 16px;
+            color: var(--gray100);
+            line-height: 1.5;
+        }
+
+        .qp-edit-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--blue60);
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .qp-divider {
+            height: 1px;
+            background: var(--gray10, #cacdcd);
+            margin: 0 16px;
+        }
+
+        .qp-suggestions-body {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 0 12px;
+        }
+
+        .qp-suggestion-item {
+            font-size: 16px;
+            color: var(--gray100);
+            line-height: 1.5;
+        }
+
+        .qp-view-all-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--blue60);
+            text-transform: uppercase;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 12px;
         }
 
         .quality-learn-more {
@@ -5135,7 +5324,7 @@
     <div class="quality-panel-overlay" id="qualityPanelOverlay" onclick="closeQualityPanel()"></div>
     <div class="quality-panel" id="qualityPanel">
         <div class="quality-panel-header">
-            <div class="quality-panel-title">Quality Score</div>
+            <div class="quality-panel-title">Quality Score: Medium</div>
             <button class="quality-panel-close" onclick="closeQualityPanel()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -5144,129 +5333,190 @@
         </div>
 
         <div class="quality-panel-body">
-            <span class="quality-badge-large" style="background: #E1F4F7; color: var(--gray90);">Medium</span>
-            <a href="#" class="quality-learn-more">Learn more</a> about the Quality Score.
 
-            <!-- Data Completeness Section -->
-            <div class="quality-section">
-                <div class="quality-section-header" onclick="toggleQualitySection('dataCompleteness')">
-                    <div class="quality-section-title">Data Completeness (1)</div>
-                    <button class="quality-section-toggle" id="dataCompletenessToggle">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            <!-- Quality Score Issues -->
+            <div>
+                <div class="qp-section-heading">
+                    <div class="qp-section-icon red">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
                         </svg>
-                    </button>
-                </div>
-                <div class="quality-progress-bar">
-                    <div class="quality-progress-fill" style="width: 85%;"></div>
-                </div>
-                <div class="quality-section-content" id="dataCompletenessContent">
-                    <div class="quality-issue-item">
-                        <div class="quality-issue-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
-                            </svg>
-                        </div>
-                        <div class="quality-issue-text">A residence place is missing a city.</div>
                     </div>
+                    <span class="qp-section-heading-text">Quality Score Issues &nbsp;(8)</span>
+                </div>
+
+                <div class="qp-category" style="gap: 20px;">
+
+                    <!-- Possible Duplicates -->
+                    <div>
+                        <div class="qp-category-row" onclick="toggleQpCategory('qpDuplicates', this)">
+                            <span class="qp-category-title">Possible Duplicates (2)</span>
+                            <div class="qp-chevron expanded">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                            </div>
+                        </div>
+                        <div class="qp-category-body" id="qpDuplicates" style="margin-top: 8px;">
+                            <div class="qp-person-card">
+                                <div class="qp-person-info">
+                                    <div class="qp-avatar">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    </div>
+                                    <div>
+                                        <div class="qp-person-name">Doris Lewis</div>
+                                        <div class="qp-person-dates">1896–1978 &nbsp;•&nbsp; LMXT-PQ3</div>
+                                    </div>
+                                </div>
+                                <button class="qp-inline-btn">Review</button>
+                            </div>
+                            <div class="qp-person-card">
+                                <div class="qp-person-info">
+                                    <div class="qp-avatar">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    </div>
+                                    <div>
+                                        <div class="qp-person-name">Doris Jane Lewis</div>
+                                        <div class="qp-person-dates">1896–1978 &nbsp;•&nbsp; LMXT-PQ4</div>
+                                    </div>
+                                </div>
+                                <button class="qp-inline-btn">Review</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Impossible or Unlikely Data -->
+                    <div>
+                        <div class="qp-category-row" onclick="toggleQpCategory('qpUnlikely', this)">
+                            <span class="qp-category-title">Impossible or Unlikely Data (1)</span>
+                            <div class="qp-chevron expanded">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                            </div>
+                        </div>
+                        <div class="qp-category-body" id="qpUnlikely" style="margin-top: 8px; gap: 16px;">
+                            <div class="qp-issue-item">
+                                <div class="qp-issue-text-wrap">
+                                    <div class="qp-issue-text">Death before Christening Date.</div>
+                                    <button class="qp-inline-btn" style="padding: 0; text-align: left;">Dismiss</button>
+                                </div>
+                                <button class="qp-edit-btn">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color: var(--blue60);"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                </button>
+                            </div>
+                            <div class="qp-issue-item">
+                                <div class="qp-issue-text-wrap">
+                                    <div class="qp-issue-text">Birth after Mother's Death.</div>
+                                    <button class="qp-inline-btn" style="padding: 0; text-align: left;">Dismiss</button>
+                                </div>
+                                <button class="qp-edit-btn">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color: var(--blue60);"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Missing Information -->
+                    <div>
+                        <div class="qp-category-row" onclick="toggleQpCategory('qpMissingInfo', this)">
+                            <span class="qp-category-title">Missing Information (4)</span>
+                            <div class="qp-chevron">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                            </div>
+                        </div>
+                        <div class="qp-category-body" id="qpMissingInfo" style="display: none; margin-top: 8px; gap: 16px;">
+                            <div class="qp-issue-item">
+                                <div class="qp-issue-text-wrap">
+                                    <div class="qp-issue-text">Birth place is missing.</div>
+                                    <button class="qp-inline-btn" style="padding: 0; text-align: left;">Add</button>
+                                </div>
+                            </div>
+                            <div class="qp-issue-item">
+                                <div class="qp-issue-text-wrap">
+                                    <div class="qp-issue-text">Death place is missing.</div>
+                                    <button class="qp-inline-btn" style="padding: 0; text-align: left;">Add</button>
+                                </div>
+                            </div>
+                            <div class="qp-issue-item">
+                                <div class="qp-issue-text-wrap">
+                                    <div class="qp-issue-text">Mother is missing.</div>
+                                    <button class="qp-inline-btn" style="padding: 0; text-align: left;">Add</button>
+                                </div>
+                            </div>
+                            <div class="qp-issue-item">
+                                <div class="qp-issue-text-wrap">
+                                    <div class="qp-issue-text">Father is missing.</div>
+                                    <button class="qp-inline-btn" style="padding: 0; text-align: left;">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Missing or Weak Sources -->
+                    <div>
+                        <div class="qp-category-row" onclick="toggleQpCategory('qpWeakSources', this)">
+                            <span class="qp-category-title">Missing or Weak Sources (1)</span>
+                            <div class="qp-chevron">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                            </div>
+                        </div>
+                        <div class="qp-category-body" id="qpWeakSources" style="display: none; margin-top: 8px; gap: 16px;">
+                            <div class="qp-issue-item">
+                                <div class="qp-issue-text-wrap">
+                                    <div class="qp-issue-text">Birth event has no attached sources.</div>
+                                    <button class="qp-inline-btn" style="padding: 0; text-align: left;">Attach Source</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conflicting Information -->
+                    <div>
+                        <div class="qp-category-row" onclick="toggleQpCategory('qpConflicting', this)">
+                            <span class="qp-category-title">Conflicting Information (2)</span>
+                            <div class="qp-chevron">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                            </div>
+                        </div>
+                        <div class="qp-category-body" id="qpConflicting" style="display: none; margin-top: 8px; gap: 16px;">
+                            <div class="qp-issue-item">
+                                <div class="qp-issue-text-wrap">
+                                    <div class="qp-issue-text">Multiple birth years found across sources.</div>
+                                    <button class="qp-inline-btn" style="padding: 0; text-align: left;">Review</button>
+                                </div>
+                            </div>
+                            <div class="qp-issue-item">
+                                <div class="qp-issue-text-wrap">
+                                    <div class="qp-issue-text">Conflicting death dates in sources.</div>
+                                    <button class="qp-inline-btn" style="padding: 0; text-align: left;">Review</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- Source Tagging Section -->
-            <div class="quality-section">
-                <div class="quality-section-header" onclick="toggleQualitySection('sourceTagging')">
-                    <div class="quality-section-title">Source Tagging (5)</div>
-                    <button class="quality-section-toggle" id="sourceTaggingToggle">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            <!-- Divider -->
+            <div class="qp-divider"></div>
+
+            <!-- Research Suggestions -->
+            <div>
+                <div class="qp-section-heading">
+                    <div class="qp-section-icon purple">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
                         </svg>
-                    </button>
+                    </div>
+                    <span class="qp-section-heading-text">Research Suggestions (4)</span>
                 </div>
-                <div class="quality-progress-bar">
-                    <div class="quality-progress-fill" style="width: 70%;"></div>
+                <div class="qp-suggestions-body">
+                    <div class="qp-suggestion-item">Person May Have Children.</div>
+                    <div class="qp-suggestion-item">Person May Have Another Spouse.</div>
                 </div>
-                <div class="quality-section-content" id="sourceTaggingContent">
-                    <div class="quality-issue-item">
-                        <div class="quality-issue-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
-                            </svg>
-                        </div>
-                        <div class="quality-issue-text">A residence has no tagged sources.</div>
-                    </div>
-                    <div class="quality-issue-item">
-                        <div class="quality-issue-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
-                            </svg>
-                        </div>
-                        <div class="quality-issue-text">A residence has no tagged sources.</div>
-                    </div>
-                    <div class="quality-issue-item">
-                        <div class="quality-issue-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
-                            </svg>
-                        </div>
-                        <div class="quality-issue-text">A residence has no tagged sources.</div>
-                    </div>
-                    <div class="quality-issue-item">
-                        <div class="quality-issue-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
-                            </svg>
-                        </div>
-                        <div class="quality-issue-text">A residence has no tagged sources.</div>
-                    </div>
-                    <div class="quality-issue-item">
-                        <div class="quality-issue-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
-                            </svg>
-                        </div>
-                        <div class="quality-issue-text">
-                            This person has multiple sources attached from the same census year and is most likely incorrect.
-                            <div class="quality-issue-source">"The Church of Jesus Christ of Latter-day Saints, Church Census Records (Worldwide), 1914-1960"</div>
-                        </div>
-                    </div>
-                </div>
+                <button class="qp-view-all-btn">
+                    VIEW ALL
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                </button>
             </div>
 
-            <!-- Source Consistency Section -->
-            <div class="quality-section">
-                <div class="quality-section-header" onclick="toggleQualitySection('sourceConsistency')">
-                    <div class="quality-section-title">Source Consistency (0)</div>
-                    <button class="quality-section-toggle" id="sourceConsistencyToggle">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="quality-progress-bar">
-                    <div class="quality-progress-fill" style="width: 100%;"></div>
-                </div>
-                <div class="quality-section-content" id="sourceConsistencyContent">
-                    <div class="quality-no-issues">No quality issues identified.</div>
-                </div>
-            </div>
-
-            <!-- Conflict-free Data Section -->
-            <div class="quality-section">
-                <div class="quality-section-header" onclick="toggleQualitySection('conflictFree')">
-                    <div class="quality-section-title">Conflict-free Data (0)</div>
-                    <button class="quality-section-toggle" id="conflictFreeToggle">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="quality-progress-bar">
-                    <div class="quality-progress-fill" style="width: 100%;"></div>
-                </div>
-                <div class="quality-section-content" id="conflictFreeContent">
-                    <div class="quality-no-issues">No quality issues identified.</div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -5349,6 +5599,7 @@
                     </div>
                 </div>
                 <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; align-self: stretch; position: relative;">
+                <span onclick="openQualityPanel()" style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 14px; color: rgba(255,255,255,0.85); cursor: pointer; font-weight: 600; align-self: flex-end;">Quality Score: <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 4px; color: white; font-weight: 600;">Medium</span></span>
                 <div class="header-actions">
                     <div class="custom-dropdown" id="searchDropdown" style="position: relative; margin-right: 12px;">
                         <button type="button" class="btn" onclick="toggleSearchDropdown()" style="white-space: nowrap;">
@@ -5479,7 +5730,6 @@
                         </div>
                     </div>
                 </div>
-                <span onclick="openQualityPanel()" style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 14px; color: rgba(255,255,255,0.85); cursor: pointer; font-weight: 600; align-self: flex-end;">Quality Score: <span style="background: #E1F4F7; padding: 2px 8px; border-radius: 4px; color: var(--gray90); font-weight: 600;">Medium</span></span>
                 </div>
             </div>
         </div>
@@ -8242,6 +8492,14 @@
                 content.classList.add('show');
                 toggle.classList.add('expanded');
             }
+        }
+
+        function toggleQpCategory(id, rowEl) {
+            const body = document.getElementById(id);
+            const chevron = rowEl.querySelector('.qp-chevron');
+            const isHidden = body.style.display === 'none';
+            body.style.display = isHidden ? 'flex' : 'none';
+            chevron.classList.toggle('expanded', isHidden);
         }
     </script>
 
