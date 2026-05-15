@@ -1378,9 +1378,19 @@
             100% { box-shadow: 0 0 0 2px transparent; background: transparent; }
         }
 
+        @keyframes sourceBadgeFade {
+            0%   { opacity: 1; }
+            70%  { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
         .source-item-highlight {
             animation: sourceHighlightFade 3.5s ease-out forwards;
             border-radius: 6px;
+        }
+
+        .source-item-highlight #birthCertAddedBadge {
+            animation: sourceBadgeFade 3.5s ease-out forwards;
         }
 
         @keyframes bounce {
@@ -5724,10 +5734,9 @@
                                                 </button>
                                             </div>
 
-                                            <div style="font-size: 11px; font-weight: 600; color: var(--green60); text-transform: uppercase; letter-spacing: 0.5px; margin: 12px 0 4px 0;">United States Federal Census, 1930</div>
                                             <div class="family-member potential" style="align-items: center;">
                                                 <div style="flex: 1;">
-                                                    <div class="hint-badge" style="margin-bottom: 6px; background: var(--green02); color: var(--green60);">Possible Child</div>
+                                                    <div class="hint-badge" style="margin-bottom: 6px; background: var(--green02); color: var(--green60);">Possible Child Found in 1930 Census</div>
                                                     <div style="display: flex; align-items: center; gap: 12px;">
                                                         <div class="avatar-small" style="background: var(--green02); display: flex; align-items: center; justify-content: center; border: 1.5px dashed var(--green60);">
                                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green60)" stroke-width="2">
@@ -5947,15 +5956,19 @@
                                 </div>
 
                                 <div class="collapsible-content" id="attachedSourcesContent">
-                                    <div class="source-item" id="birthCertSourceItem" style="margin: 12px; display: none;">
-                                    <div class="source-content">
-                                        <div class="source-header">
-                                            <div class="source-title">Utah, Birth Certificates, 1890–1911</div>
+                                                    <div class="source-item" id="birthCertSourceItem" style="margin: 12px; display: none; position: relative;">
+                                        <div class="source-content">
+                                            <div class="source-header">
+                                                <div class="source-title">Utah, Birth Certificates, 1890–1911</div>
+                                            </div>
+                                            <div class="source-meta">Name, Sex, Birth Date, Birth Place, Parents</div>
                                         </div>
-                                        <div class="source-meta">Name, Sex, Birth Date, Birth Place, Parents</div>
+                                        <button class="view-btn" onclick="openModal('birthCertModal')">View</button>
+                                        <div id="birthCertAddedBadge" style="display:none; position:absolute; top: -11px; right: 8px; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: var(--green60); background: white; border: 1.5px solid var(--green60); border-radius: 20px; padding: 2px 8px; white-space: nowrap;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                            Added to sources
+                                        </div>
                                     </div>
-                                    <button class="view-btn" onclick="openModal('birthCertModal')">View</button>
-                                </div>
 
                                 <div class="source-item" style="margin: 12px;">
                                     <div class="source-content">
@@ -8123,7 +8136,11 @@
             const birthCertItem = document.getElementById('birthCertSourceItem');
             if (birthCertItem) {
                 birthCertItem.style.display = '';
-                requestAnimationFrame(() => birthCertItem.classList.add('source-item-highlight'));
+                const badge = document.getElementById('birthCertAddedBadge');
+                requestAnimationFrame(() => {
+                    birthCertItem.classList.add('source-item-highlight');
+                    if (badge) badge.style.display = 'flex';
+                });
             }
             ['sourcesCount1', 'sourcesCount2', 'sourcesCount3'].forEach(id => {
                 const el = document.getElementById(id);
