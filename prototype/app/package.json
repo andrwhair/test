@@ -21,7 +21,8 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publish": "vite build && cd ../.. && git add prototype/app/dist && git commit -m 'Update sandbox build' && git push origin main"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
