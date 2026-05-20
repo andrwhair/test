@@ -1,6 +1,3 @@
-# Build output — GitHub Actions handles this, never commit it
-prototype/app/dist/
-
 # Dependencies
 prototype/app/node_modules/
 node_modules/
