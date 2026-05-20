@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import TreeCompareV2 from './components/tree-compare-v2'
 import TreeCompareV3 from './components/tree-compare-v3'
 
-const basename = process.env.PUBLIC_URL || ''
+const basename = '/test/prototype/app'
 
 const homeStyle = {
   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
