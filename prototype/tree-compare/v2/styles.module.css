@@ -1,0 +1,811 @@
+/* Tree Compare v2 */
+
+.root {
+  background: #EAECEC;
+  min-height: 100vh;
+  overflow-x: auto;
+  font-family: Verdana, Arial, sans-serif;
+  position: relative;
+}
+
+/* ── Toggle ─────────────────────────────────────── */
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  margin: 20px auto 40px;
+  width: fit-content;
+  position: relative;
+  z-index: 10;
+}
+
+.toggleBtn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 15px 24px;
+  border-radius: 26px;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s, color 0.2s;
+  background: transparent;
+  color: #888;
+}
+
+.toggleBtnMy.toggleActive {
+  background: var(--gray80);
+  color: white;
+}
+
+.toggleBtnFs.toggleActive {
+  background: #6A992D;
+  color: white;
+}
+
+/* ── Canvas ─────────────────────────────────────── */
+.canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 60px;
+  min-width: 1200px;
+  position: relative;
+  transition: margin-right 0.3s ease;
+}
+
+
+.canvas.canvasShifted {
+  margin-right: 440px;
+}
+
+.generation {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  position: relative;
+}
+
+.couple {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+}
+
+.spacer {
+  height: 60px;
+  width: 100%;
+  position: relative;
+}
+
+.genLabel {
+  font-size: 10px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transform: translateY(-40px);
+  margin-bottom: -10px;
+}
+
+/* ── Person Slot + Card ─────────────────────────── */
+.personSlot {
+  position: relative;
+  width: 158px;
+  height: 175px;
+}
+
+.personCard {
+  width: 130px;
+  height: 170px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+}
+
+/* My Tree card — dark */
+.cardDark {
+  background: var(--gray80);
+}
+
+/* FS card — light */
+.cardLight {
+  background: white;
+}
+
+.cardTopBar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 6px 6px 0 0;
+}
+
+.barMy { background: #2396BF; }
+.barFs { background: #6A992D; }
+
+.foreground {
+  z-index: 2;
+  opacity: 1;
+  transform: translate(0, 0);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.14);
+  transition: transform 0.7s cubic-bezier(0.34, 1.2, 0.64, 1), opacity 0.7s ease, box-shadow 0.7s ease;
+}
+
+.background {
+  z-index: 1;
+  opacity: 0.75;
+  transform: translate(24px, -20px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border: 1px solid #ddd;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.7s ease, box-shadow 0.7s ease;
+}
+
+.cardDark.background {
+  border-color: #2e4560;
+}
+
+.ghost {
+  z-index: 1;
+  opacity: 0.35;
+  transform: translate(0, 0);
+  animation: ghostIn 0.7s ease both;
+}
+
+.ghostMy {
+  border: 2px dashed #2396BF;
+  background: rgba(26, 43, 60, 0.12) !important;
+}
+
+.ghostFs {
+  border: 2px dashed #6A992D;
+  background: rgba(106, 153, 45, 0.06) !important;
+}
+
+/* Ghost placeholder card for missing persons */
+.ghostCard {
+  z-index: 1;
+  transform: translate(0, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+  box-shadow: none;
+}
+
+
+.ghostCardMy {
+  border: 2px dashed #2396BF;
+  background: #64686A;
+}
+
+.ghostCardFs {
+  border: 2px dashed #6A992D;
+  background: white;
+}
+
+.ghostAddBtn {
+  margin-top: auto;
+  background: none;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #888;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-family: Verdana, Arial, sans-serif;
+}
+
+.ghostAddBtn:hover {
+  border-color: #555;
+  color: #555;
+}
+
+.solo {
+  z-index: 2;
+  opacity: 1;
+  transform: translate(0, 0);
+  transition: transform 0.7s cubic-bezier(0.34, 1.2, 0.64, 1), opacity 0.7s ease, box-shadow 0.7s ease;
+}
+
+@keyframes ghostIn {
+  0% { opacity: 0; transform: translate(12px, -12px) scale(0.85); }
+  60% { opacity: 0.4; transform: translate(-2px, -2px) scale(1.02); }
+  100% { opacity: 0.35; transform: translate(0, 0) scale(1); }
+}
+
+@keyframes soloIn {
+  0% { opacity: 0; transform: translateY(-10px) scale(0.9); }
+  60% { opacity: 1; transform: translateY(-3px) scale(1.03); }
+  100% { opacity: 1; transform: translate(0, 0) scale(1); }
+}
+
+/* Selected ring */
+.personSlot.selected .personCard.foreground,
+.personSlot.selected .personCard.solo {
+  outline: 3px solid #2396BF;
+  outline-offset: 0;
+  box-shadow: 0 0 0 6px rgba(35, 150, 191, 0.18), 0 3px 12px rgba(0,0,0,0.12);
+}
+
+/* Avatars */
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatarMyMale   { background: #4a7fb5; }
+.avatarMyFemale { background: #b5547a; }
+.avatarFsMale   { background: #d0e2f0; }
+.avatarFsFemale { background: #f0d0e0; }
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardName {
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.3;
+  color: #202121;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cardNameDark { color: #ffffff; }
+
+.cardDates {
+  font-size: 10px;
+  color: #666;
+  margin-top: 2px;
+  text-align: center;
+}
+.cardDatesDark { color: #c0d4e4; }
+
+.cardPid {
+  font-size: 9px;
+  color: #999;
+  margin-top: 2px;
+}
+.cardPidDark { color: #4a6a88; }
+
+.conflictBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #7E57C2;
+  font-size: 9px;
+  font-weight: 500;
+  color: white;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+.confidenceNum {
+  font-weight: 700;
+  font-size: 9px;
+  opacity: 0.85;
+}
+
+/* ── SVG connectors ─────────────────────────────── */
+.treeSvg {
+  position: absolute;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Legend ─────────────────────────────────────── */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: margin-right 0.3s ease;
+  width: fit-content;
+  margin: 0 auto 40px;
+}
+
+.legend.legendShifted {
+  margin-right: calc(440px + auto);
+  transform: translateX(-220px);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #555;
+}
+
+.legendDot {
+  width: 12px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.legendDotMy { background: #2396BF; }
+.legendDotFs { background: #6A992D; }
+
+/* ── Side Sheet ─────────────────────────────────── */
+.sheet {
+  position: absolute;
+  top: 0;
+  right: -440px;
+  width: 440px;
+  min-height: 100%;
+  background: white;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.14);
+  z-index: 201;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sheet.sheetOpen {
+  right: 0;
+}
+
+.sheetTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid #e5e5e5;
+  flex-shrink: 0;
+}
+
+.sheetTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #202121;
+}
+
+.sheetClose {
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #888;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.sheetBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Panel: headers ─────────────────────────────── */
+.panelHeaders {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex-shrink: 0;
+}
+
+.panelHeaderMy {
+  background: var(--gray80);
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.panelHeaderFs {
+  background: #6A992D;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.panelHeaderLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.panelHeaderSub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Panel: portraits ───────────────────────────── */
+.portraits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.portraitCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 12px 16px;
+  text-align: center;
+}
+
+.portraitCellFs {
+  border-left: 1px solid #e5e5e5;
+  background: #fafafa;
+}
+
+.portraitImg {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.portraitIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.portraitName {
+  font-size: 13px;
+  font-weight: 700;
+  color: #202121;
+}
+
+.portraitMeta {
+  font-size: 11px;
+  color: #999;
+  margin-top: 3px;
+}
+
+.notFound {
+  font-size: 12px;
+  color: #ccc;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+/* ── Panel: section divider ─────────────────────── */
+.sectionDivider {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #555;
+  background: #F0F1F1;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 20px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #444;
+  background: #F0F1F1;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  fill: #666;
+  transition: transform 0.2s;
+}
+
+.sectionHeaderCollapsed .chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Panel: field rows ──────────────────────────── */
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #ececec;
+  position: relative;
+}
+
+.fieldRowConflict {
+  background: #faf8ff;
+  min-height: 160px;
+}
+
+.fieldCell {
+  padding: 14px 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldCellFs {
+  border-left: 1px solid #ececec;
+  background: #f7f8f8;
+}
+
+
+.fieldLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sourceZero {
+  font-size: 10px;
+  color: #ddd;
+  font-weight: 400;
+}
+
+.sourceLink {
+  font-size: 10px;
+  color: #056F94;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.fieldValue {
+  font-size: 14px;
+  color: #202121;
+  line-height: 1.4;
+  transition: opacity 0.3s;
+}
+
+.fieldValueStaged {
+  opacity: 0.3;
+}
+
+.fieldValueUpdated {
+  color: #6A992D;
+  font-weight: 600;
+}
+
+.fieldEmpty {
+  color: #ddd;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  fill: #2396BF;
+}
+
+/* Sliding My Tree box */
+.slidingBox {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: white;
+  padding: 14px 16px;
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 4;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.slidingBoxLeft {
+  left: 0;
+}
+
+.slidingBoxRight {
+  left: 50%;
+}
+
+.slidingBoxLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.slidingBoxValue {
+  font-size: 14px;
+  color: #202121;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+/* Arrow button inside sliding box */
+.arrowBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.arrowCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #2396BF;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrowBtnLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: #2396BF;
+}
+
+.diffTag {
+  display: inline-block;
+  background: #7E57C2;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-top: 6px;
+  width: fit-content;
+}
+
+.stagedTag {
+  display: inline-block;
+  background: #6A992D;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-top: 6px;
+  width: fit-content;
+}
+
+/* ── Panel: family sections ─────────────────────── */
+.familyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.familyCol {
+  padding-bottom: 8px;
+}
+
+.familyColRight {
+  border-left: 1px solid #ececec;
+  background: #f7f8f8;
+}
+
+.familyEmpty {
+  padding: 12px 16px;
+  font-size: 12px;
+  color: #bbb;
+  font-style: italic;
+}
+
+.familyRole {
+  font-size: 10px;
+  color: #aaa;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 16px 2px;
+}
+
+.familyMember {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 2px 16px 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.dotBlue { background: #3366aa; border-radius: 2px; }
+.dotPink { background: #cc3366; border-radius: 50%; }
+
+.memberName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #202121;
+  line-height: 1.3;
+}
+
+.memberDates {
+  font-size: 11px;
+  color: #999;
+}
+
+/* ── Panel: footer ──────────────────────────────── */
+.panelFooter {
+  padding: 16px 20px;
+  border-top: 1px solid #e5e5e5;
+  flex-shrink: 0;
+  background: white;
+  margin-top: auto;
+}
+
+.saveBtn {
+  width: 100%;
+  padding: 12px 0;
+  background: #2396BF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.15s;
+  font-family: Verdana, Arial, sans-serif;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: #1b7fa3;
+}
+
+.saveBtn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.saveBtnDone {
+  background: #6A992D;
+  cursor: default;
+}
