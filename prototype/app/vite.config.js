@@ -17,8 +17,11 @@ export default defineConfig({
       include: /\.(jsx|js|tsx|ts)$/,
     }),
   ],
-  // GitHub Pages base path
-  base: '/test/prototype/app/',
+  base: '/test/',
+  build: {
+    outDir: '../../docs',
+    emptyOutDir: true,
+  },
   resolve: {
     alias: {
       // FamilySearch server-side path — mock with empty JSON responses
