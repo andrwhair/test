@@ -1,0 +1,15 @@
+# Build output — GitHub Actions handles this, never commit it
+prototype/app/dist/
+
+# Dependencies
+prototype/app/node_modules/
+node_modules/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor / tool state
+.claude/
+.windsurf/
+.agents/.DS_Store
