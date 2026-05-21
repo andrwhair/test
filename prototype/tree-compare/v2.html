@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tree Compare v2</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --gray80: #2d3748; }
+body { font-family: Verdana, Arial, sans-serif; background: #EAECEC; color: #202121; min-height: 100vh; overflow-x: auto; }
+.toggle { display: flex; align-items: center; gap: 4px; background: white; padding: 6px 10px; border-radius: 9999px; box-shadow: 0 2px 8px rgba(0,0,0,0.12); margin: 20px auto 40px; width: fit-content; position: relative; z-index: 10; }
+.toggle-btn { font-size: 12px; font-weight: 600; padding: 15px 24px; border-radius: 26px; cursor: pointer; border: none; display: flex; align-items: center; gap: 6px; transition: background 0.2s, color 0.2s; background: transparent; color: #888; font-family: Verdana, Arial, sans-serif; }
+.toggle-btn-my.active { background: var(--gray80); color: white; }
+.toggle-btn-fs.active { background: #6A992D; color: white; }
+.canvas { display: flex; flex-direction: column; align-items: center; padding: 0 20px 60px; min-width: 1200px; position: relative; transition: margin-right 0.3s ease; }
+.canvas.shifted { margin-right: 440px; }
+.generation { display: flex; justify-content: center; gap: 48px; position: relative; }
+.couple { display: flex; align-items: flex-start; gap: 16px; position: relative; }
+.spacer { height: 60px; width: 100%; position: relative; }
+.gen-label { font-size: 10px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; transform: translateY(-40px); margin-bottom: -10px; }
+.person-slot { position: relative; width: 158px; height: 175px; }
+.person-card { width: 130px; height: 170px; border-radius: 6px; display: flex; flex-direction: column; align-items: center; padding: 12px 8px 8px; position: absolute; top: 0; left: 0; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.10); }
+.card-dark { background: var(--gray80); }
+.card-light { background: white; }
+.card-top-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 6px 6px 0 0; }
+.bar-my { background: #2396BF; }
+.bar-fs { background: #6A992D; }
+.foreground { z-index: 2; opacity: 1; transform: translate(0,0); box-shadow: 0 3px 12px rgba(0,0,0,0.14); transition: transform 0.7s cubic-bezier(0.34,1.2,0.64,1), opacity 0.7s, box-shadow 0.7s; }
+.background { z-index: 1; opacity: 0.75; transform: translate(24px,-20px); box-shadow: 0 2px 10px rgba(0,0,0,0.08); border: 1px solid #ddd; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.7s, box-shadow 0.7s; }
+.card-dark.background { border-color: #2e4560; }
+.solo { z-index: 2; opacity: 1; transform: translate(0,0); transition: transform 0.7s cubic-bezier(0.34,1.2,0.64,1), opacity 0.7s, box-shadow 0.7s; }
+.ghost { z-index: 1; opacity: 0.35; transform: translate(0,0); }
+.ghost-my { border: 2px dashed #2396BF !important; background: rgba(26,43,60,0.12) !important; }
+.ghost-fs { border: 2px dashed #6A992D !important; background: rgba(106,153,45,0.06) !important; }
+.ghost-card { z-index: 1; transform: translate(0,0); display: flex; flex-direction: column; align-items: center; cursor: default; box-shadow: none !important; }
+.ghost-card-my { border: 2px dashed #2396BF; background: #64686A; }
+.ghost-card-fs { border: 2px dashed #6A992D; background: white; }
+.ghost-add-btn { margin-top: auto; background: none; border: 1px solid #aaa; border-radius: 10px; font-size: 9px; font-weight: 700; color: #888; padding: 2px 8px; cursor: pointer; font-family: Verdana,Arial,sans-serif; }
+.ghost-add-btn:hover { border-color: #555; color: #555; }
+.person-slot.selected .person-card.foreground,
+.person-slot.selected .person-card.solo { outline: 3px solid #2396BF; outline-offset: 0; box-shadow: 0 0 0 6px rgba(35,150,191,0.18), 0 3px 12px rgba(0,0,0,0.12); }
+.avatar { width: 52px; height: 52px; border-radius: 50%; margin-top: 8px; margin-bottom: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.avatar-my-male { background: #4a7fb5; }
+.avatar-my-female { background: #b5547a; }
+.avatar-fs-male { background: #d0e2f0; }
+.avatar-fs-female { background: #f0d0e0; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.card-name { font-size: 11px; font-weight: 600; text-align: center; line-height: 1.3; color: #202121; max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
+.card-name-dark { color: #fff; }
+.card-dates { font-size: 10px; color: #666; margin-top: 2px; text-align: center; }
+.card-dates-dark { color: #c0d4e4; }
+.card-pid { font-size: 9px; color: #999; margin-top: 2px; }
+.card-pid-dark { color: #4a6a88; }
+.conflict-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 10px; background: #7E57C2; font-size: 9px; font-weight: 500; color: white; margin-top: 4px; white-space: nowrap; }
+.confidence-num { font-weight: 700; font-size: 9px; opacity: 0.85; }
+.tree-svg { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; }
+.legend { display: flex; justify-content: center; gap: 24px; padding: 12px 20px; background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); transition: margin-right 0.3s ease; width: fit-content; margin: 0 auto 40px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #555; }
+.legend-dot { width: 12px; height: 4px; border-radius: 2px; }
+.legend-dot-my { background: #2396BF; }
+.legend-dot-fs { background: #6A992D; }
+.sheet { position: fixed; top: 0; right: -440px; width: 440px; height: 100vh; background: white; box-shadow: -4px 0 24px rgba(0,0,0,0.14); z-index: 201; transition: right 0.3s ease; display: flex; flex-direction: column; overflow-y: auto; }
+.sheet.open { right: 0; }
+.sheet-top-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid #e5e5e5; flex-shrink: 0; position: sticky; top: 0; background: white; z-index: 10; }
+.sheet-title { font-size: 15px; font-weight: 700; color: #202121; }
+.sheet-close { background: none; border: none; font-size: 26px; cursor: pointer; color: #888; padding: 0 4px; line-height: 1; }
+.panel-headers { display: grid; grid-template-columns: 1fr 1fr; flex-shrink: 0; }
+.panel-header-my { background: var(--gray80); padding: 10px 16px; display: flex; flex-direction: column; gap: 1px; }
+.panel-header-fs { background: #6A992D; padding: 10px 16px; display: flex; flex-direction: column; gap: 1px; }
+.panel-header-label { font-size: 12px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
+.panel-header-sub { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px; }
+.portraits { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #e5e5e5; }
+.portrait-cell { display: flex; flex-direction: column; align-items: center; padding: 20px 12px 16px; text-align: center; }
+.portrait-cell-fs { border-left: 1px solid #e5e5e5; background: #fafafa; }
+.portrait-img { width: 56px; height: 56px; border-radius: 4px; object-fit: cover; margin-bottom: 8px; }
+.portrait-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+.portrait-name { font-size: 13px; font-weight: 700; color: #202121; }
+.portrait-meta { font-size: 11px; color: #999; margin-top: 3px; }
+.not-found { font-size: 12px; color: #ccc; font-style: italic; padding: 20px 0; }
+.section-divider { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #555; background: #F0F1F1; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; padding: 10px 20px; }
+.section-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #444; background: #F0F1F1; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; cursor: pointer; user-select: none; }
+.section-header .chevron { width: 16px; height: 16px; fill: #666; transition: transform 0.2s; }
+.section-header.collapsed .chevron { transform: rotate(180deg); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #ececec; position: relative; }
+.field-row-conflict { background: #faf8ff; min-height: 160px; }
+.field-cell { padding: 14px 16px; position: relative; display: flex; flex-direction: column; gap: 4px; }
+.field-cell-fs { border-left: 1px solid #ececec; background: #f7f8f8; }
+.field-label { font-size: 10px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
+.source-zero { font-size: 10px; color: #ddd; font-weight: 400; }
+.source-link { font-size: 10px; color: #056F94; font-weight: 600; background: none; border: none; cursor: pointer; padding: 0; font-family: inherit; }
+.field-value { font-size: 14px; color: #202121; line-height: 1.4; transition: opacity 0.3s; }
+.field-value-staged { opacity: 0.3; }
+.field-empty { color: #ddd; }
+.sliding-box { position: absolute; top: 0; width: 50%; height: 100%; background: white; padding: 14px 16px; transition: left 0.4s cubic-bezier(0.4,0,0.2,1); z-index: 4; pointer-events: none; display: flex; flex-direction: column; box-sizing: border-box; }
+.sliding-box-left { left: 0; }
+.sliding-box-right { left: 50%; }
+.sliding-box-label { font-size: 10px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+.sliding-box-value { font-size: 14px; color: #202121; line-height: 1.4; margin-bottom: 8px; }
+.arrow-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; padding: 0; margin-top: auto; align-self: flex-start; pointer-events: all; font-family: inherit; }
+.arrow-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #2396BF; background: white; display: flex; align-items: center; justify-content: center; }
+.arrow-circle svg { width: 16px; height: 16px; fill: #2396BF; transition: transform 0.3s; }
+.arrow-btn-label { font-size: 10px; font-weight: 700; color: #2396BF; }
+.diff-tag { display: inline-block; background: #7E57C2; color: white; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 10px; margin-top: 6px; width: fit-content; }
+.staged-tag { display: inline-block; background: #6A992D; color: white; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 10px; margin-top: 6px; width: fit-content; }
+.family-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.family-col { padding-bottom: 8px; }
+.family-col-right { border-left: 1px solid #ececec; background: #f7f8f8; }
+.family-empty { padding: 12px 16px; font-size: 12px; color: #bbb; font-style: italic; }
+.family-role { font-size: 10px; color: #aaa; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 16px 2px; }
+.family-member { display: flex; align-items: flex-start; gap: 8px; padding: 2px 16px 8px; }
+.dot { width: 10px; height: 10px; flex-shrink: 0; margin-top: 4px; }
+.dot-blue { background: #3366aa; border-radius: 2px; }
+.dot-pink { background: #cc3366; border-radius: 50%; }
+.member-name { font-size: 13px; font-weight: 600; color: #202121; line-height: 1.3; }
+.member-dates { font-size: 11px; color: #999; }
+.panel-footer { padding: 16px 20px; border-top: 1px solid #e5e5e5; flex-shrink: 0; background: white; }
+.save-btn { width: 100%; padding: 12px 0; background: #2396BF; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.3s; font-family: Verdana,Arial,sans-serif; text-transform: uppercase; }
+.save-btn:hover:not(:disabled) { background: #1b7fa3; }
+.save-btn:disabled { background: #6A992D; cursor: default; }
+@keyframes ghostIn { 0% { opacity:0; transform:translate(12px,-12px) scale(0.85); } 60% { opacity:0.4; transform:translate(-2px,-2px) scale(1.02); } 100% { opacity:0.35; transform:translate(0,0) scale(1); } }
+</style>
+</head>
+<body>
+<div class="toggle">
+  <button class="toggle-btn toggle-btn-my active" id="btnMy" onclick="setPrimary('my')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M20 4v4h-3V4h3Zm0 12v4h-3v-4h3ZM4 14v-4h3v4H4ZM15 3v2h-1a3 3 0 0 0-3 3v3H9V9a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-2h2v3a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1v2a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1Z"/></svg>
+    My Tree
+  </button>
+  <button class="toggle-btn toggle-btn-fs" id="btnFs" onclick="setPrimary('fs')">FamilySearch</button>
+</div>
+<div class="canvas" id="canvas"></div>
+<div class="legend" id="legend">
+  <div class="legend-item"><div class="legend-dot legend-dot-my"></div><span>My Tree</span></div>
+  <div class="legend-item"><div class="legend-dot legend-dot-fs"></div><span>FamilySearch</span></div>
+</div>
+<div class="sheet" id="sheet">
+  <div class="sheet-top-bar">
+    <span class="sheet-title">Tree Compare</span>
+    <button class="sheet-close" onclick="closeSheet()">×</button>
+  </div>
+  <div id="sheet-body"></div>
+</div>
+<script>
+const MALE_PNG = 'data:image/png;base64,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';
+const FEMALE_PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAlaSURBVHgBzZtdcBtXFcfPXcm27Di2nI86DcGoTfhQZmzFaafp4DZRyzhDISWhHVrSPsQi8FjcvpRhYCb2A/DAQxN4ZFrbD7RQGHCGpMkkfCihYcYZsCy7UzNNS5TvziSx5Y9Y1tdezllJtiRL2ntWkpvfjKz16q6053/PPffcjxVQZWQg4AKbzYuHHny5QAgXSOk0jnMJ4Wdh/CyEryAej0FNzZhwu0NQRQRUATkx4UUj9uPhAVhpKA8SQsoxfB8S7e1+qDAVE0BevuyE+flevNkeKNfo4oTw1Y+e4a+UZ5QtQJbhr+K/TlgdqLkMgt0+VK4QZQmArk6G98HqGZ5PCF/9oqNjECxiSQA5OemCeHwAD71wfxDCZvGUFW9gC1BOrUfmFmDin6Nw99M7xv9btrXBugc3wOe+2AYVgHqQfuHxHOVcxBJAjo+/gW+vAhMy3P/uWTj3hzPGcT4kwrbOr4D3he5U+flUGTrHRog+7C36lYurFpQffDAAut4DTMjw028NFzTcDBJmz3e6wfviXmAyiHHBp1JQSQB0+wC61w5gMHXrDvz2Z2/Cx4H/Qrl8/XsH4JnD+3kXYf6AntBpWsysgJWaH3nvAvz5V29bqvViWBJBwRNKCoA1fyQd8JQ59dZxOP3mMFQDiyIcRRFeK/ZhUQHS0Z4VUatpfAZLIkj5WrHeoaAA6X4+AIyubjWMz2BBhDDmCZ2F8gStYPF4/B9wnxpPUK/CDK7OdOK2ghUCYF/fA4zBDN1IJYzftbYVmuy1yuWph8nkC4p4ZTC4IofJEcBwfYAjoEimqyuHjTX14Gt1w+NrN8Hz67cqi0C/7f/9GWAhxBFj8JZFrgckEoeAUfsjpy4YN2IVd0MLPL8BjbaljKZ3EsHdsE7p+nOYZDG9wAmzszlesCSAUfupsbwyF997H6xCLr/X2QZ1wpZznkTY6/w8vLTxS6ZCkPEj3HsQojfbC5Y9IB73AqP26cet1j4ZTy5fCmoaJMSWusaS5SbOB4BJjhdkNwHltk9Q8KtvbAAuu5s3mxqfzVpbrel9MJsBecGhzKEhgDGHx5zG+tOxd1hjyTrNBvvWuaBzzUbgENWTpmVG+E3RlbY57QFSHgImVPuquT5FdgpuWx3NwCUmzQWw0AwImrBNCyAEa6RHhqu6Hbm87wG30aatMJuImZa5cekqvxmkZq1BS0d/lgCU+akEQDKe6/L5RBU8wGJAdtGahYbRn2U8tbdz75onINTmyzWeA9sDCFyw0Ti1TyqfxtpXYYNFl88n03TMvs9Kj0RN345/PKrlx3FCU9XVNlZIgG7MBagnoO87E74GkwtTBctN4UQre3JV17EJ0FqdIpR6qtCNGd72+haoBJQZZsTcUls8Kbo0amnq7QtaeqFSCU6gqZQHZFNqoHQRp+HYCOGkbtClWl61nd1ORGC1oSDIHh2i7RqntOoszI3YPFQDs5yAAjS3N2AJ0LJpg1K52rwRXiWgfGDs3u2SZch4Soo42FULUvt/++dqkx9zCtkbhxNTIbiOXqUyLriEgyPOihJ5QEilIGV/qrn/bDKmlMGpQt+lYjyxXtFL04Q0Y1uKAhPnR4FDYN76TFE+s4oe1b57Jzz2jSdAGSnDmrEnRwFucKH2WgkvuB67Z3iUGeuw5p/74UFgcoUEuKJSkhYqOZDLnsXMrRxIwLPTakFtz4vd7HtExjRjE5ICVtb5PonMQOCe9aZwdvqaUu0T6/nGGwuoGiSTfpWyL//0sOFmXM7P3LCUGJ2fuQmfLM4olaUxgJV7Q9vHNNHZGQKFnqD9yZ3w+pDyvoMcyBguAZM+PxuKT2z3l3KMbM9MiSmNcSkV3raTv2vjenQeIom4enkMfBwee6aLPxxON/2UAJqmvLbV/qTpnoOCRLArUxEhKXX434JSz7yE6hxFDkIM0ZshQHoHZkjlul3Yz3LVrhUpnc1EIOPnYlG4w4wZmb1FymDXn9l1qmWdHFK5loznrs8319SBw57KujMi6FIufZ7QdePcbGwRz+s4E6wrfzc1yW/3vgQshFgKZssC6DptIFDyvT0v7GXFAlrcaLDXQa1tWYRwdAGm8TW1iIlOLGKck2lRMh5jxnO9B+GVX/8IWFDil9XzLf0SRkTaZ3cMFPn+L15RFmGro8l4b8zyhNS9yILlW2x1YMbLPzlsVIQFhtI9n0Gu1AwvoKZA6ps1B5odzp7KIk9Yg0JoJWrZ7XBCrVb8c8r3WTl/Bqp9XR/MPpXzK2kvYHX2tF3lyB9/iTfUVTAZ2d20eWn5O0MdNgVnXX1RIagJPNpQfEp9F/6WJbDtZ9e+capQOTk+TltkvMCE5gwunnofRk5eMGZpH65vhmdbXKbXUfSPYyBM4PiBjilAUvOYjIbh3wVSaRLcQuITEh7PQ/mnC0+IJJM+XDRgbZKKzS3iTEgc2rDm3I92wcSFUeU83oY1brOhJ9hyb6fLsQY2a00QDE/BlBaBxFqbtQUQata6/lShDwoKQG4ig8F+dJk3oAhk8NRHt+DauQ/h09HLeLyc7jY7aqGjVW2Xhxm3Z2OwXq83Xo2OFtjU9TDEbs4BcDyANlHnuX6G0hslg8GjtKMi+9z8rWmYfOdf8PHJ/6RqvQibmxpga0vpzQ1mXAnfg6szhdPixgdbwPODr8GmRx4yjouS2kHeV+xj862yweAgbSggY4O/+Rt8+Dv1+fdyRChlfD7b9j2CYjxdSIgh0dHRU+papS0O4b/8PfDX3oEd8zengYvDboP21hZ8V0tuwtE4XEXjZxZ5E6tkvPvgV2H7d9M9BI32PJ7yN0tnGHB8c1CAYG+kyNDaWA8PNDowGbKDXcv92cWEDncjUbi7EGUbnk+bdzvsev1bQ2uefqJHpTzrgYkBx74+wdxLVIg6+/K6QTRRudljQgo45oucUH6og7WCcTzxkX9/zZdnhBSPo3QOsEhSl0uviiFFWGryx77IyT7OZZYemhpwHHAJSGKyJF1wf+CXYPf5FodDwKSsx+YGHM/2pJrEZySEUet6P9Y6a1t/NmU/OEnegCP6nlSAXCUhyHCBI1eH/agvPMybPsqjYo/OpoRIeqvrETIkAaeyKmB4hqo8PI29hRe/ukcI6QEJrE1YK0GjhTiO3zPsWzzhhwpTFQGyMTxDS+7AId4O7D08oMn04/PClVtSph6f10UIo/kVkDrO2tb6rQQ2Dv8HhDkGyiyhF6gAAAAASUVORK5CYII=';
+
+const myTree = {
+  'gg-pp-hus': { name: 'James William Hair', dates: '1840-1910', pid: 'KWCL-111', gender: 'male' },
+  'gg-pp-wife': { name: 'Margaret Ann Scott', dates: '1845-1918', pid: 'KWCL-112', gender: 'female' },
+  'gg-pm-hus': { name: 'Thomas Edward Lewis', dates: '1842-1905', pid: 'KWCL-113', gender: 'male' },
+  'gg-pm-wife': { name: 'Sarah Jane Morgan', dates: '1848-1920', pid: 'KWCL-114', gender: 'female' },
+  'gg-mp-hus': { name: 'Friedrich August Weller', dates: '1838-1902', pid: 'KWCL-115', gender: 'male' },
+  'gg-mp-wife': { name: 'Anna Marie Braun', dates: '1843-1915', pid: 'KWCL-116', gender: 'female' },
+  'gg-mm-hus': { name: 'Heinrich Karl Martin', dates: '1841-1908', pid: 'KWCL-117', gender: 'male' },
+  'gg-mm-wife': { name: 'Elisabeth Hoffman', dates: '1846-1922', pid: 'KWCL-118', gender: 'female' },
+  'gp-pat-hus': { name: 'John William Hair', dates: '1891-1965', pid: 'KWCL-QC6', gender: 'male' },
+  'gp-pat-wife': { name: 'Doris Jane Lewis', dates: '1896-1988', pid: 'KWCL-QCX', gender: 'female' },
+  'gp-mat-hus': { name: 'Gustav August Weller', dates: '1890-1971', pid: 'KWCQ-R2D', gender: 'male' },
+  'gp-mat-wife': { name: 'Gertrud Marie Martin', dates: '1894-1978', pid: 'KW2S-P6G', gender: 'female' },
+  'par-hus': { name: 'Dale William Hair', dates: '1932-2019', pid: 'LNWC-D92', gender: 'male' },
+  'par-wife': { name: 'Mary Magdal. Weller', dates: '1933-2022', pid: 'LNHY-RN8', gender: 'female' },
+  'focus': { name: 'Andrew Dale Hair', dates: '1974-Living', pid: 'KW4Y-36B', gender: 'male' },
+  'focus-spouse': { name: 'Wendy Michelle Sheley', dates: '1972-Living', pid: 'LNHY-R4L', gender: 'female' },
+};
+const fsTree = {
+  'gg-pp-hus': { name: 'James William Hair', dates: '1840-1910', pid: 'USR-001', gender: 'male' },
+  'gg-pp-wife': { name: 'Margaret Ann Scott', dates: '1845-1919', pid: 'USR-002', gender: 'female' },
+  'gg-pm-hus': { name: 'Thomas E. Lewis', dates: '1842-1906', pid: 'USR-003', gender: 'male' },
+  'gg-pm-wife': { name: 'Sarah J. Morgan', dates: '1847-1920', pid: 'USR-004', gender: 'female' },
+  'gg-mp-hus': { name: 'Friedrich August Weller', dates: '1838-1902', pid: 'USR-013', gender: 'male' },
+  'gg-mp-wife': { name: 'Anna Marie Braun', dates: '1843-1916', pid: 'USR-014', gender: 'female' },
+  'gp-pat-hus': { name: 'John W. Hair', dates: '1890-1965', pid: 'USR-005', gender: 'male' },
+  'gp-pat-wife': { name: 'Doris J. Lewis', dates: '1896-1987', pid: 'USR-006', gender: 'female' },
+  'gp-mat-hus': { name: 'Gustav August Weller', dates: '1890-1971', pid: 'USR-007', gender: 'male' },
+  'gp-mat-wife': { name: 'Gertrude Marie Martin', dates: '1894-1978', pid: 'USR-008', gender: 'female' },
+  'par-hus': { name: 'Dale William Hair', dates: '1932-2019', pid: 'USR-009', gender: 'male' },
+  'par-wife': { name: 'Mary Magdal. Weller', dates: '1933-2022', pid: 'USR-010', gender: 'female' },
+  'focus': { name: 'Andrew Dale Hair', dates: '1974-Living', pid: 'USR-011', gender: 'male' },
+  'focus-spouse': { name: 'Wendy Michelle Sheley', dates: '1972-Living', pid: 'USR-012', gender: 'female' },
+  'focus-sibling': { name: 'Robert Dean Hair', dates: '1970-Living', pid: 'USR-015', gender: 'male' },
+};
+const matches = {
+  'gg-pp-hus':'gg-pp-hus','gg-pp-wife':'gg-pp-wife','gg-pm-hus':'gg-pm-hus','gg-pm-wife':'gg-pm-wife',
+  'gg-mp-hus':'gg-mp-hus','gg-mp-wife':'gg-mp-wife','gp-pat-hus':'gp-pat-hus','gp-pat-wife':'gp-pat-wife',
+  'gp-mat-hus':'gp-mat-hus','gp-mat-wife':'gp-mat-wife','par-hus':'par-hus','par-wife':'par-wife',
+  'focus':'focus','focus-spouse':'focus-spouse'
+};
+const treeStructure = [
+  { label:'Great-Grandparents', couples:[{myKey:'gg-pp-hus',myWife:'gg-pp-wife'},{myKey:'gg-pm-hus',myWife:'gg-pm-wife'},{myKey:'gg-mp-hus',myWife:'gg-mp-wife'},{myKey:'gg-mm-hus',myWife:'gg-mm-wife'}] },
+  { label:'Grandparents', couples:[{myKey:'gp-pat-hus',myWife:'gp-pat-wife'},{myKey:'gp-mat-hus',myWife:'gp-mat-wife'}] },
+  { label:'Parents', couples:[{myKey:'par-hus',myWife:'par-wife'}] },
+  { label:'Focus Person', couples:[{myKey:'focus',myWife:'focus-spouse',extraFs:['focus-sibling']}] },
+];
+const personParents = {
+  'gp-pat-hus':{gen:0,couple:0},'gp-pat-wife':{gen:0,couple:1},'gp-mat-hus':{gen:0,couple:2},'gp-mat-wife':{gen:0,couple:3},
+  'par-hus':{gen:1,couple:0},'par-wife':{gen:1,couple:1},'focus':{gen:2,couple:0},'focus-sibling':{gen:2,couple:0}
+};
+const coupleRelMap = {
+  'focus':{spouse:'focus-spouse'},'focus-spouse':{spouse:'focus'},
+  'par-hus':{spouse:'par-wife'},'par-wife':{spouse:'par-hus'},
+  'gp-pat-hus':{spouse:'gp-pat-wife',children:['par-hus']},'gp-pat-wife':{spouse:'gp-pat-hus',children:['par-hus']},
+  'gp-mat-hus':{spouse:'gp-mat-wife',children:['par-wife']},'gp-mat-wife':{spouse:'gp-mat-hus',children:['par-wife']},
+  'gg-pp-hus':{spouse:'gg-pp-wife',children:['gp-pat-hus']},'gg-pp-wife':{spouse:'gg-pp-hus',children:['gp-pat-hus']},
+  'gg-pm-hus':{spouse:'gg-pm-wife',children:['gp-pat-wife']},'gg-pm-wife':{spouse:'gg-pm-hus',children:['gp-pat-wife']},
+  'gg-mp-hus':{spouse:'gg-mp-wife',children:['gp-mat-hus']},'gg-mp-wife':{spouse:'gg-mp-hus',children:['gp-mat-hus']},
+  'gg-mm-hus':{spouse:'gg-mm-wife',children:['gp-mat-wife']},'gg-mm-wife':{spouse:'gg-mm-hus',children:['gp-mat-wife']},
+};
+const parentMap = {
+  'focus':{father:'par-hus',mother:'par-wife'},'par-hus':{father:'gp-pat-hus',mother:'gp-pat-wife'},
+  'par-wife':{father:'gp-mat-hus',mother:'gp-mat-wife'},'gp-pat-hus':{father:'gg-pp-hus',mother:'gg-pp-wife'},
+  'gp-pat-wife':{father:'gg-pm-hus',mother:'gg-pm-wife'},'gp-mat-hus':{father:'gg-mp-hus',mother:'gg-mp-wife'},
+  'gp-mat-wife':{father:'gg-mm-hus',mother:'gg-mm-wife'},
+};
+
+let primaryTree = 'my';
+let selectedKey = null;
+let sheetOpen = false;
+
+function getConflicts(mk, fk) {
+  const a = myTree[mk], b = fsTree[fk];
+  if (!a||!b) return [];
+  const c = [];
+  if (a.name!==b.name) c.push({field:'Name',my:a.name,fs:b.name});
+  if (a.dates!==b.dates) c.push({field:'Dates',my:a.dates,fs:b.dates});
+  return c;
+}
+function calcConfidence(mk, fk) {
+  const c = getConflicts(mk,fk);
+  if (c.length===0) return 100;
+  return c.length===1 ? 82 : 61;
+}
+function parseDates(s) {
+  if (!s) return {birth:'',death:''};
+  const p = s.split('-');
+  return {birth:p[0]||'',death:p[1]||''};
+}
+function getSourceCount(key, field) {
+  if (!key) return 0;
+  let h=0; const s=key+field;
+  for (let i=0;i<s.length;i++) h=h*31+s.charCodeAt(i);
+  h=Math.abs(h);
+  return h%10<4?0:(h%7)+1;
+}
+
+function makeAvatarEl(person, source) {
+  const div = document.createElement('div');
+  const isMale = person.gender==='male';
+  if (source==='my') {
+    div.className = 'avatar ' + (isMale?'avatar-my-male':'avatar-my-female');
+    div.innerHTML = '<svg viewBox="0 0 24 24" style="width:30px;height:30px;fill:white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+  } else {
+    div.className = 'avatar ' + (isMale?'avatar-fs-male':'avatar-fs-female');
+    const img = document.createElement('img');
+    img.src = isMale ? MALE_PNG : FEMALE_PNG;
+    img.alt = person.gender;
+    div.appendChild(img);
+  }
+  return div;
+}
+
+function makePersonCard(person, source, stateClass, hasConflict, confidence) {
+  const card = document.createElement('div');
+  const isDark = source==='my';
+  card.className = 'person-card ' + (isDark?'card-dark':'card-light') + ' ' + stateClass;
+  const bar = document.createElement('div');
+  bar.className = 'card-top-bar ' + (source==='my'?'bar-my':'bar-fs');
+  card.appendChild(bar);
+  card.appendChild(makeAvatarEl(person, source));
+  const nameEl = document.createElement('div');
+  nameEl.className = 'card-name' + (isDark?' card-name-dark':'');
+  nameEl.textContent = person.name;
+  card.appendChild(nameEl);
+  const datesEl = document.createElement('div');
+  datesEl.className = 'card-dates' + (isDark?' card-dates-dark':'');
+  datesEl.textContent = person.dates;
+  card.appendChild(datesEl);
+  const pidEl = document.createElement('div');
+  pidEl.className = 'card-pid' + (isDark?' card-pid-dark':'');
+  pidEl.textContent = person.pid;
+  card.appendChild(pidEl);
+  if (hasConflict) {
+    const badge = document.createElement('div');
+    badge.className = 'conflict-badge';
+    badge.innerHTML = 'Match ' + (confidence!=null?'<span class="confidence-num">'+confidence+'%</span>':'');
+    card.appendChild(badge);
+  }
+  return card;
+}
+
+function makeGhostCard(person, source) {
+  const card = document.createElement('div');
+  const isMy = source==='my';
+  card.className = 'person-card ghost-card ' + (isMy?'ghost-card-my':'ghost-card-fs');
+  const bar = document.createElement('div');
+  bar.className = 'card-top-bar ' + (isMy?'bar-my':'bar-fs');
+  card.appendChild(bar);
+  const av = makeAvatarEl(person, source);
+  av.style.opacity='0.4';
+  card.appendChild(av);
+  const nameEl = document.createElement('div');
+  nameEl.className = 'card-name' + (isMy?' card-name-dark':'');
+  nameEl.style.opacity='0.4';
+  nameEl.textContent = person.name;
+  card.appendChild(nameEl);
+  const datesEl = document.createElement('div');
+  datesEl.className = 'card-dates' + (isMy?' card-dates-dark':'');
+  datesEl.style.opacity='0.4';
+  datesEl.textContent = person.dates;
+  card.appendChild(datesEl);
+  const btn = document.createElement('button');
+  btn.className = 'ghost-add-btn';
+  btn.textContent = '+ Add';
+  card.appendChild(btn);
+  return card;
+}
+
+function makePersonSlot(myKey, fsKey, mode) {
+  const slot = document.createElement('div');
+  slot.className = 'person-slot';
+  const dataKey = myKey||fsKey;
+  if (dataKey) slot.setAttribute('data-person-key', dataKey);
+
+  const personMy = myKey ? myTree[myKey] : null;
+  const personFs = fsKey ? fsTree[fsKey] : null;
+  const hasConflict = myKey&&fsKey&&personMy&&personFs&&getConflicts(myKey,fsKey).length>0;
+  const confidence = hasConflict ? calcConfidence(myKey,fsKey) : null;
+  const isSelected = selectedKey===dataKey;
+  if (isSelected) slot.classList.add('selected');
+
+  const onClick = () => selectPerson(myKey, fsKey);
+
+  if (mode==='fs-only') {
+    const card = makePersonCard(personFs,'fs',primaryTree==='fs'?'solo':'background',false,null);
+    card.addEventListener('click', onClick);
+    slot.appendChild(card);
+    if (primaryTree==='my') slot.appendChild(makeGhostCard(personFs,'my'));
+    return slot;
+  }
+  if (personMy && personFs) {
+    const myState = primaryTree==='my'?'foreground':'background';
+    const fsState = primaryTree==='fs'?'foreground':'background';
+    const myCard = makePersonCard(personMy,'my',myState,hasConflict,confidence);
+    const fsCard = makePersonCard(personFs,'fs',fsState,hasConflict,confidence);
+    myCard.addEventListener('click', onClick);
+    fsCard.addEventListener('click', onClick);
+    slot.appendChild(myCard);
+    slot.appendChild(fsCard);
+    return slot;
+  }
+  if (personMy && !personFs) {
+    const card = makePersonCard(personMy,'my',primaryTree==='my'?'solo':'background',false,null);
+    card.addEventListener('click', onClick);
+    slot.appendChild(card);
+    if (primaryTree==='fs') slot.appendChild(makeGhostCard(personMy,'fs'));
+    return slot;
+  }
+  if (!personMy && personFs) {
+    const card = makePersonCard(personFs,'fs',primaryTree==='fs'?'solo':'background',false,null);
+    card.addEventListener('click', onClick);
+    slot.appendChild(card);
+    if (primaryTree==='my') slot.appendChild(makeGhostCard(personFs,'my'));
+    return slot;
+  }
+  return slot;
+}
+
+function renderTree() {
+  const canvas = document.getElementById('canvas');
+  canvas.innerHTML = '';
+  treeStructure.forEach((gen, gi) => {
+    const label = document.createElement('div');
+    label.className = 'gen-label';
+    label.textContent = gen.label;
+    canvas.appendChild(label);
+    const genRow = document.createElement('div');
+    genRow.className = 'generation';
+    gen.couples.forEach((couple, ci) => {
+      const coupleDiv = document.createElement('div');
+      coupleDiv.className = 'couple';
+      coupleDiv.setAttribute('data-couple-id', 'couple-'+gi+'-'+ci);
+      coupleDiv.appendChild(makePersonSlot(couple.myKey, matches[couple.myKey]||null));
+      coupleDiv.appendChild(makePersonSlot(couple.myWife, matches[couple.myWife]||null));
+      if (couple.extraFs) {
+        couple.extraFs.forEach(k => coupleDiv.appendChild(makePersonSlot(null, k, 'fs-only')));
+      }
+      genRow.appendChild(coupleDiv);
+    });
+    canvas.appendChild(genRow);
+    if (gi < treeStructure.length-1) {
+      const sp = document.createElement('div');
+      sp.className = 'spacer';
+      canvas.appendChild(sp);
+    }
+  });
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.className = 'tree-svg';
+  canvas.appendChild(svg);
+  requestAnimationFrame(() => drawConnectors(svg, canvas));
+}
+
+function drawConnectors(svg, container) {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  svg.setAttribute('width', container.scrollWidth);
+  svg.setAttribute('height', container.scrollHeight);
+
+  function getOffset(el) {
+    let x=0,y=0,cur=el;
+    while(cur&&cur!==container){x+=cur.offsetLeft;y+=cur.offsetTop;cur=cur.offsetParent;}
+    return {x,y};
+  }
+  function rel(el) {
+    const pos=getOffset(el);
+    return {bottom:pos.y+el.offsetHeight,top:pos.y,cx:pos.x+el.offsetWidth/2};
+  }
+  function relCard(slotEl) {
+    const card = slotEl.querySelector('.foreground')||slotEl.querySelector('.solo')||slotEl.querySelector('.person-card');
+    return card?rel(card):rel(slotEl);
+  }
+  function line(x1,y1,x2,y2) {
+    const el=document.createElementNS('http://www.w3.org/2000/svg','line');
+    el.setAttribute('x1',x1);el.setAttribute('y1',y1);el.setAttribute('x2',x2);el.setAttribute('y2',y2);
+    el.setAttribute('stroke','#bbb');el.setAttribute('stroke-width','1.5');
+    svg.appendChild(el);
+  }
+  const coupleInfo={};
+  container.querySelectorAll('[data-couple-id]').forEach(coupleEl => {
+    const id=coupleEl.getAttribute('data-couple-id');
+    const slots=coupleEl.querySelectorAll('.person-slot');
+    if(slots.length<2) return;
+    const h=relCard(slots[0]),w=relCard(slots[1]);
+    const barY=Math.max(h.bottom,w.bottom)+8;
+    const midX=(h.cx+w.cx)/2;
+    line(h.cx,h.bottom,h.cx,barY);
+    line(w.cx,w.bottom,w.cx,barY);
+    line(h.cx,barY,w.cx,barY);
+    coupleInfo[id]={barY,midX};
+  });
+  Object.entries(personParents).forEach(([personKey,ref]) => {
+    const personEl=container.querySelector('[data-person-key="'+personKey+'"]');
+    if(!personEl) return;
+    const person=relCard(personEl);
+    const parent=coupleInfo['couple-'+ref.gen+'-'+ref.couple];
+    if(!parent) return;
+    const railY=(parent.barY+person.top)/2;
+    line(parent.midX,parent.barY,parent.midX,railY);
+    line(parent.midX,railY,person.cx,railY);
+    line(person.cx,railY,person.cx,person.top);
+  });
+}
+
+function setPrimary(tree) {
+  primaryTree = tree;
+  document.getElementById('btnMy').classList.toggle('active', tree==='my');
+  document.getElementById('btnFs').classList.toggle('active', tree==='fs');
+  renderTree();
+  if (sheetOpen) renderSheetContent();
+}
+
+function selectPerson(myKey, fsKey) {
+  const key = myKey||fsKey;
+  if (selectedKey===key && sheetOpen) { closeSheet(); return; }
+  selectedKey = key;
+  sheetOpen = true;
+  document.getElementById('canvas').classList.add('shifted');
+  document.getElementById('sheet').classList.add('open');
+  renderTree();
+  renderSheetContent(myKey, fsKey);
+}
+
+function closeSheet() {
+  sheetOpen = false;
+  selectedKey = null;
+  document.getElementById('canvas').classList.remove('shifted');
+  document.getElementById('sheet').classList.remove('open');
+  renderTree();
+}
+
+function sourceBadgeHTML(count) {
+  if (!count) return '<span class="source-zero">0 sources</span>';
+  return '<button class="source-link">'+count+' source'+(count>1?'s':'')+'</button>';
+}
+
+function renderSheetContent(myKey, fsKey) {
+  if (!myKey && !fsKey) {
+    // re-render with stored keys — find from selected
+    const slot = document.querySelector('[data-person-key="'+selectedKey+'"]');
+    if (!slot) return;
+    myKey = Object.keys(myTree).find(k=>k===selectedKey)||null;
+    fsKey = Object.keys(fsTree).find(k=>k===selectedKey)||null;
+  }
+  const personMy = myKey?myTree[myKey]:null;
+  const personFs = fsKey?fsTree[fsKey]:null;
+  const personKey = myKey||fsKey;
+  const rel = coupleRelMap[personKey]||{};
+  const pMap = parentMap[personKey];
+  const dA = parseDates(personMy?.dates);
+  const dB = parseDates(personFs?.dates);
+
+  // Store for re-renders
+  window._sheetMyKey = myKey;
+  window._sheetFsKey = fsKey;
+
+  let html = '';
+  html += '<div class="panel-headers">';
+  html += '<div class="panel-header-my"><span class="panel-header-label">My Tree</span><span class="panel-header-sub">GEDCOM</span></div>';
+  html += '<div class="panel-header-fs"><span class="panel-header-label">FamilySearch</span></div>';
+  html += '</div>';
+
+  html += '<div class="portraits">';
+  html += '<div class="portrait-cell">';
+  if (personMy) {
+    const bg = personMy.gender==='male'?'#4a7fb5':'#b5547a';
+    html += '<div class="portrait-icon" style="background:'+bg+'"><svg viewBox="0 0 24 24" style="width:34px;height:34px;fill:white"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>';
+    html += '<div class="portrait-name">'+personMy.name+'</div>';
+    html += '<div class="portrait-meta">'+dA.birth+'–'+dA.death+' · '+personMy.pid+'</div>';
+  } else html += '<div class="not-found">Not in My Tree</div>';
+  html += '</div>';
+  html += '<div class="portrait-cell portrait-cell-fs">';
+  if (personFs) {
+    html += '<img class="portrait-img" src="'+(personFs.gender==='male'?MALE_PNG:FEMALE_PNG)+'" alt="'+personFs.name+'">';
+    html += '<div class="portrait-name">'+personFs.name+'</div>';
+    html += '<div class="portrait-meta">'+dB.birth+'–'+dB.death+' · '+personFs.pid+'</div>';
+  } else html += '<div class="not-found">Not in FamilySearch</div>';
+  html += '</div>';
+  html += '</div>';
+
+  html += '<div class="section-divider">Vitals</div>';
+
+  const fields = [
+    {label:'Name', myVal:personMy?.name||'', fsVal:personFs?.name||''},
+    {label:'Sex', myVal:personMy?(personMy.gender==='male'?'Male':'Female'):'', fsVal:personFs?(personFs.gender==='male'?'Male':'Female'):''},
+    {label:'Birth', myVal:dA.birth, fsVal:dB.birth},
+    {label:'Death', myVal:dA.death==='Living'?'':dA.death, fsVal:dB.death==='Living'?'':dB.death},
+  ];
+
+  fields.forEach((f,idx) => {
+    const isDiff = f.myVal && f.fsVal && f.myVal!==f.fsVal;
+    const rowId = 'field-row-'+idx;
+    html += '<div class="field-row'+(isDiff?' field-row-conflict':'')+'" id="'+rowId+'">';
+    html += '<div class="field-cell">';
+    html += '<div class="field-label">'+f.label+' '+sourceBadgeHTML(getSourceCount(myKey,f.label))+'</div>';
+    html += '<div class="field-value'+(isDiff?' field-value-staged':'')+'" id="fv-my-'+idx+'">'+(f.myVal||'<span class="field-empty">—</span>')+'</div>';
+    html += '</div>';
+    html += '<div class="field-cell field-cell-fs">';
+    html += '<div class="field-label">'+f.label+' '+sourceBadgeHTML(getSourceCount(fsKey,f.label))+'</div>';
+    html += '<div class="field-value" id="fv-fs-'+idx+'">'+(f.fsVal||'<span class="field-empty">—</span>')+'</div>';
+    if (isDiff) html += '<div class="diff-tag" id="diff-tag-'+idx+'">Different</div>';
+    html += '</div>';
+    if (isDiff) {
+      html += '<div class="sliding-box sliding-box-left" id="sb-'+idx+'">';
+      html += '<div class="sliding-box-label">'+f.label+' '+sourceBadgeHTML(getSourceCount(myKey,f.label))+'</div>';
+      html += '<div class="sliding-box-value">'+f.myVal+'</div>';
+      html += '<div id="staged-tag-'+idx+'" style="display:none" class="staged-tag">Ready ✓</div>';
+      html += '<button class="arrow-btn" onclick="toggleField('+idx+',\''+f.myVal.replace(/'/g,"\'")+'\')">';
+      html += '<span class="arrow-circle"><svg viewBox="0 0 24 24" id="arrow-svg-'+idx+'"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></svg></span>';
+      html += '<span class="arrow-btn-label" id="arrow-lbl-'+idx+'">Add</span>';
+      html += '</button>';
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+
+  // Spouse and Children section
+  html += '<div class="section-header" onclick="toggleSection(this)">';
+  html += '<span>Spouse and Children</span>';
+  html += '<svg viewBox="0 0 24 24" class="chevron"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></div>';
+  html += '<div class="section-content">';
+  html += '<div class="family-grid">';
+  html += '<div class="family-col">';
+  if (personMy) { html += '<div class="family-role">Self</div>'+familyMemberHTML(personMy.name,dA.birth,personMy.gender); }
+  if (rel.spouse && myTree[rel.spouse]) {
+    const sp=myTree[rel.spouse]; const d=parseDates(sp.dates);
+    html += '<div class="family-role">Spouse</div>'+familyMemberHTML(sp.name,d.birth,sp.gender);
+  }
+  if (rel.children) rel.children.forEach(ck => {
+    if(myTree[ck]){const ch=myTree[ck];const d=parseDates(ch.dates);html+='<div class="family-role">Child</div>'+familyMemberHTML(ch.name,d.birth,ch.gender);}
+  });
+  if (!personMy&&!rel.spouse&&(!rel.children||!rel.children.length)) html+='<div class="family-empty">No information</div>';
+  html += '</div>';
+  html += '<div class="family-col family-col-right">';
+  if (personFs) { html += '<div class="family-role">Self</div>'+familyMemberHTML(personFs.name,dB.birth,personFs.gender); }
+  if (rel.spouse && fsTree[rel.spouse]) {
+    const sp=fsTree[rel.spouse]; const d=parseDates(sp.dates);
+    html += '<div class="family-role">Spouse</div>'+familyMemberHTML(sp.name,d.birth,sp.gender);
+  }
+  if (rel.children) rel.children.forEach(ck => {
+    if(fsTree[ck]){const ch=fsTree[ck];const d=parseDates(ch.dates);html+='<div class="family-role">Child</div>'+familyMemberHTML(ch.name,d.birth,ch.gender);}
+  });
+  if (!personFs&&!rel.spouse&&(!rel.children||!rel.children.length)) html+='<div class="family-empty">No information</div>';
+  html += '</div></div></div>';
+
+  // Parents and Siblings section
+  html += '<div class="section-header collapsed" onclick="toggleSection(this)">';
+  html += '<span>Parents and Siblings</span>';
+  html += '<svg viewBox="0 0 24 24" class="chevron"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></div>';
+  html += '<div class="section-content" style="display:none">';
+  html += '<div class="family-grid">';
+  html += '<div class="family-col">';
+  if (pMap) {
+    if(myTree[pMap.father]){const f=myTree[pMap.father];const d=parseDates(f.dates);html+='<div class="family-role">Father</div>'+familyMemberHTML(f.name,d.birth,f.gender);}
+    if(myTree[pMap.mother]){const m=myTree[pMap.mother];const d=parseDates(m.dates);html+='<div class="family-role">Mother</div>'+familyMemberHTML(m.name,d.birth,m.gender);}
+    Object.entries(myTree).filter(([k])=>{const pm=parentMap[k];return pm&&pm.father===pMap.father&&pm.mother===pMap.mother&&k!==personKey;}).forEach(([k,v])=>{const d=parseDates(v.dates);html+='<div class="family-role">Sibling</div>'+familyMemberHTML(v.name,d.birth,v.gender);});
+  } else html+='<div class="family-empty">No information</div>';
+  html += '</div>';
+  html += '<div class="family-col family-col-right">';
+  if (pMap) {
+    if(fsTree[pMap.father]){const f=fsTree[pMap.father];const d=parseDates(f.dates);html+='<div class="family-role">Father</div>'+familyMemberHTML(f.name,d.birth,f.gender);}
+    if(fsTree[pMap.mother]){const m=fsTree[pMap.mother];const d=parseDates(m.dates);html+='<div class="family-role">Mother</div>'+familyMemberHTML(m.name,d.birth,m.gender);}
+    Object.entries(fsTree).filter(([k])=>{const pm=parentMap[k];return pm&&pm.father===pMap.father&&pm.mother===pMap.mother&&k!==personKey;}).forEach(([k,v])=>{const d=parseDates(v.dates);html+='<div class="family-role">Sibling</div>'+familyMemberHTML(v.name,d.birth,v.gender);});
+  } else html+='<div class="family-empty">No information</div>';
+  html += '</div></div></div>';
+
+  html += '<div class="panel-footer"><button class="save-btn" id="save-btn" onclick="handleSave()">Save to FamilySearch</button></div>';
+
+  document.getElementById('sheet-body').innerHTML = html;
+
+  // Store staged state per field
+  window._stagedFields = {};
+}
+
+function familyMemberHTML(name, dates, gender) {
+  return '<div class="family-member"><div class="dot '+(gender==='female'?'dot-pink':'dot-blue')+'"></div><div><div class="member-name">'+name+'</div>'+(dates?'<div class="member-dates">'+dates+'</div>':'')+'</div></div>';
+}
+
+function toggleField(idx, myVal) {
+  if (!window._stagedFields) window._stagedFields = {};
+  const staged = window._stagedFields[idx];
+  const sb = document.getElementById('sb-'+idx);
+  const arrowSvg = document.getElementById('arrow-svg-'+idx);
+  const arrowLbl = document.getElementById('arrow-lbl-'+idx);
+  const stagedTag = document.getElementById('staged-tag-'+idx);
+  const diffTag = document.getElementById('diff-tag-'+idx);
+  const myValEl = document.getElementById('fv-my-'+idx);
+
+  if (!staged) {
+    window._stagedFields[idx] = true;
+    sb.classList.remove('sliding-box-left');
+    sb.classList.add('sliding-box-right');
+    arrowSvg.style.transform = 'rotate(180deg)';
+    arrowLbl.textContent = 'Undo';
+    if (stagedTag) stagedTag.style.display='';
+    if (diffTag) diffTag.style.display='none';
+    if (myValEl) myValEl.style.opacity='0.3';
+  } else {
+    window._stagedFields[idx] = false;
+    sb.classList.remove('sliding-box-right');
+    sb.classList.add('sliding-box-left');
+    arrowSvg.style.transform = '';
+    arrowLbl.textContent = 'Add';
+    if (stagedTag) stagedTag.style.display='none';
+    if (diffTag) diffTag.style.display='';
+    if (myValEl) myValEl.style.opacity='';
+  }
+}
+
+function toggleSection(header) {
+  header.classList.toggle('collapsed');
+  const content = header.nextElementSibling;
+  content.style.display = content.style.display==='none' ? '' : 'none';
+}
+
+function handleSave() {
+  const btn = document.getElementById('save-btn');
+  btn.textContent = 'Saved ✓';
+  btn.disabled = true;
+  setTimeout(() => closeSheet(), 1200);
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeSheet(); });
+
+let rafId = null;
+const canvas = document.getElementById('canvas');
+canvas.addEventListener('transitionstart', e => {
+  if (e.propertyName==='margin-right') {
+    function tick() {
+      const svg = canvas.querySelector('.tree-svg');
+      if (svg) drawConnectors(svg, canvas);
+      rafId = requestAnimationFrame(tick);
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+});
+canvas.addEventListener('transitionend', e => {
+  if (e.propertyName==='margin-right') {
+    cancelAnimationFrame(rafId);
+    const svg = canvas.querySelector('.tree-svg');
+    if (svg) drawConnectors(svg, canvas);
+  }
+});
+window.addEventListener('resize', () => {
+  const svg = canvas.querySelector('.tree-svg');
+  if (svg) drawConnectors(svg, canvas);
+});
+
+renderTree();
+</script>
+</body>
+</html>
