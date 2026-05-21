@@ -15,6 +15,9 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@fs/react-scripts": "^8.12.2",
+    "@fs/zion-config": "^3.5.0",
+    "@fs/zion-root": "^18.0.0",
+    "@fs/zion-router": "^12.0.0",
     "@fs/zion-ui": "^14.0.0",
     "@linaria/core": "^3.0.0-beta.13",
     "@linaria/react": "^7.0.1",
