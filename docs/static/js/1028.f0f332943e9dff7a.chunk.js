@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkandrwhair_sandbox=self.webpackChunkandrwhair_sandbox||[]).push([[1028],{1028(e,a,r){r.r(a),r.d(a,{default:()=>l});var t=r(74914),n=r(26774),c=r(55907),s=r(18428);const l=function(){var e=(0,n.B)().t;return t.createElement(t.Fragment,null,t.createElement(c.H6,{size:"H5",centered:!0},e("contact.familysearch","FamilySearch")),t.createElement(s.A,{centered:!0,size:"sm"},e("contact-overlay.familysearch.blurb","Change made by authorized support staff or as part of an update.")))}}}]);
-//# sourceMappingURL=1028.f0f332943e9dff7a.chunk.js.map
